@@ -1,6 +1,8 @@
 import { Nunito } from 'next/font/google';
 
 import './globals.css';
+import ClientOnly from './components/ui/ClientOnly';
+import LoginModal from './components/modals/LoginModal';
 
 export const metadata = {
   title: 'Baike',
@@ -19,6 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
+        <ClientOnly>
+          <LoginModal />
+        </ClientOnly>
         <div className="pb-20 pt-28">{children}</div>
       </body>
     </html>
