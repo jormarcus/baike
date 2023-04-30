@@ -7,13 +7,13 @@ import { FcGoogle } from 'react-icons/fc';
 import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
+import useRegisterModal from '@/app/hooks/useRegisterModal';
+import useLoginModal from '@/app/hooks/useRegisterModal';
 import Modal from './Modal';
 import Heading from '../ui/Heading';
 import Input from '../inputs/Input';
-import Button from '../ui/Button';
+import { Button } from '../ui/Button';
 import toast from 'react-hot-toast';
-import useRegisterModal from '@/app/hooks/useRegisterModal';
-import useLoginModal from '@/app/hooks/useLoginModal';
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -84,18 +84,14 @@ const RegisterModal = () => {
   const footerContent = (
     <div className="mt-3 flex flex-col gap-4">
       <hr />
-      <Button
-        variant="outline"
-        label="Continue with Google"
-        icon={FcGoogle}
-        onClick={() => signIn('google')}
-      />
-      <Button
-        variant="outline"
-        label="Continue with Github"
-        icon={AiFillGithub}
-        onClick={() => signIn('github')}
-      />
+      <Button variant="outline" onClick={() => signIn('google')}>
+        <FcGoogle className="mr-2 h-4 w-4" />
+        Continue with Google
+      </Button>
+      <Button variant="outline" onClick={() => signIn('github')}>
+        <AiFillGithub className="mr-2 h-4 w-4" />
+        Continue with Github
+      </Button>
       <div
         className="
           mt-4 
