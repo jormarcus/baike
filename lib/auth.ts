@@ -1,30 +1,14 @@
 import { NextAuthOptions } from 'next-auth';
-import { UpstashRedisAdapter } from '@next-auth/upstash-redis-adapter';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaClient } from '@prisma/client';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
+import { getCredentials } from '@/helpers/auth-helper';
 
-import { db } from './db';
-
-function getCredentials(isGoogle: boolean) {
-  const key = isGoogle ? 'GOOGLE_CLIENT' : 'GITHUB';
-  const clientId = process.env[`${key}]_ID`];
-  const clientSecret = process.env[`${key}]_SECRET`];
-
-  if (!clientId || !clientSecret) {
-    throw new Error(
-      `Please provide ${key}_ID and  ${key}_SECRET env variables`
-    );
-  }
-
-  return {
-    clientId,
-    clientSecret,
-  };
-}
+const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
-  adapter: UpstashRedisAdapter(db),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: getCredentials(false).clientId,
@@ -43,34 +27,4 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET,
-  callbacks: {
-    async jwt({ token, user }) {
-      const dbUser = (await db.get(`user:${token.id}`)) as User | null;
-
-      if (!dbUser) {
-        token.id = user!.id;
-        return token;
-      }
-
-      return {
-        id: dbUser.id,
-        name: dbUser.name,
-        email: dbUser.email,
-        picture: dbUser.image,
-      };
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.image = token.picture;
-      }
-
-      return session;
-    },
-    redirect() {
-      return '/';
-    },
-  },
 };
