@@ -1,22 +1,21 @@
 import { NextAuthOptions } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import { getCredentials } from '@/helpers/auth-helper';
 
-const prisma = new PrismaClient();
+import prisma from './prismadb';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
-      clientId: getCredentials(false).clientId,
-      clientSecret: getCredentials(false).clientSecret,
+      clientId: getCredentials('GITHUB').clientId,
+      clientSecret: getCredentials('GITHUB').clientSecret,
     }),
     GoogleProvider({
-      clientId: getCredentials(true).clientId,
-      clientSecret: getCredentials(true).clientSecret,
+      clientId: getCredentials('GOOGLE_CLIENT').clientId,
+      clientSecret: getCredentials('GOOGLE_CLIENT').clientSecret,
     }),
   ],
   pages: {
