@@ -3,7 +3,6 @@ import { Nunito } from 'next/font/google';
 import './globals.css';
 import ClientOnly from './components/ui/ClientOnly';
 import LoginModal from './components/modals/LoginModal';
-import Navbar from './components/navbar/Navbar';
 import RegisterModal from './components/modals/RegisterModal';
 
 export const metadata = {
@@ -26,9 +25,8 @@ export default function RootLayout({
         <ClientOnly>
           <LoginModal />
           <RegisterModal />
-          <Navbar />
         </ClientOnly>
-        <div className="pb-20 pt-28">{children}</div>
+        <div className="md:pb-0">{children}</div>
       </body>
     </html>
   );
