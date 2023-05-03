@@ -1,5 +1,5 @@
 import getCurrentUser from './actions/getCurrentUser';
-import Logo from './components/Logo';
+import Logo from './components/ui/Logo';
 import Search from './components/Search';
 import Sidebar from './components/Sidebar';
 

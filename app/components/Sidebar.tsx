@@ -2,7 +2,7 @@
 
 import { signOut } from 'next-auth/react';
 
-import Logo from './Logo';
+import Logo from './ui/Logo';
 import { Button } from './ui/Button';
 import useLoginModal from '../hooks/useLoginModal';
 import useRegisterModal from '../hooks/useRegisterModal';
