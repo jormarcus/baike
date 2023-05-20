@@ -1,6 +1,6 @@
 import getCurrentUser from './actions/getCurrentUser';
 import Logo from './components/ui/Logo';
-import Search from './components/Search';
+import Chat from './components/Chat';
 import Sidebar from './components/Sidebar';
 
 export default async function Home() {
@@ -15,7 +15,7 @@ export default async function Home() {
             <Logo />
           </div>
           <div>
-            <Search />
+            <Chat />
           </div>
         </div>
       </div>
