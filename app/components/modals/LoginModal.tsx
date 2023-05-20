@@ -7,11 +7,9 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { AiFillGithub } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
-import { IconType } from 'react-icons';
 
-import useRegisterModal from '@/app/hooks/useRegisterModal';
-import useLoginModal from '@/app/hooks/useLoginModal';
-
+import { useRegisterModal } from '@/app/context/RegisterModalContext';
+import { useLoginModal } from '@/app/context/LoginModalContext';
 import Modal from './Modal';
 import Input from '../inputs/Input';
 import Heading from '../ui/Heading';

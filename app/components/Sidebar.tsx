@@ -4,8 +4,8 @@ import { signOut } from 'next-auth/react';
 
 import Logo from './ui/Logo';
 import { Button } from './ui/Button';
-import useLoginModal from '../hooks/useLoginModal';
-import useRegisterModal from '../hooks/useRegisterModal';
+import { useRegisterModal } from '@/app/context/RegisterModalContext';
+import { useLoginModal } from '@/app/context/LoginModalContext';
 import { SafeUser } from '../types';
 
 interface SidebarProps {

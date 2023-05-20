@@ -7,8 +7,8 @@ import { FcGoogle } from 'react-icons/fc';
 import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
-import useRegisterModal from '@/app/hooks/useRegisterModal';
-import useLoginModal from '@/app/hooks/useRegisterModal';
+import { useRegisterModal } from '@/app/context/RegisterModalContext';
+import { useLoginModal } from '@/app/context/LoginModalContext';
 import Modal from './Modal';
 import Heading from '../ui/Heading';
 import Input from '../inputs/Input';
