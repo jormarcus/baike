@@ -24,10 +24,10 @@ export default function RootLayout({
     <html lang="en">
       <Providers>
         <body className={font.className}>
-          <ClientOnly>
-            <LoginModal />
-            <RegisterModal />
-          </ClientOnly>
+          {/* <ClientOnly> */}
+          <LoginModal />
+          <RegisterModal />
+          {/* </ClientOnly> */}
           <div className="md:pb-0">{children}</div>
         </body>
       </Providers>
