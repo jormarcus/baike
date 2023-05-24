@@ -5,6 +5,7 @@ import { LoginModalProvider } from '@/app/context/LoginModalContext';
 import { RegisterModalProvider } from '@/app/context/RegisterModalContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FC, ReactNode } from 'react';
+import AuthContext from '../context/AuthContext';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -15,11 +16,13 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <RegisterModalProvider>
-        <LoginModalProvider>
-          <MessagesProvider>{children}</MessagesProvider>
-        </LoginModalProvider>
-      </RegisterModalProvider>
+      <AuthContext>
+        <RegisterModalProvider>
+          <LoginModalProvider>
+            <MessagesProvider>{children}</MessagesProvider>
+          </LoginModalProvider>
+        </RegisterModalProvider>
+      </AuthContext>
     </QueryClientProvider>
   );
 };
