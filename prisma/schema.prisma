@@ -63,3 +63,15 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verificationtokens")
 }
+
+model Recipe {
+  id           Int       @id @default(autoincrement())
+  title        String
+  description  String?
+  instructions String?
+  prepTime     DateTime?
+  cookTime     DateTime?
+  servings     Int?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
