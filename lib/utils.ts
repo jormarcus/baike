@@ -8,3 +8,9 @@ export function cn(...inputs: ClassValue[]) {
 export function throwContextNotInitializedError(): any {
   throw new Error('Cannot use Context before initialization');
 }
+
+export function isNullOrUndefined<T>(
+  value: T | null | undefined
+): value is null | undefined {
+  return value === null || value === undefined;
+}

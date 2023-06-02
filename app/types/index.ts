@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { Recipe, User } from '@prisma/client';
 
 export type SafeUser = Omit<
   User,
@@ -7,4 +7,16 @@ export type SafeUser = Omit<
   createdAt: string;
   updatedAt: string;
   emailVerified: string | null;
+};
+
+export type SafeRecipe = Omit<
+  Recipe,
+  'createdAt' | 'updatedAt' | 'prepTime' | 'cookTime'
+> & {
+  createdAt?: string | null;
+  updatedAt?: string | null;
+  prepTimeStr?: string | null;
+  prepTime?: number | null;
+  cookTimeStr?: string | null;
+  cookTime?: number | null;
 };
