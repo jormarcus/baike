@@ -1,18 +1,12 @@
-import Logo from './components/ui/Logo';
-import Chat from './components/Chat';
+import Chat from './components/chat/Chat';
+import Feed from './components/feed/Feed';
 
 export default async function Home() {
   return (
-    <div className="flex min-h-[100vh]">
-      <div className="relative grow md:flex justify-center items-start h-full w-full mx-auto max-w-screen-md px-4 py-6 md:px-6">
-        <div className="w-full">
-          <div className="pt-4 pb-4 md:pb-6 flex items-center justify-center">
-            <Logo />
-          </div>
-          <div>
-            <Chat />
-          </div>
-        </div>
+    <div className="relative flex min-h-[100vh] max-w-full overflow-hidden flex-1 flex-col">
+      <div className="flex items-center flex-col justify-center">
+        <Feed />
+        <Chat />
       </div>
     </div>
   );

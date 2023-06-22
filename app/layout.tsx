@@ -23,13 +23,15 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <Providers>
-        <body className={font.className}>
-          <LoginModal />
-          <RegisterModal />
-          <Sidebar currentUser={currentUser} />
-          <div className="md:pb-0">{children}</div>
+        <body className={`${font.className} dark:bg-gray-800`}>
+          <div className="overflow-hidden w-full h-full relative flex">
+            <LoginModal />
+            <RegisterModal />
+            <Sidebar currentUser={currentUser} />
+            <div className="md:pb-0">{children}</div>
+          </div>
         </body>
       </Providers>
     </html>
