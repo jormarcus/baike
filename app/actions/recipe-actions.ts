@@ -43,3 +43,89 @@ export async function getRecipeById(id: string) {
 
   return formatSafeRecipe(recipe);
 }
+
+export async function getMyRecipes(
+  userId: string,
+  pageNumber: number,
+  pageSize: number
+) {
+  const userRecipes = await prisma.userRecipeCollection.findMany({
+    where: {
+      userId: userId,
+    },
+    include: {
+      recipe: true,
+    },
+    skip: (pageNumber - 1) * pageSize,
+    take: pageSize,
+  });
+
+  return userRecipes.map((userRecipe) => formatSafeRecipe(userRecipe.recipe));
+}
+
+export async function updateRecipe(recipe: SafeRecipe) {
+  const { prepTime, cookTime } = recipe;
+  const prepTimeStr: string = !isNullOrUndefined(prepTime)
+    ? convertToInterval(prepTime)
+    : '';
+  const cookTimeStr: string = !isNullOrUndefined(cookTime)
+    ? convertToInterval(cookTime)
+    : '';
+
+  const updatedRecipe = await prisma.recipe.update({
+    where: {
+      id: recipe.id,
+    },
+    data: {
+      ...recipe,
+      prepTime: prepTimeStr,
+      cookTime: cookTimeStr,
+    },
+  });
+
+  return formatSafeRecipe(updatedRecipe);
+}
+
+export async function deleteRecipe(id: string) {
+  const deletedRecipe = await prisma.recipe.delete({
+    where: {
+      id,
+    },
+  });
+
+  return formatSafeRecipe(deletedRecipe);
+}
+
+export async function getNewFeedRecipes() {
+  const recipes = await prisma.recipe.findMany({
+    where: {
+      isPrivate: false,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: 10,
+  });
+
+  return recipes.map((recipe) => formatSafeRecipe(recipe));
+}
+
+export async function getPopularFeedRecipes() {
+  const twoWeeksAgo = new Date();
+  twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
+  const recipes = await prisma.recipe.findMany({
+    where: {
+      isPrivate: false,
+      createdAt: {
+        gte: twoWeeksAgo,
+      },
+    },
+    orderBy: {
+      likesCount: 'desc',
+    },
+    take: 10,
+  });
+
+  return recipes.map((recipe) => formatSafeRecipe(recipe));
+}
