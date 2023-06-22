@@ -41,22 +41,23 @@ model Session {
 }
 
 model User {
-  id             String       @id @default(cuid())
-  name           String?
-  email          String?      @unique
-  emailVerified  DateTime?    @map("email_verified")
-  image          String?
-  hashedPassword String?
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  accounts       Account[]
-  sessions       Session[]
-  Like           Like[]
-  Rating         Rating[]
-  Note           Note[]
-  Review         Review[]
-  ReviewLike     ReviewLike[]
-  NoteLike       NoteLike[]
+  id                   String                 @id @default(cuid())
+  name                 String?
+  email                String?                @unique
+  emailVerified        DateTime?              @map("email_verified")
+  image                String?
+  hashedPassword       String?
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  accounts             Account[]
+  sessions             Session[]
+  Like                 Like[]
+  Rating               Rating[]
+  Note                 Note[]
+  Review               Review[]
+  ReviewLike           ReviewLike[]
+  NoteLike             NoteLike[]
+  UserRecipeCollection UserRecipeCollection[]
 
   @@map("users")
 }
@@ -71,62 +72,66 @@ model VerificationToken {
 }
 
 model Recipe {
-  id            String    @id @default(cuid())
-  title         String
-  description   String?
-  instructions  String?
-  prepTime      DateTime?
-  cookTime      DateTime?
-  servings      Int?
-  image         String?
-  createdAt     DateTime? @default(now())
-  updatedAt     DateTime? @updatedAt
-  isPrivate     Boolean   @default(false)
-  likes         Like[]
-  likesCount    Int       @default(0)
-  averageRating Float     @default(0)
-  ratings       Rating[]
-  ratingsCount  Int       @default(0)
-  notes         Note[]
-  notesCount    Int       @default(0)
-  reviews       Review[]
-  reviewsCount  Int       @default(0)
+  id                   String                 @id @default(cuid())
+  title                String
+  description          String?
+  instructions         String?
+  prepTime             DateTime?
+  cookTime             DateTime?
+  servings             Int?
+  image                String?
+  createdAt            DateTime?              @default(now())
+  updatedAt            DateTime?              @updatedAt
+  isPrivate            Boolean                @default(false)
+  likes                Like[]
+  likesCount           Int                    @default(0)
+  averageRating        Float                  @default(0)
+  ratings              Rating[]
+  ratingsCount         Int                    @default(0)
+  notes                Note[]
+  notesCount           Int                    @default(0)
+  reviews              Review[]
+  reviewsCount         Int                    @default(0)
+  userRecipeCollection UserRecipeCollection[]
 }
 
 model Collection {
-  id        String   @id @default(cuid())
-  userId    String   @map("user_id")
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isPrivate Boolean  @default(false)
+  id                   String                 @id @default(cuid())
+  userId               String                 @map("user_id")
+  name                 String
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  isPrivate            Boolean                @default(false)
+  likes                Like[]
+  likesCount           Int                    @default(0)
+  userRecipeCollection UserRecipeCollection[]
 }
 
 model UserRecipeCollection {
-  id           String   @id @default(cuid())
-  userId       String   @map("user_id")
-  recipeId     String   @map("recipe_id")
-  collectionId String   @map("collection_id")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  isPrivate    Boolean  @default(false)
-  likes        Like[]
-  likesCount   Int      @default(0)
+  id           String     @id @default(cuid())
+  userId       String     @map("user_id")
+  recipeId     String     @map("recipe_id")
+  collectionId String     @map("collection_id")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  user         User       @relation(fields: [userId], references: [id])
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  collection   Collection @relation(fields: [collectionId], references: [id])
 
   @@unique([userId, recipeId, collectionId])
   @@map("user_recipe_collection")
 }
 
 model Like {
-  id                     String                @id @default(cuid())
-  userId                 String                @map("user_id")
-  recipeId               String                @map("recipe_id")
-  reviewId               String                @map("review_id")
-  user                   User                  @relation(fields: [userId], references: [id])
-  recipe                 Recipe                @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  review                 Review                @relation(fields: [reviewId], references: [id], onDelete: Cascade)
-  UserRecipeCollection   UserRecipeCollection? @relation(fields: [userRecipeCollectionId], references: [id])
-  userRecipeCollectionId String?
+  id           String     @id @default(cuid())
+  userId       String     @map("user_id")
+  recipeId     String     @map("recipe_id")
+  reviewId     String     @map("review_id")
+  collectionId String     @map("collection_id")
+  user         User       @relation(fields: [userId], references: [id])
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  review       Review     @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  collection   Collection @relation(fields: [collectionId], references: [id])
 }
 
 model Rating {
@@ -143,7 +148,7 @@ model Note {
   userId   String     @map("user_id")
   recipeId String     @map("recipe_id")
   note     String
-  jser     User       @relation(fields: [userId], references: [id])
+  user     User       @relation(fields: [userId], references: [id])
   recipe   Recipe     @relation(fields: [recipeId], references: [id])
   noteLike NoteLike[]
 }
