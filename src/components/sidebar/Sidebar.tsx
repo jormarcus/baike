@@ -4,8 +4,8 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 
 import Logo from '../ui/Logo';
-import { useRegisterModal } from '@/app/context/RegisterModalContext';
-import { useLoginModal } from '@/app/context/LoginModalContext';
+import { useRegisterModal } from '@/context/RegisterModalContext';
+import { useLoginModal } from '@/context/LoginModalContext';
 import { SafeUser } from '../../types';
 import SidebarItem from './SidebarItem';
 import { Icons } from '../Icons';

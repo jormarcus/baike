@@ -1,4 +1,4 @@
-import { SafeRecipe } from '@/app/types';
+import { SafeRecipe } from '@/types';
 import { formatDuration, getTimeInMinutes } from '@/helpers/date-time-helper';
 import { Recipe } from '@prisma/client';
 

@@ -1,6 +1,6 @@
-import { getNewFeedRecipes } from './actions/recipe-actions';
-import Chat from './components/chat/Chat';
-import Feed from './components/feed/Feed';
+import { getNewFeedRecipes } from './_actions/recipe-actions';
+import Chat from '../components/chat/Chat';
+import Feed from '../components/feed/Feed';
 
 export default async function Home() {
   const recipes = await getNewFeedRecipes();

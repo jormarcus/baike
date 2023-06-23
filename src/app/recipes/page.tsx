@@ -1,6 +1,6 @@
-import { getRecipesByUserId } from '../actions/recipe-actions';
-import { getCurrentUser } from '../actions/user-actions';
-import EmptyState from '../components/ui/EmptyState';
+import { getRecipesByUserId } from '../_actions/recipe-actions';
+import { getCurrentUser } from '../_actions/user-actions';
+import EmptyState from '../../components/ui/EmptyState';
 
 interface RecipesPageProps {}
 

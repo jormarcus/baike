@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { sendMessage } from '@/app/actions/message-actions';
+import { sendMessage } from '@/app/_actions/message-actions';
 import { ca } from 'date-fns/locale';
 
 const Chat = () => {

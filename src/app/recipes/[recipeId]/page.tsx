@@ -1,6 +1,6 @@
-import { getRecipeById } from '@/app/actions/recipe-actions';
-import EmptyState from '@/app/components/ui/EmptyState';
-import { SafeRecipe } from '@/app/types';
+import { getRecipeById } from '@/app/_actions/recipe-actions';
+import EmptyState from '@/components/ui/EmptyState';
+import { SafeRecipe } from '@/types';
 
 interface RecipePageProps {
   params: {

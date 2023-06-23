@@ -4,7 +4,7 @@
 
 import prisma from '@/lib/prismadb';
 import { convertToInterval } from '@/helpers/date-time-helper';
-import { SafeRecipe } from '../types';
+import { SafeRecipe } from '../../types';
 import { formatSafeRecipe } from '@/helpers/format-dto';
 import { isNullOrUndefined } from '@/lib/utils';
 

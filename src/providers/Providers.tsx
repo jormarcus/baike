@@ -3,11 +3,11 @@
 import { ThemeProvider } from 'next-themes';
 import { FC, ReactNode } from 'react';
 
-import { MessagesProvider } from '@/app/context/MessagesContext';
-import { LoginModalProvider } from '@/app/context/LoginModalContext';
-import { RegisterModalProvider } from '@/app/context/RegisterModalContext';
-import AuthContext from '@/app/context/AuthContext';
-import { AddRecipeModalProvider } from '@/app/context/AddRecipeModal';
+import { MessagesProvider } from '@/context/MessagesContext';
+import { LoginModalProvider } from '@/context/LoginModalContext';
+import { RegisterModalProvider } from '@/context/RegisterModalContext';
+import AuthContext from '@/context/AuthContext';
+import { AddRecipeModalProvider } from '@/context/AddRecipeModal';
 
 interface ProvidersProps {
   children: ReactNode;
