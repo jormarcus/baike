@@ -2,13 +2,11 @@
 
 import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { ca } from 'date-fns/locale';
 
 import { sendMessage } from '@/app/_actions/message-actions';
-import ChatMessages from './ChatMessages';
-import ChatInput from './ChatInput';
+import { ca } from 'date-fns/locale';
 
-const Chat = () => {
+const ChatInput = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,10 +25,28 @@ const Chat = () => {
 
   return (
     <div className="flex flex-col">
-      <ChatMessages />
-      <ChatInput />
+      <div className="rounded-sm">
+        <form>
+          <TextareaAutosize
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+
+                onMessage(input);
+              }
+            }}
+            rows={2}
+            maxRows={4}
+            value={input}
+            autoFocus
+            disabled={isLoading}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Find your next recipe..."
+          />
+        </form>
+      </div>
     </div>
   );
 };
 
-export default Chat;
+export default ChatInput;
