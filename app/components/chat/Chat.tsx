@@ -1,19 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { Message } from '@/lib/validators/message';
-import { useMessage } from '@/app/hooks/useMessage';
+import { sendMessage } from '@/app/actions/message-actions';
+import { ca } from 'date-fns/locale';
 
 const Chat = () => {
   const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { sendMessage, isLoading } = useMessage();
-
-  const onMessage = async (message: Message) => {
-    await sendMessage(message);
+  const onMessage = async (messageInput: string) => {
+    try {
+      setIsLoading(true);
+      await sendMessage(messageInput);
+    } catch (error) {
+      console.error(error);
+      // display an error in the chat that the message was not set and there was an error
+    } finally {
+      setIsLoading(false);
+      setInput('');
+    }
   };
 
   return (
@@ -25,13 +32,7 @@ const Chat = () => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
 
-                const message: Message = {
-                  id: nanoid(),
-                  isUserMessage: true,
-                  text: input,
-                };
-
-                onMessage(message);
+                onMessage(input);
               }
             }}
             rows={2}
