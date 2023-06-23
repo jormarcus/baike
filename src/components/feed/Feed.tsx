@@ -1,3 +1,5 @@
+'use client';
+
 import { Recipe } from '@prisma/client';
 
 const Feed: React.FC = () => {
