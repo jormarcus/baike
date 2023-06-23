@@ -19,4 +19,8 @@ export type SafeRecipe = Omit<
   prepTime?: number | null;
   cookTimeStr?: string | null;
   cookTime?: number | null;
+  isPrivate: boolean | null;
+  likesCount: number | null;
+  averageRating: number | null;
+  ratingsCount: number | null;
 };

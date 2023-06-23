@@ -34,6 +34,12 @@ const AddRecipeModal: React.FC<AddRecipeModalProps> = ({}) => {
         description: null,
         instructions: null,
         servings: null,
+        isPrivate: false,
+        likesCount: 0,
+        averageRating: 0,
+        ratingsCount: 0,
+        notesCount: 0,
+        reviewsCount: 0,
       });
       addRecipeModal.onClose();
     } catch (error) {

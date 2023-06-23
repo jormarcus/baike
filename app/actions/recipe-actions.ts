@@ -22,6 +22,7 @@ export async function createRecipe(recipe: SafeRecipe) {
       ...recipe,
       prepTime: prepTimeStr,
       cookTime: cookTimeStr,
+      isPrivate: recipe.isPrivate || false,
     },
   });
 
@@ -44,7 +45,7 @@ export async function getRecipeById(id: string) {
   return formatSafeRecipe(recipe);
 }
 
-export async function getMyRecipes(
+export async function getRecipesByUserId(
   userId: string,
   pageNumber: number,
   pageSize: number
