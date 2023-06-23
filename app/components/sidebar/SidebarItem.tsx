@@ -1,24 +1,33 @@
-import { Button } from '../ui/Button';
+'use client';
 
+import Link from 'next/link';
+import { useState } from 'react';
 interface SidebarItemProps {
   label: string;
-  // icon: Icon,
-  onClick?: () => void;
+  href: string;
+  isActive: boolean;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ label, onClick }) => {
-  const handleClick = () => {
-    if (onClick) {
-      return onClick();
-    }
-  };
-
+const SidebarItem: React.FC<SidebarItemProps> = ({ label, href, isActive }) => {
   return (
-    <li className="list-none">
-      <Button onClick={handleClick} variant="ghost">
+    <Link href={href}>
+      <li
+        className={`list-none
+    flex
+    m-px
+    px-3
+    py-2
+    items-center
+    gap-3
+    relative
+    rounded-md
+    hover:bg-gray-600
+    ${isActive ? 'bg-gray-700' : ''}
+    `}
+      >
         {label}
-      </Button>
-    </li>
+      </li>
+    </Link>
   );
 };
 

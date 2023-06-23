@@ -1,16 +1,12 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Logo = () => {
-  const router = useRouter();
   return (
-    <h2
-      onClick={() => router.push('/')}
-      className="text-lg text-rose-500 font-bold cursor-pointer"
-    >
-      BAIKE
-    </h2>
+    <Link href="/">
+      <h2 className="text-lg text-rose-500 font-bold cursor-pointer">BAIKE</h2>
+    </Link>
   );
 };
 
