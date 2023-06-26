@@ -30,7 +30,9 @@ export default async function RootLayout({
             <LoginModal />
             <RegisterModal />
             <Sidebar currentUser={currentUser} />
-            <div className="flex w-full">{children}</div>
+            <div className="flex min-h-[100vh] max-w-full overflow-hidden flex-col xl:px-20 md:px-10 sm:px-2 px-4">
+              {children}
+            </div>
           </div>
         </body>
       </Providers>

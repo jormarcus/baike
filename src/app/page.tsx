@@ -1,18 +1,18 @@
 import { getNewFeedRecipes } from './_actions/recipe-actions';
-import Chat from '@/components/chat/Chat';
 import Feed from '@/components/feed/Feed';
 import Categories from '@/components/categories/Categories';
+import ChatInput from '@/components/chat/ChatInput';
+import Logo from '@/components/ui/Logo';
 
 export default async function Home() {
   const recipes = await getNewFeedRecipes();
   console.log('feed recipes', recipes);
   return (
-    <div className="relative flex min-h-[100vh] max-w-full overflow-hidden flex-1 flex-col">
-      <div className="flex items-center flex-col justify-center">
-        <Chat />
-        <Categories />
-        <Feed />
-      </div>
+    <div className="flex items-center flex-col justify-center">
+      <Logo className="pb-6 md:pb-6 py-6" />
+      <ChatInput />
+      <Categories />
+      <Feed />
     </div>
   );
 }
