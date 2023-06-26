@@ -8,7 +8,6 @@ import { recipePrompt } from '@/helpers/prompts/recipePrompt';
 
 export async function POST(req: Request) {
   const request = await req.json();
-  console.log('request', request);
   const messages = request.message;
 
   const parsedMessages = MessageArraySchema.parse([messages]);

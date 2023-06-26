@@ -14,6 +14,10 @@ export async function sendMessage(input: string) {
     },
     body: JSON.stringify({ message }),
   });
-  console.log(response);
+
+  if (!response.ok) {
+    throw new Error('Something went wrong.');
+  }
+
   return response.body;
 }
