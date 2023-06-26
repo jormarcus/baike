@@ -9,7 +9,7 @@ import { formatSafeRecipe } from '@/helpers/format-dto';
 import { isNullOrUndefined } from '@/lib/utils';
 
 export async function createRecipe(recipe: SafeRecipe) {
-  const { prepTime, cookTime } = recipe;
+  const { prepTime, cookTime, createdAt, updatedAt } = recipe;
   const prepTimeStr: string = !isNullOrUndefined(prepTime)
     ? convertToInterval(prepTime)
     : '';
@@ -23,6 +23,8 @@ export async function createRecipe(recipe: SafeRecipe) {
       prepTime: prepTimeStr,
       cookTime: cookTimeStr,
       isPrivate: recipe.isPrivate || false,
+      createdAt: createdAt ? new Date(createdAt) : new Date(),
+      updatedAt: updatedAt ? new Date(updatedAt) : new Date(),
     },
   });
 
@@ -65,7 +67,7 @@ export async function getRecipesByUserId(
 }
 
 export async function updateRecipe(recipe: SafeRecipe) {
-  const { prepTime, cookTime } = recipe;
+  const { prepTime, cookTime, createdAt, updatedAt } = recipe;
   const prepTimeStr: string = !isNullOrUndefined(prepTime)
     ? convertToInterval(prepTime)
     : '';
@@ -81,6 +83,8 @@ export async function updateRecipe(recipe: SafeRecipe) {
       ...recipe,
       prepTime: prepTimeStr,
       cookTime: cookTimeStr,
+      createdAt: createdAt ? new Date(createdAt) : new Date(),
+      updatedAt: updatedAt ? new Date(updatedAt) : new Date(),
     },
   });
 
