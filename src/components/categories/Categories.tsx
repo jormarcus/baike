@@ -1,7 +1,6 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import Container from '../ui/Container';
 import CategoryItem from './CategoryItem';
 
 const categoryItems = [
@@ -44,20 +43,18 @@ const Categories = () => {
   const selectedCategory = params?.get('category');
 
   return (
-    <Container>
-      <div className="py-8 overflow-x-auto">
-        <ul className="flex flex-row items-center justify-between w-full gap-8">
-          {categoryItems.map((item) => (
-            <CategoryItem
-              key={item.label}
-              label={item.label}
-              image={item.image}
-              selected={item.label === selectedCategory}
-            />
-          ))}
-        </ul>
-      </div>
-    </Container>
+    <div className="py-8 overflow-x-auto">
+      <ul className="flex flex-row items-center justify-between w-full gap-8">
+        {categoryItems.map((item) => (
+          <CategoryItem
+            key={item.label}
+            label={item.label}
+            image={item.image}
+            selected={item.label === selectedCategory}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 
