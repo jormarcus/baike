@@ -26,11 +26,11 @@ export default async function RootLayout({
     <html lang="en" className="dark">
       <Providers>
         <body className={`${font.className} dark:bg-gray-800`}>
-          <div className="overflow-hidden w-full h-full flex">
+          <div className="overflow-hidden w-[100vw] min-h-[100vh] flex">
             <LoginModal />
             <RegisterModal />
             <Sidebar currentUser={currentUser} />
-            <div className="flex min-h-[100vh] max-w-full overflow-hidden flex-col xl:px-20 md:px-10 sm:px-2 px-4">
+            <div className="flex w-full h-full overflow-hidden flex-col">
               {children}
             </div>
           </div>
