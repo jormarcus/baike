@@ -58,7 +58,7 @@ model User {
   ReviewLike           ReviewLike[]
   NoteLike             NoteLike[]
   UserRecipeCollection UserRecipeCollection[]
-  Message              Message[]
+  Chat                 Chat[]
 
   @@map("users")
 }
@@ -182,12 +182,22 @@ model NoteLike {
   note   Note   @relation(fields: [noteId], references: [id])
 }
 
+model Chat {
+  id         String    @id @default(cuid())
+  userId     String    @map("user_id")
+  receiverId String    @map("receiver_id")
+  messages   Message[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  user       User      @relation(fields: [userId], references: [id])
+}
+
 model Message {
-  id         String   @id @default(cuid())
-  userrId    String   @map("userr_id")
-  receiverId String   @map("receiver_id")
-  message    String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  user       User     @relation(fields: [userrId], references: [id])
+  id            String   @id @default(cuid())
+  isUserMessage Boolean
+  text          String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  chatId        String
+  chat          Chat     @relation(fields: [chatId], references: [id])
 }

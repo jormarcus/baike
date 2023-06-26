@@ -1,4 +1,4 @@
-import { Recipe, User } from '@prisma/client';
+import { Message, Recipe, User } from '@prisma/client';
 
 export type SafeUser = Omit<
   User,
@@ -23,4 +23,9 @@ export type SafeRecipe = Omit<
   likesCount: number | null;
   averageRating: number | null;
   ratingsCount: number | null;
+};
+
+export type SafeMessage = Omit<Message, 'createdAt' | 'updatedAt'> & {
+  createdAt?: string | null;
+  updatedAt?: string | null;
 };
