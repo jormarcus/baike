@@ -1,91 +1,42 @@
 'use client';
 
-import { useContext, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import toast from 'react-hot-toast';
 import { HTMLAttributes } from 'react';
 
-import { sendMessage } from '@/app/_actions/message-actions';
 import { Button } from '../ui/Button';
 import { Icons } from '../Icons';
-import { createEmptyMessage } from '@/helpers/messages-helper';
-import { MessagesContext } from '@/context/MessagesContext';
 import { cn } from '@/lib/utils';
 
-interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {}
+interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
+  handleSubmit: (e: any) => void;
+}
 
-const ChatInput: React.FC<ChatInputProps> = ({ className }) => {
+const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    messages,
-    addMessage,
-    removeMessage,
-    updateMessage,
-    setIsMessageUpdating,
-  } = useContext(MessagesContext);
 
   const isEmpty = input.length === 0;
 
-  const emptyMsg = createEmptyMessage();
-
-  const onMessage = async (messageInput: string) => {
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
     try {
-      setIsLoading(true);
-      const stream = await sendMessage(messageInput);
-
-      if (!stream) throw new Error('Something went wrong.');
-
-      // add new message to state
-      addMessage(emptyMsg);
-
-      setIsMessageUpdating(true);
-
-      const reader = stream.getReader();
-      const decoder = new TextDecoder();
-      let done = false;
-
-      while (!done) {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-        const chunkValue = decoder.decode(value);
-        updateMessage(emptyMsg.id, (prev) => prev + chunkValue);
-      }
-
-      // clean up
-      setIsMessageUpdating(false);
-      setInput('');
-
-      setTimeout(() => {
-        textareaRef.current?.focus();
-      }, 10);
+      handleSubmit(e);
     } catch (error) {
-      console.error(error);
-      toast.error('Something went wrong. Please try again.');
-      removeMessage(emptyMsg.id);
-      textareaRef.current?.focus();
-      // display an error in the chat that the message was not set and there was an error
+      console.log(error);
     } finally {
-      setIsLoading(false);
       setInput('');
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onMessage(input);
-  };
-
   return (
     <div className={cn('relative w-full max-w-2xl', className)}>
-      <form className="relative" onSubmit={handleSubmit}>
+      <form className="relative" onSubmit={onSubmit}>
         <TextareaAutosize
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-
-              onMessage(input);
+              onSubmit(e);
             }
           }}
           rows={2}
@@ -106,10 +57,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ className }) => {
         />
         <Button
           type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            onMessage(input);
-          }}
+          onClick={(e) => onSubmit(e)}
           className={`absolute bg-transparent hover:bg-transparent bottom-3 right-0 text-gray-600
           ${
             isEmpty

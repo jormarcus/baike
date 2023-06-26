@@ -1,8 +1,8 @@
 import { getNewFeedRecipes } from './_actions/recipe-actions';
 import Feed from '@/components/feed/Feed';
 import Categories from '@/components/categories/Categories';
-import ChatInput from '@/components/chat/ChatInput';
 import Logo from '@/components/ui/Logo';
+import ChatInputHome from '@/components/chat/ChatInputHome';
 
 export default async function Home() {
   const recipes = await getNewFeedRecipes();
@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <div className="flex items-center flex-col justify-center">
       <Logo className="pb-6 md:pb-6 py-6" />
-      <ChatInput />
+      <ChatInputHome />
       <Categories />
       <Feed />
     </div>

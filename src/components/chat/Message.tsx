@@ -5,7 +5,15 @@ interface MessageProps {
 
 const Message: React.FC<MessageProps> = ({ message }) => {
   return (
-    <div className="flex items-center justify-between w-full px-4 py-2 space-x-4">
+    <div
+      className={`flex items-center justify-between w-full px-4 py-2
+    ${
+      message.isUserMessage
+        ? 'flex-row-reverse dark:bg-gray-600'
+        : 'flex-row dark:bg-gray-800'
+    }
+    `}
+    >
       <div>
         <p>{message.text}</p>
       </div>
