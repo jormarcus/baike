@@ -1,16 +1,22 @@
-import { MessageArraySchema } from '@/lib/validators/message';
+import {
+  Message,
+  MessageArraySchema,
+} from '@/lib/validators/message-validator';
 import {
   ChatGPTMessage,
   OpenAIStream,
   OpenAIStreamPayload,
 } from '@/lib/openai-stream';
 import { recipePrompt } from '@/helpers/prompts/recipePrompt';
+import { formatDBMessage } from '@/helpers/messages-helper';
 
 export async function POST(req: Request) {
   const request = await req.json();
-  const messages = request.message;
+  const messages = request.messages;
 
-  const parsedMessages = MessageArraySchema.parse([messages]);
+  const dbMessages: Message[] = messages.map(formatDBMessage);
+
+  const parsedMessages = MessageArraySchema.parse(dbMessages);
 
   const outboundMessages: ChatGPTMessage[] = parsedMessages.map((message) => {
     return {

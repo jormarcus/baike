@@ -1,19 +1,11 @@
 import { createContext, useState } from 'react';
 import { nanoid } from 'nanoid';
-import { Message } from '@/lib/validators/message';
-
-const defaultValue = [
-  {
-    id: nanoid(),
-    text: 'Hello, what would you like to cook next?',
-    isUserMessage: false,
-  },
-];
+import { SafeMessage } from '@/types';
 
 export const MessagesContext = createContext<{
-  messages: Message[];
+  messages: SafeMessage[];
   isMessageUpdating: boolean;
-  addMessage: (message: Message) => void;
+  addMessage: (message: SafeMessage) => void;
   removeMessage: (id: string) => void;
   updateMessage: (id: string, updateFn: (prevText: string) => string) => void;
   setIsMessageUpdating: (isUpdating: boolean) => void;
@@ -27,10 +19,10 @@ export const MessagesContext = createContext<{
 });
 
 export function MessagesProvider({ children }: { children: React.ReactNode }) {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<SafeMessage[]>([]);
   const [isMessageUpdating, setIsMessageUpdating] = useState<boolean>(false);
 
-  const addMessage = (message: Message) => {
+  const addMessage = (message: SafeMessage) => {
     setMessages((prev) => [...prev, message]);
   };
 

@@ -8,12 +8,11 @@ import ChatMessages from '@/components/chat/ChatMessages';
 import { MessagesContext } from '@/context/MessagesContext';
 import { createEmptyMessage } from '@/helpers/messages-helper';
 import { sendMessage } from '@/app/_actions/message-actions';
-import { Message } from '@/lib/validators/message';
 import ChatInput from '@/components/chat/ChatInput';
+import { SafeMessage } from '@/types';
 
 const SearchPage = ({}) => {
   const params = usePathname();
-  console.log('params', params);
 
   const {
     messages,
@@ -25,7 +24,7 @@ const SearchPage = ({}) => {
 
   const decodeMessage = async (
     messageStream: ReadableStream<Uint8Array>,
-    emptyMsg: Message
+    emptyMsg: SafeMessage
   ) => {
     try {
       setIsMessageUpdating(true);
@@ -51,14 +50,16 @@ const SearchPage = ({}) => {
     }
   };
 
-  const streamMessage = async (inputValue: string) => {
+  const streamMessage = async () => {
     const emptyResponseMsg = createEmptyMessage();
     try {
-      const stream = await sendMessage(inputValue);
+      const stream = await sendMessage(messages);
+
       if (!stream) throw new Error('Something went wrong.');
       addMessage(emptyResponseMsg);
       decodeMessage(stream, emptyResponseMsg);
     } catch (error) {
+      console.error(error);
       toast.error('Something went wrong. Please try again.');
       removeMessage(emptyResponseMsg.id);
       // textareaRef.current?.focus();
@@ -66,8 +67,7 @@ const SearchPage = ({}) => {
   };
 
   useEffect(() => {
-    console.log('messages', messages);
-    streamMessage(messages[messages.length - 1]['text']);
+    streamMessage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,8 +78,9 @@ const SearchPage = ({}) => {
     emptyMsg.text = inputValue;
     emptyMsg.isUserMessage = true;
     addMessage(emptyMsg);
+
     try {
-      streamMessage(inputValue);
+      streamMessage();
     } catch (error) {
       toast.error('Something went wrong. Please try again.');
       removeMessage(emptyMsg.id);

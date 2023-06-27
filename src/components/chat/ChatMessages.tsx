@@ -1,6 +1,5 @@
 'use client';
 
-import { Message as MessageType } from '@/lib/validators/message';
 import Message from './Message';
 import { useContext } from 'react';
 import { MessagesContext } from '@/context/MessagesContext';

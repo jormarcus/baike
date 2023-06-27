@@ -1,7 +1,6 @@
 import { SafeMessage, SafeRecipe } from '@/types';
 import { formatDuration, getTimeInMinutes } from '@/helpers/date-time-helper';
-import { Message, Recipe } from '@prisma/client';
-import { nanoid } from 'nanoid';
+import { Chat, Message, Recipe } from '@prisma/client';
 
 export function formatSafeRecipe(recipe: Recipe): SafeRecipe {
   const { prepTime, cookTime } = recipe;
@@ -16,11 +15,19 @@ export function formatSafeRecipe(recipe: Recipe): SafeRecipe {
   };
 }
 
+export function formatSafeChat(chat: Chat) {
+  return {
+    ...chat,
+    createdAt: chat.createdAt?.toISOString() ?? '',
+    updatedAt: chat.updatedAt?.toISOString() ?? '',
+  };
+}
+
 export function formatSafeMessage(message: Message): SafeMessage {
   const { createdAt, updatedAt } = message;
   return {
     ...message,
-    createdAt: createdAt?.toISOString() ?? '',
-    updatedAt: updatedAt?.toISOString() ?? '',
+    createdAt: createdAt.toISOString(),
+    updatedAt: updatedAt.toISOString(),
   };
 }
