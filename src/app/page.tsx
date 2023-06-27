@@ -9,7 +9,7 @@ export default async function Home() {
   console.log('feed recipes', recipes);
   return (
     <div className="flex items-center flex-col justify-center">
-      <Logo className="pb-6 md:pb-6 py-6" />
+      <Logo className="pb-6 md:pb-6 py-6 cursor-default" />
       <ChatInputHome />
       <Categories />
       <Feed />

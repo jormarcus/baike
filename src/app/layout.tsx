@@ -25,7 +25,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className="dark">
       <Providers>
-        <body className={`${font.className} dark:bg-gray-800`}>
+        <body
+          className={`${font.className} antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900`}
+        >
           <div className="overflow-hidden w-[100vw] min-h-[100vh] flex">
             <LoginModal />
             <RegisterModal />
