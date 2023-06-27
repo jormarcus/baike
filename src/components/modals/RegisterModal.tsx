@@ -51,44 +51,21 @@ const RegisterModal = () => {
   }, [registerModal, loginModal]);
 
   const bodyContent = (
-    <div className="flex flex-col gap-4">
-      <Heading title="Welcome to Baike" subtitle="Create an account!" />
-      <Input
-        id="email"
-        label="Email"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="name"
-        label="Name"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="password"
-        label="Password"
-        type="password"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-    </div>
-  );
-
-  const footerContent = (
-    <div className="mt-3 flex flex-col gap-4">
+    <div className="mt-2 flex flex-col gap-4">
       <hr />
-      <Button variant="outline" onClick={() => signIn('google')}>
+      <Button
+        className="bg-white text-black hover:bg-neutral-300"
+        variant="outline"
+        onClick={() => signIn('google')}
+      >
         <FcGoogle className="mr-2 h-4 w-4" />
         Continue with Google
       </Button>
-      <Button variant="outline" onClick={() => signIn('github')}>
+      <Button
+        className="bg-white text-black hover:bg-neutral-300"
+        variant="outline"
+        onClick={() => signIn('github')}
+      >
         <AiFillGithub className="mr-2 h-4 w-4" />
         Continue with Github
       </Button>
@@ -97,7 +74,7 @@ const RegisterModal = () => {
           mt-4 
           text-center 
           font-light 
-          text-neutral-500
+          text-muted-foreground
         "
       >
         <p className="flex flex-row justify-center gap-2">
@@ -106,7 +83,7 @@ const RegisterModal = () => {
             onClick={onToggle}
             className="
               cursor-pointer
-              text-neutral-800 
+              text-white
               hover:underline
             "
           >
@@ -122,11 +99,8 @@ const RegisterModal = () => {
       disabled={isLoading}
       isOpen={registerModal.isOpen}
       title="Register"
-      actionLabel="Continue"
       onClose={registerModal.onClose}
-      onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
-      footer={footerContent}
     />
   );
 };

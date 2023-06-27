@@ -11,6 +11,7 @@ import SidebarItem from './SidebarItem';
 import { Icons } from '../Icons';
 import { Button } from '../ui/Button';
 import { set } from 'date-fns';
+import { signOut } from 'next-auth/react';
 
 interface SidebarProps {
   currentUser?: SafeUser | null;
@@ -57,12 +58,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
 
   const authContent = currentUser ? (
     <div className="pl-3">
-      <Button>Sign out</Button>
+      <Button onClick={() => signOut()}>Sign out</Button>
     </div>
   ) : (
-    <div className="mb-4 pl-4">
-      <Button>Login</Button>
-      <Button>Sign up</Button>
+    <div className="mb-4 pl-3 flex flex-col gap-4">
+      <Button onClick={() => loginModal.onOpen()}>Login</Button>
+      <Button onClick={() => registerModal.onOpen()}>Sign up</Button>
     </div>
   );
 
