@@ -28,8 +28,6 @@ export async function createRecipe(recipe: SafeRecipe) {
     },
   });
 
-  console.log('Created recipe:', newRecipe);
-
   return formatSafeRecipe(newRecipe);
 }
 

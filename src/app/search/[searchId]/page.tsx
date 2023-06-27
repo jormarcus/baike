@@ -40,8 +40,6 @@ const SearchPage = ({}) => {
         updateMessage(emptyMsg.id, (prev) => prev + chunkValue);
       }
 
-      console.log('updated message', messages);
-
       // clean up
       setIsMessageUpdating(false);
     } catch (error) {

@@ -2,7 +2,6 @@ import { addMinutes, formatISO } from 'date-fns';
 
 export function convertToInterval(value: number) {
   const minutesValue = addMinutes(new Date(), value);
-  console.log('minutesValue', minutesValue);
   return formatISO(minutesValue);
 }
 
