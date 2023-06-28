@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 interface SidebarItemProps {
   label: string;
   href: string;
@@ -21,8 +20,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ label, href, isActive }) => {
     gap-3
     relative
     rounded-md
-    hover:bg-gray-600
-    ${isActive ? 'bg-gray-700' : ''}
+    hover:bg-neutral-700
+    ${isActive ? 'bg-neutral-700' : ''}
     `}
       >
         {label}

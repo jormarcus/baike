@@ -21,10 +21,9 @@ const LoginModal = () => {
   }, [loginModal, registerModal]);
 
   const bodyContent = (
-    <div className="mt-3 flex flex-col gap-4">
-      <hr />
+    <div className="max-w-sm mx-auto flex flex-col gap-4">
       <Button
-        className="bg-white text-black hover:bg-neutral-500"
+        className="dark:bg-neutral-700 dark:text-white dark:hover:text-neutral-400"
         variant="outline"
         onClick={() => signIn('google')}
       >
@@ -32,7 +31,7 @@ const LoginModal = () => {
         Continue with Google
       </Button>
       <Button
-        className="bg-white text-black hover:bg-neutral-500"
+        className="dark:bg-neutral-700 dark:text-white dark:hover:text-neutral-400"
         variant="outline"
         onClick={() => signIn('github')}
       >
@@ -40,7 +39,7 @@ const LoginModal = () => {
         Continue with Github
       </Button>
       <div className="mt-4 text-center font-light">
-        <p className="flex gap-2 justify-center text-muted-foreground">
+        <p className="flex gap-2 justify-center dark:text-neutral-400">
           First time using Baike?
           <span
             onClick={onToggle}

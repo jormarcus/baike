@@ -32,7 +32,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
 
   return (
     <div className={cn('relative w-full max-w-2xl', className)}>
-      <form className="relative" onSubmit={onSubmit}>
+      <form className="relative mx-4 flex" onSubmit={onSubmit}>
         <TextareaAutosize
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -46,27 +46,29 @@ const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
           disabled={isLoading}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Find your next recipe..."
-          className="w-full
+          className="
+          grow
           min-w-0
-          border-gray-600 rounded-md
+          border-neutral-600 rounded-md
           py-3 px-4 shadow-md hover:shadow-lg
           resize-none 
           bg-transparent placeholder:text-muted-foreground focus-visible:outline-none
-          focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-          disabled:cursor-not-allowed disabled:opacity-50"
+          focus-visible:ring-2 focus-visible:ring-ring 
+          disabled:cursor-not-allowed disabled:opacity-50
+          focus:ring-neutral-500 focus:border-neutral-500"
         />
         <Button
           type="submit"
           onClick={(e) => onSubmit(e)}
-          className={`absolute bg-transparent hover:bg-transparent bottom-3 right-0 text-gray-600
+          className={`absolute bottom-0 right-0 text-neutral-500 bg-transparent hover:bg-transparent m-2 h-8 px-2
           ${
             isEmpty
               ? 'cursor-default'
-              : 'bg-green-400 text-white hover:bg-green-400'
+              : 'bg-amber-500 text-white hover:bg-amber-500'
           }
           `}
         >
-          <Icons.arrowRightCircle className="h-1 w-1" />
+          <Icons.arrowRightCircle className="h-5 w-5" />
         </Button>
       </form>
     </div>

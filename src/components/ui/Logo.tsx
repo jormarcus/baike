@@ -12,7 +12,7 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
     <Link href="/">
       <h2
         className={cn(
-          'text-lg text-rose-500 font-bold cursor-pointer',
+          'text-lg text-amber-500 font-bold cursor-pointer',
           className
         )}
       >

@@ -57,18 +57,33 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   }, []);
 
   const authContent = currentUser ? (
-    <div className="pl-3">
-      <Button onClick={() => signOut()}>Sign out</Button>
+    <div className="px-0.5 w-full">
+      <Button
+        className="dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600 w-full"
+        onClick={() => signOut()}
+      >
+        Sign out
+      </Button>
     </div>
   ) : (
-    <div className="mb-4 pl-3 flex flex-col gap-4">
-      <Button onClick={() => loginModal.onOpen()}>Login</Button>
-      <Button onClick={() => registerModal.onOpen()}>Sign up</Button>
+    <div className="px-0.5 m-px flex flex-col gap-4">
+      <Button
+        className="dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
+        onClick={() => loginModal.onOpen()}
+      >
+        Login
+      </Button>
+      <Button
+        className="bg-amber-500 text-neutral-100 hover:bg-amber-600 hover:text-white"
+        onClick={() => registerModal.onOpen()}
+      >
+        Sign up
+      </Button>
     </div>
   );
 
   return (
-    <div className="px-2 hidden md:block flex-none w-64 border border-gray-600 bg-transparent">
+    <div className="px-2 hidden md:block flex-none w-64 border border-neutral-600 bg-transparent">
       <div className="pt-4 sticky flex flex-col h-screen w-full">
         <div>
           <div className="pl-4 mb-6 block flex-shrink-0">
@@ -77,12 +92,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
           <div className="mb-0.5 flex flex-row gap-2">
             <Link
               href="/"
-              className="p-3 flex items-center gap-3 border border-gray-600 rounded-md cursor-pointer hover:border-white transition duration-200 h-11 flex-shrink-0 flex-grow"
+              className="p-3 flex items-center gap-3 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition duration-200 h-11 flex-shrink-0 flex-grow"
             >
               <Icons.plus className="h-4 w-4" />
               <div className="text-sm font-semibold">New thread</div>
             </Link>
-            <div className="p-3 flex items-center justify-center gap-3 border border-gray-600 rounded-md cursor-pointer hover:border-white transition duration-200 h-11 w-11 flex-shrink-0 flex-grow-0">
+            <div className="p-3 flex items-center justify-center gap-3 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition duration-200 h-11 w-11 flex-shrink-0 flex-grow-0">
               <Icons.sidebar className="h-4 w-4" />
             </div>
           </div>

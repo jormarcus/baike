@@ -43,8 +43,8 @@ const Input: React.FC<InputProps> = ({
         className={`
           peer w-full rounded-md border-2 bg-white p-4 pt-6 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70
           ${formatPrice ? 'pl-9' : 'pl-4'}
-          ${errors[id] ? 'border-rose-500' : 'border-neutral-300'}
-          ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}
+          ${errors[id] ? 'border-red-500' : 'border-neutral-300'}
+          ${errors[id] ? 'focus:border-red-500' : 'focus:border-black'}
         `}
       />
       <label
