@@ -1,25 +1,25 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useContext, useMemo } from 'react';
+import { useCallback, useContext } from 'react';
 
 import ChatInput from './ChatInput';
 import { MessagesContext } from '@/context/MessagesContext';
-import { createEmptyMessage } from '@/helpers/messages-helper';
+import { createSafeMessage } from '@/helpers/messages-helper';
+import { createChat } from '@/services/chat-services';
 
 const ChatInputHome: React.FC = () => {
   const router = useRouter();
   const { addMessage } = useContext(MessagesContext);
 
-  const emptyMsg = useMemo(() => createEmptyMessage(), []);
+  const handleSubmit = useCallback(async (inputValue: string) => {
+    const chat = await createChat();
+    const message = createSafeMessage(inputValue, chat.id, true);
 
-  const handleSubmit = (e: any = null) => {
-    e?.preventDefault();
-    emptyMsg.text = e.target.value;
-    emptyMsg.isUserMessage = true;
-    addMessage(emptyMsg);
-    router.push(`/search/${emptyMsg.id}`);
-  };
+    addMessage(message);
+    router.push(`/search/${encodeURIComponent(chat.id)}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <ChatInput handleSubmit={handleSubmit} />;
 };

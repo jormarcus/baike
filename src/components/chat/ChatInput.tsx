@@ -9,7 +9,7 @@ import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
 
 interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
-  handleSubmit: (e: any) => void;
+  handleSubmit: (e: any) => Promise<void>;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
@@ -22,17 +22,16 @@ const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      handleSubmit(e);
+      await handleSubmit(e.target.value);
+      setInput('');
     } catch (error) {
       console.log(error);
-    } finally {
-      setInput('');
     }
   };
 
   return (
     <div className={cn('relative w-full max-w-2xl', className)}>
-      <form className="relative mx-4 flex" onSubmit={onSubmit}>
+      <form className="relative mx-4 flex" onSubmit={handleSubmit}>
         <TextareaAutosize
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -49,6 +48,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
           className="
           grow
           min-w-0
+          text-neutral-200
           border-neutral-600 rounded-md
           py-3 px-4 shadow-md hover:shadow-lg
           resize-none 
@@ -64,7 +64,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
           ${
             isEmpty
               ? 'cursor-default'
-              : 'bg-amber-500 text-white hover:bg-amber-500'
+              : 'bg-amber-500 text-neutral-200 hover:bg-amber-500'
           }
           `}
         >
