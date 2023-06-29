@@ -18,9 +18,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
     `}
     >
       <div>
-        <p>
-          <MarkdownLite text={message.text} />
-        </p>
+        <MarkdownLite text={message.text} />
       </div>
     </div>
   );
