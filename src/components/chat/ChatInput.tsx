@@ -1,12 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
-import { HTMLAttributes } from 'react';
+import { useRef, useState, HTMLAttributes } from 'react';
 
 import { Button } from '../ui/Button';
 import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
+import Textarea from '../inputs/Textarea';
 
 interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
   handleSubmit: (e: any) => Promise<void>;
@@ -32,14 +31,13 @@ const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
   return (
     <div className={cn('relative w-full max-w-2xl', className)}>
       <form className="relative mx-4 flex" onSubmit={handleSubmit}>
-        <TextareaAutosize
+        <Textarea
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               onSubmit(e);
             }
           }}
           rows={2}
-          maxRows={4}
           value={input}
           autoFocus
           disabled={isLoading}
