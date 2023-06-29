@@ -24,20 +24,22 @@ export default async function RootLayout({
   const currentUser = await getCurrentUser();
   return (
     <html lang="en" className="dark">
-      <Providers>
-        <body
-          className={`${font.className} antialiased text-neutral-500 dark:text-neutral-400 bg-white dark:bg-neutral-800`}
-        >
-          <div className="overflow-hidden w-[100vw] min-h-[100vh] flex">
-            <LoginModal />
-            <RegisterModal />
-            <Sidebar currentUser={currentUser} />
-            <div className="flex w-full h-full overflow-hidden flex-col">
-              {children}
+      <body>
+        <Providers>
+          <div
+            className={`${font.className} antialiased text-neutral-500 dark:text-neutral-400 bg-white dark:bg-neutral-800`}
+          >
+            <div className="overflow-hidden w-[100vw] min-h-[100vh] flex">
+              <LoginModal />
+              <RegisterModal />
+              <Sidebar currentUser={currentUser} />
+              <div className="flex w-full h-full overflow-hidden flex-col">
+                {children}
+              </div>
             </div>
           </div>
-        </body>
-      </Providers>
+        </Providers>
+      </body>
     </html>
   );
 }
