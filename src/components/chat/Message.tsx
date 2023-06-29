@@ -7,7 +7,6 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ message }) => {
-  console.log('message', message);
   return (
     <div
       className={`flex items-center justify-between w-full px-4 py-2 dark:text-neutral-200

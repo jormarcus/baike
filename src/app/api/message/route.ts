@@ -1,48 +1,12 @@
-import {
-  Message,
-  MessageArraySchema,
-} from '@/lib/validators/message-validator';
-import {
-  ChatGPTMessage,
-  OpenAIStream,
-  OpenAIStreamPayload,
-} from '@/lib/openai-stream';
-import { recipePrompt } from '@/helpers/prompts/recipePrompt';
-import { formatDBMessage } from '@/helpers/messages-helper';
+import { MessageArraySchema } from '@/lib/validators/message-validator';
+import { OpenAIStream } from '@/lib/openai-stream';
+import { Message } from '@prisma/client';
+import { formatMessageDTO } from '@/helpers/format-dto';
 
 export async function POST(req: Request) {
-  const request = await req.json();
-  const messages = request.messages;
-
-  const dbMessages: Message[] = messages.map(formatDBMessage);
-
-  const parsedMessages = MessageArraySchema.parse(dbMessages);
-
-  const outboundMessages: ChatGPTMessage[] = parsedMessages.map((message) => {
-    return {
-      role: message.isUserMessage ? 'user' : 'system',
-      content: message.text,
-    };
-  });
-
-  outboundMessages.unshift({
-    role: 'system',
-    content: recipePrompt,
-  });
-
-  const payload: OpenAIStreamPayload = {
-    model: 'gpt-3.5-turbo',
-    messages: outboundMessages,
-    temperature: 0.4,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-    max_tokens: 150,
-    stream: true,
-    n: 1,
-  };
-
-  const stream = await OpenAIStream(payload);
-
+  const { messages } = await req.json();
+  const formattedMessages = messages.map(formatMessageDTO);
+  const parsedMessages: Message[] = MessageArraySchema.parse(formattedMessages);
+  const stream = await OpenAIStream(parsedMessages);
   return new Response(stream);
 }

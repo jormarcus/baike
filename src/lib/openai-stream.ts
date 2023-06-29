@@ -3,6 +3,8 @@ import {
   ParsedEvent,
   ReconnectInterval,
 } from 'eventsource-parser';
+import { Message } from './validators/message-validator';
+import { recipePrompt } from '@/helpers/prompts/recipePrompt';
 
 export type ChatGPTAgent = 'user' | 'system';
 
@@ -23,11 +25,35 @@ export interface OpenAIStreamPayload {
   n: number;
 }
 
-export async function OpenAIStream(payload: OpenAIStreamPayload) {
+export async function OpenAIStream(parsedMessages: Message[]) {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
   let counter = 0;
+
+  const outboundMessages: ChatGPTMessage[] = parsedMessages.map((message) => {
+    return {
+      role: message.isUserMessage ? 'user' : 'system',
+      content: message.text,
+    };
+  });
+
+  outboundMessages.unshift({
+    role: 'system',
+    content: recipePrompt,
+  });
+
+  const payload: OpenAIStreamPayload = {
+    model: 'gpt-3.5-turbo',
+    messages: outboundMessages,
+    temperature: 0.4,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+    max_tokens: 150,
+    stream: true,
+    n: 1,
+  };
 
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     headers: {

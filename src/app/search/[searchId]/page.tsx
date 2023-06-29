@@ -1,18 +1,23 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
 import ChatMessages from '@/components/chat/ChatMessages';
 import { MessagesContext } from '@/context/MessagesContext';
-import { createEmptyMessage } from '@/helpers/messages-helper';
-import { sendMessage } from '@/app/_actions/message-actions';
+import { sendMessage } from '@/services/message-services';
 import ChatInput from '@/components/chat/ChatInput';
 import { SafeMessage } from '@/types';
+import {
+  createEmptyMessage,
+  createSafeMessage,
+} from '@/helpers/messages-helper';
 
 const SearchPage = ({}) => {
-  const params = usePathname();
+  const path = usePathname();
+  const chatIdEncoded = path.split('/').pop();
+  const chatId = chatIdEncoded ? decodeURIComponent(chatIdEncoded) : '';
 
   const {
     messages,
@@ -48,43 +53,29 @@ const SearchPage = ({}) => {
     }
   };
 
-  const streamMessage = async () => {
+  const handleSendMessage = useCallback(async () => {
     const emptyResponseMsg = createEmptyMessage();
-    try {
-      const stream = await sendMessage(messages);
+    console.log('messages', messages);
+    const stream = await sendMessage(messages);
+    if (!stream) throw new Error('Something went wrong.');
+    addMessage(emptyResponseMsg);
+    decodeMessage(stream, emptyResponseMsg);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages]);
 
-      if (!stream) throw new Error('Something went wrong.');
-      addMessage(emptyResponseMsg);
-      decodeMessage(stream, emptyResponseMsg);
-    } catch (error) {
-      console.error(error);
-      toast.error('Something went wrong. Please try again.');
-      removeMessage(emptyResponseMsg.id);
-      // textareaRef.current?.focus();
-    }
-  };
+  const handleSubmit = useCallback(
+    async (inputValue: string) => {
+      const msg = createSafeMessage(inputValue, chatId, true);
+      addMessage(msg);
+    },
+    [addMessage, chatId]
+  );
 
   useEffect(() => {
-    streamMessage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handleSubmit = (e: any = null) => {
-    e?.preventDefault();
-    const inputValue = e.target.value;
-    const emptyMsg = createEmptyMessage();
-    emptyMsg.text = inputValue;
-    emptyMsg.isUserMessage = true;
-    addMessage(emptyMsg);
-
-    try {
-      streamMessage();
-    } catch (error) {
-      toast.error('Something went wrong. Please try again.');
-      removeMessage(emptyMsg.id);
-      // textareaRef.current?.focus();
+    if (messages.length > 0 && messages[messages.length - 1]?.isUserMessage) {
+      handleSendMessage();
     }
-  };
+  }, [messages, handleSendMessage]);
 
   return (
     <div className="flex flex-col justify-between h-[100vh] w-full items-center">
