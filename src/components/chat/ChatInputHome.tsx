@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCallback, useContext } from 'react';
+import { startTransition, useCallback, useContext } from 'react';
 import { nanoid } from 'nanoid';
 
 import ChatInput from './ChatInput';
@@ -17,7 +17,9 @@ const ChatInputHome: React.FC = () => {
     const message = createSafeMessage(inputValue, chatId, true);
     // add message to state
     addMessage(message);
-    router.push(`/search/${encodeURIComponent(chatId)}`);
+    startTransition(() => {
+      router.push(`/search/${encodeURIComponent(chatId)}`);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
