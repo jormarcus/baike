@@ -34,3 +34,11 @@ export type SafeChat = Omit<Chat, 'createdAt' | 'updatedAt' | 'userId'> & {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Role = 'function' | 'user' | 'system' | 'assistant';
+
+export type ChatGPTMessage = {
+  id: string;
+  role: Role;
+  content: string;
+};

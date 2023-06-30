@@ -15,12 +15,9 @@ export async function getMessages(chatId: string, startIndex: number) {
   return messages.map((message) => formatSafeMessage(message));
 }
 
-export async function createMessage(message: Message, chatId: string) {
+export async function createMessage(message: Message) {
   const newMessage: Message = await prisma.message.create({
-    data: {
-      ...message,
-      chatId,
-    },
+    data: message,
   });
 
   return formatSafeMessage(newMessage);

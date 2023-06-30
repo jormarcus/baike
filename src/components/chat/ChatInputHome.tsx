@@ -2,22 +2,22 @@
 
 import { useRouter } from 'next/navigation';
 import { useCallback, useContext } from 'react';
+import { nanoid } from 'nanoid';
 
 import ChatInput from './ChatInput';
 import { MessagesContext } from '@/context/MessagesContext';
 import { createSafeMessage } from '@/helpers/messages-helper';
-import { createChat } from '@/services/chat-services';
 
 const ChatInputHome: React.FC = () => {
   const router = useRouter();
   const { addMessage } = useContext(MessagesContext);
 
   const handleSubmit = useCallback(async (inputValue: string) => {
-    const chat = await createChat();
-    const message = createSafeMessage(inputValue, chat.id, true);
-
+    const chatId: string = nanoid();
+    const message = createSafeMessage(inputValue, chatId, true);
+    // add message to state
     addMessage(message);
-    router.push(`/search/${encodeURIComponent(chat.id)}`);
+    router.push(`/search/${encodeURIComponent(chatId)}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
