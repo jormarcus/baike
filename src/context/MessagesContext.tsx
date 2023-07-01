@@ -4,6 +4,7 @@ import { SafeMessage } from '@/types';
 
 export const MessagesContext = createContext<{
   messages: SafeMessage[];
+  setMessages: (messages: SafeMessage[]) => void;
   isMessageUpdating: boolean;
   addMessage: (message: SafeMessage) => void;
   removeMessage: (id: string) => void;
@@ -11,6 +12,7 @@ export const MessagesContext = createContext<{
   setIsMessageUpdating: (isUpdating: boolean) => void;
 }>({
   messages: [],
+  setMessages: () => {},
   isMessageUpdating: false,
   addMessage: () => {},
   removeMessage: () => {},
@@ -48,6 +50,7 @@ export function MessagesProvider({ children }: { children: React.ReactNode }) {
     <MessagesContext.Provider
       value={{
         messages,
+        setMessages,
         isMessageUpdating,
         addMessage,
         removeMessage,
