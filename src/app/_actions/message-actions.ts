@@ -1,3 +1,5 @@
+'use server';
+
 import prisma from '@/lib/prismadb';
 import { formatSafeMessage } from '@/helpers/format-dto';
 import { Message } from '@prisma/client';

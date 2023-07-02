@@ -1,5 +1,5 @@
-export async function createChat() {
-  const response = await fetch('/api/chat', {
+export async function createThread() {
+  const response = await fetch('/api/thread', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

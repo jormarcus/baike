@@ -3,7 +3,13 @@
 import { MessagesContext } from '@/context/MessagesContext';
 import { ChatGPTMessage, Role } from '@/types';
 import { useChat } from 'ai/react';
-import { useContext, useEffect } from 'react';
+import {
+  FormEvent,
+  useContext,
+  useEffect,
+  useMemo,
+  useTransition,
+} from 'react';
 
 interface ChatPageProps {
   params: {
@@ -12,9 +18,9 @@ interface ChatPageProps {
 }
 
 const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
-  // const chatIdEncoded = params.searchId;
-  // const chatId = chatIdEncoded ? decodeURIComponent(chatIdEncoded) : '';
-
+  const chatIdEncoded = params.searchId;
+  const chatId = chatIdEncoded ? decodeURIComponent(chatIdEncoded) : '';
+  const [isPending, startTransition] = useTransition();
   const {
     messages,
     input,
@@ -25,15 +31,17 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
   } = useChat();
   const { messages: safeMessages } = useContext(MessagesContext);
 
-  const chatGPTMessages: ChatGPTMessage[] = safeMessages.map((m) => ({
-    id: m.id,
-    content: m.text,
-    role: m.isUserMessage ? ('user' as Role) : ('system' as Role),
-  }));
+  const chatGPTMessages: ChatGPTMessage[] = useMemo(() => {
+    return safeMessages.map((m) => ({
+      id: m.id,
+      content: m.text,
+      role: m.isUserMessage ? ('user' as Role) : ('system' as Role),
+    }));
+  }, [safeMessages]);
 
   useEffect(() => {
     setMessages(chatGPTMessages);
-    reload();
+    reload({ options: { body: { chatId } } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -48,7 +56,11 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
           ))
         : null}
 
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(e: FormEvent<HTMLFormElement>) =>
+          handleSubmit(e, { options: { body: { chatId } } })
+        }
+      >
         <input
           className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl"
           value={input}

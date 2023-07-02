@@ -1,5 +1,9 @@
+import { createMessage } from '@/app/_actions/message-actions';
 import { recipePrompt } from '@/helpers/prompts/recipePrompt';
+import { ChatGPTMessage } from '@/types';
+import { Message } from '@prisma/client';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { nanoid } from 'nanoid';
 import { Configuration, OpenAIApi } from 'openai-edge';
 
 // Create an OpenAI API client (that's edge friendly!)
@@ -8,12 +12,16 @@ const config = new Configuration({
 });
 const openai = new OpenAIApi(config);
 
-// IMPORTANT! Set the runtime to edge
-export const runtime = 'edge';
+// IMPORTANT! Set the runtime to edge (from vercel's instructions)
+// IMPORTANT!!! prisma doesnt work with server actions when runtime is set to edge
+// Error: PrismaClient is unable to be run in the browser.
+// export const runtime = 'edge';
 
 export async function POST(req: Request) {
   // Extract the `messages` from the body of the request
-  const { messages } = await req.json();
+  const data = await req.json();
+  const messages = data.messages;
+  const chatId: string = data.chatId;
 
   messages.unshift({
     role: 'system',
@@ -27,7 +35,43 @@ export async function POST(req: Request) {
     messages,
   });
 
-  const stream = OpenAIStream(response);
+  // Convert the response into a friendly text-stream
+  const stream = OpenAIStream(response, {
+    onStart: async () => {
+      // This callback is called when the stream starts
+      // You can use this to save the prompt to your database
+      const formattedMessages = messages.map((message: ChatGPTMessage) => {
+        return {
+          id: nanoid(),
+          text: message.content,
+          isUserMessage: message.role === 'user',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          chatId,
+        };
+      });
+      await createMessage(formattedMessages[formattedMessages.length - 1]);
+    },
+    onToken: async (token: string) => {
+      // This callback is called for each token in the stream
+      // You can use this to debug the stream or save the tokens to your database
+      // console.log(token);
+    },
+    onCompletion: async (completion: string) => {
+      // This callback is called when the stream completes
+      // You can use this to save the final completion to your database
+      const message: Message = {
+        id: nanoid(),
+        text: completion,
+        isUserMessage: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        chatId,
+      };
+
+      await createMessage(message);
+    },
+  });
 
   // Respond with the stream
   return new StreamingTextResponse(stream);
