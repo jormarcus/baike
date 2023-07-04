@@ -1,74 +1,40 @@
-'use client';
-
+import * as React from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-import { BiDollar } from 'react-icons/bi';
 
-interface InputProps {
+import { cn } from '@/lib/utils';
+
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  label: string;
-  type?: string;
-  disabled?: boolean;
-  formatPrice?: boolean;
   required?: boolean;
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
-  placeholder?: string;
+  errors?: FieldErrors;
+  disabled?: boolean;
 }
 
-const Input: React.FC<InputProps> = ({
-  id,
-  label,
-  type = 'text',
-  disabled,
-  formatPrice,
-  required,
-  register,
-  errors,
-  placeholder,
-}) => {
-  return (
-    <div className="relative w-full">
-      {formatPrice && (
-        <BiDollar
-          size={24}
-          className="absolute left-2 top-6 text-neutral-700"
-        />
-      )}
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  (
+    { className, type, id, required = false, errors, disabled, ...props },
+    ref
+  ) => {
+    return (
       <input
         id={id}
-        disabled={disabled}
-        {...register(id, { required })}
-        placeholder={placeholder}
+        disabled
         type={type}
-        className={`
-          peer w-full rounded-md border-2 bg-white p-4 pt-6 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70
-          ${formatPrice ? 'pl-9' : 'pl-4'}
-          ${errors[id] ? 'border-red-500' : 'border-neutral-300'}
-          ${errors[id] ? 'focus:border-red-500' : 'focus:border-black'}
-        `}
+        className={cn(
+          `flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
+          ${errors && errors[id] ? 'border-red-500' : 'border-neutral-300'}
+          ${
+            errors && errors[id] ? 'focus:border-red-500' : 'focus:border-black'
+          }`,
+          className
+        )}
+        ref={ref}
+        {...props}
       />
-      <label
-        className={`
-          text-md 
-          absolute
-          top-5 
-          z-10 
-          origin-[0] 
-          -translate-y-3 
-          transform 
-          duration-150 
-          ${formatPrice ? 'left-9' : 'left-4'}
-          peer-placeholder-shown:translate-y-0 
-          peer-placeholder-shown:scale-100 
-          peer-focus:-translate-y-4
-          peer-focus:scale-75
-          ${errors[id] ? 'text-rose-500' : 'text-zinc-400'}
-        `}
-      ></label>
+    );
+  }
+);
+Input.displayName = 'Input';
 
-      {label}
-    </div>
-  );
-};
-
-export default Input;
+export { Input };
