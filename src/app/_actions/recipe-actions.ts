@@ -130,3 +130,28 @@ export async function getPopularFeedRecipes() {
 
   return recipes.map((recipe) => formatSafeRecipe(recipe));
 }
+
+export async function importRecipe(url: string): Promise<SafeRecipe> {
+  console.log('importing recipe from url: ', url);
+  // TODO - Replace this with call to flask app
+  return {
+    id: '1',
+    title: 'test',
+    description: 'test',
+    image: null,
+    prepTime: 10,
+    prepTimeStr: '10 minutes',
+    cookTime: 5,
+    cookTimeStr: '5 minutes',
+    servings: 1,
+    isPrivate: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    averageRating: 5,
+    ratingsCount: 1,
+    likesCount: 1,
+    instructions: '',
+    notesCount: 0,
+    reviewsCount: 1,
+  };
+}
