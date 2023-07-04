@@ -1,6 +1,8 @@
 import { getRecipesByUserId } from '../_actions/recipe-actions';
 import { getCurrentUser } from '../_actions/user-actions';
 import EmptyState from '../../components/ui/EmptyState';
+import RecipePageHeader from '@/components/recipes/RecipesPageHeader';
+import RecipeCard from '@/components/recipes/RecipeCard';
 
 interface RecipesPageProps {}
 
@@ -13,8 +15,13 @@ const RecipesPage = async ({}) => {
 
   const recipes = await getRecipesByUserId(currentUser.id, 1, 10);
   return (
-    <div className="mt-16 flex flex-col lg:pl-64">
-      <h1>Recipes Page</h1>
+    <div className="mt-16 flex flex-col justify-center px-12 lg:pl-64">
+      <RecipePageHeader />
+      <div className="grid grid-cols-1 gap-8 pt-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        {recipes.map((recipe) => (
+          <RecipeCard key={recipe.id} recipe={recipe} />
+        ))}
+      </div>
     </div>
   );
 };
