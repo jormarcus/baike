@@ -11,7 +11,7 @@ const RecipePageHeader: React.FC<RecipePageHeaderProps> = () => {
       <div>
         <h2 className="font-bold text-2xl">Recipes</h2>
       </div>
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-3">
         <ImportRecipeModal />
 
         <Button

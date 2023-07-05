@@ -50,7 +50,9 @@ const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Import recipe</Button>
+        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-850">
+          Import recipe
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
