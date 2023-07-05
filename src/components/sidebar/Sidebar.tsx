@@ -92,12 +92,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
           <div className="mb-0.5 flex flex-row gap-2">
             <Link
               href="/"
-              className="p-3 flex items-center gap-3 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition duration-200 h-11 flex-shrink-0 flex-grow"
+              className="p-3 flex items-center gap-3 bg-neutral-950 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition duration-200 h-11 flex-shrink-0 flex-grow"
             >
               <Icons.plus className="h-4 w-4" />
               <div className="text-sm font-semibold">New thread</div>
             </Link>
-            <div className="p-3 flex items-center justify-center gap-3 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition duration-200 h-11 w-11 flex-shrink-0 flex-grow-0">
+            <div className="p-3 flex items-center justify-center gap-3 bg-neutral-950 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition duration-200 h-11 w-11 flex-shrink-0 flex-grow-0">
               <Icons.sidebar className="h-4 w-4" />
             </div>
           </div>

@@ -8,8 +8,8 @@ const RecipeSearch: React.FC<RecipeSearchProps> = ({}) => {
       <Input
         id="recipe-search"
         placeholder="Search your recipes..."
-        className="lg:max-w-sm md:lg:max-w-sm sm:max-w-md"
-      ></Input>
+        className="lg:max-w-sm md:lg:max-w-sm sm:max-w-md bg-neutral-950 dark:placeholder:text-neutral-400 stretch"
+      />
     </div>
   );
 };

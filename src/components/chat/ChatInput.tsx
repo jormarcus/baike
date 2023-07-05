@@ -46,14 +46,15 @@ const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
           className="
           grow
           min-w-0
-          text-neutral-200
+          dark:bg-neutral-950
+          dark:text-neutral-400
           border-neutral-600 rounded-md
+          focus:border-amber-500
           py-3 px-4 shadow-md hover:shadow-lg
           resize-none 
-          bg-transparent placeholder:text-muted-foreground focus-visible:outline-none
-          focus-visible:ring-2 focus-visible:ring-ring 
+          bg-transparent focus-visible:outline-none
           disabled:cursor-not-allowed disabled:opacity-50
-          focus:ring-neutral-500 focus:border-neutral-500"
+          focus:ring-amber-500"
         />
         <Button
           type="submit"

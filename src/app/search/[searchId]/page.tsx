@@ -1,5 +1,6 @@
 'use client';
 
+import { Input } from '@/components/inputs/Input';
 import { MessagesContext } from '@/context/MessagesContext';
 import { ChatGPTMessage, Role } from '@/types';
 import { useChat } from 'ai/react';
@@ -8,6 +9,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useState,
   useTransition,
 } from 'react';
 
@@ -18,9 +20,10 @@ interface ChatPageProps {
 }
 
 const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const chatIdEncoded = params.searchId;
   const chatId = chatIdEncoded ? decodeURIComponent(chatIdEncoded) : '';
-  const [isPending, startTransition] = useTransition();
+
   const {
     messages,
     input,
@@ -40,8 +43,10 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
   }, [safeMessages]);
 
   useEffect(() => {
+    setIsLoading(true);
     setMessages(chatGPTMessages);
     reload({ options: { body: { chatId } } });
+    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,11 +66,14 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
           handleSubmit(e, { options: { body: { chatId } } })
         }
       >
-        <input
-          className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-neutral-600 rounded shadow-xl"
+        <Input
+          id="chat-input"
+          className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-neutral-600 dark:bg-neutral-950
+          dark:text-neutral-400 rounded shadow-xl focus:border-amber-500"
           value={input}
           placeholder="Say something..."
           onChange={handleInputChange}
+          disabled={isLoading}
         />
       </form>
     </div>

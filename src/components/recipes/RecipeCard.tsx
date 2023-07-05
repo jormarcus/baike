@@ -1,11 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { FaHeart, FaMitten, FaStar } from 'react-icons/fa';
+import { FaHeart, FaStar } from 'react-icons/fa';
+import { MdOutlineBakeryDining } from 'react-icons/md';
 import Link from 'next/link';
-import { SafeRecipe } from '@/types';
-
 import { useEffect, useMemo, useState } from 'react';
+
+import { SafeRecipe } from '@/types';
 
 interface RecipeCardProps {
   recipe: SafeRecipe;
@@ -29,7 +30,7 @@ const CardImage: React.FC<{
       />
     ) : (
       <div className="flex items-center justify-center h-4/5">
-        <FaMitten size={size} />
+        <MdOutlineBakeryDining size={size} />
       </div>
     )}
     <div className="absolute right-3 top-3">
@@ -62,17 +63,19 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const iconSize = useMemo(() => {
-    let size = 60;
+    let size = 80;
     if (windowWidth < 768) {
-      size = 100;
+      size = 150;
     } else if (windowWidth < 1024) {
-      size = 60;
+      size = 80;
     }
     return size;
   }, [windowWidth]);
 
   useEffect(() => {
     console.log('useEffect');
+    // TODO: this doesnt work reliably
+    // there are issues with next js and window on refresh
     function handleResize() {
       setWindowWidth(windowWidth);
     }
