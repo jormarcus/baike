@@ -7,7 +7,6 @@ import { MessagesProvider } from '@/context/MessagesContext';
 import { LoginModalProvider } from '@/context/LoginModalContext';
 import { RegisterModalProvider } from '@/context/RegisterModalContext';
 import AuthContext from '@/context/AuthContext';
-import { AddRecipeModalProvider } from '@/context/AddRecipeModal';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -19,9 +18,7 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
       <AuthContext>
         <RegisterModalProvider>
           <LoginModalProvider>
-            <AddRecipeModalProvider>
-              <MessagesProvider>{children}</MessagesProvider>
-            </AddRecipeModalProvider>
+            <MessagesProvider>{children}</MessagesProvider>
           </LoginModalProvider>
         </RegisterModalProvider>
       </AuthContext>
