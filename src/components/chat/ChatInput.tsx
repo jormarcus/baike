@@ -52,9 +52,8 @@ const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
           focus:border-amber-500
           py-3 px-4 shadow-md hover:shadow-lg
           resize-none 
-          bg-transparent focus-visible:outline-none
-          disabled:cursor-not-allowed disabled:opacity-50
-          focus:ring-amber-500"
+          bg-transparent focus:ring-amber-500 focus-visible:ring-amber-500 focus-visible:ring-1 focus-visible:ring-offset-0
+          disabled:cursor-not-allowed disabled:opacity-50"
         />
         <Button
           type="submit"
