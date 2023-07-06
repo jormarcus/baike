@@ -12,7 +12,7 @@ interface RecipeCardProps {
   recipe: SafeRecipe;
 }
 
-const CardImage: React.FC<{
+const CardContent: React.FC<{
   image: string | null;
   title: string;
   size: number;
@@ -42,7 +42,7 @@ const CardImage: React.FC<{
   </div>
 );
 
-const CardBottom: React.FC<{
+const CardFooter: React.FC<{
   title: string;
   averageRating: number;
 }> = ({ title, averageRating }) => (
@@ -87,10 +87,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   return (
     <div className="flex flex-col gap-2 group col-span-1 dark:bg-neutral-950 rounded-lg p-3 shadow-lg shadow-neutral-950/50">
       <Link href={`/recipe/${id}`}>
-        <div>
-          <CardImage image={image} title={title} size={iconSize} />
-          <CardBottom title={title} averageRating={averageRating} />
-        </div>
+        <CardContent image={image} title={title} size={iconSize} />
+        <CardFooter title={title} averageRating={averageRating} />
       </Link>
     </div>
   );
