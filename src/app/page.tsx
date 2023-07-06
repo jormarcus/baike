@@ -6,7 +6,6 @@ import ChatInputHome from '@/components/chat/ChatInputHome';
 
 export default async function Home() {
   const recipes = await getNewFeedRecipes();
-  console.log('feed recipes', recipes);
   return (
     <div className="flex items-center flex-col justify-center">
       <Logo className="pb-6 md:pb-6 py-6 cursor-default" />
