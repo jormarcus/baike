@@ -1,9 +1,20 @@
 'use client';
 
-import { Recipe } from '@prisma/client';
+import { SafeRecipe } from '@/types';
+import Post from './Post';
 
-const Feed: React.FC = () => {
-  return <div>Feed</div>;
+interface FeedProps {
+  recipes: SafeRecipe[];
+}
+
+const Feed: React.FC<FeedProps> = ({ recipes }) => {
+  return (
+    <div className="flex flex-col items-center gap-4 w-full h-full">
+      {recipes.map((recipe) => (
+        <Post key={recipe.id} recipe={recipe} />
+      ))}
+    </div>
+  );
 };
 
 export default Feed;

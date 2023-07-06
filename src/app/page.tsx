@@ -12,7 +12,7 @@ export default async function Home() {
       <Logo className="pb-6 md:pb-6 py-6 cursor-default" />
       <ChatInputHome />
       <Categories />
-      <Feed />
+      <Feed recipes={recipes} />
     </div>
   );
 }
