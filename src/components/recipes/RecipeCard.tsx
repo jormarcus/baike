@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { FaHeart, FaStar } from 'react-icons/fa';
+import { FaRegHeart, FaStar } from 'react-icons/fa';
 import { MdOutlineBakeryDining } from 'react-icons/md';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
@@ -34,7 +34,7 @@ const CardContent: React.FC<{
       </div>
     )}
     <div className="absolute right-3 top-3">
-      <FaHeart
+      <FaRegHeart
         size={20}
         className="hover:fill-red-500 transition duration-200"
       />
