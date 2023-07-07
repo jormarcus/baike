@@ -37,7 +37,7 @@ const PostComments: React.FC<{ postId: string; commentsCount: number }> = ({
         <div className="text-sm text-neutral-400 hover:text-neutral-300 cursor-pointer">{`View all ${commentsCount} comments`}</div>
       )}
       <div>
-        <form onSubmit={handleSubmit}>
+        <form className="relative flex flex-row" onSubmit={handleSubmit}>
           <Input
             id="add-comment"
             className="w-full max-w-[470px] mt-1 border-none p-0 focus:ring-0 focus-visible:ring-0 text-neutral-400"
