@@ -71,7 +71,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
           className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-neutral-600 dark:bg-neutral-950
           dark:text-neutral-400 rounded shadow-xl focus:border-amber-500"
           value={input}
-          placeholder="Say something..."
+          placeholder="Ask follow-up..."
           onChange={handleInputChange}
           disabled={isLoading}
         />
