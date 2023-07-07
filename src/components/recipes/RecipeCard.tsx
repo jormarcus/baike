@@ -4,9 +4,10 @@ import Image from 'next/image';
 import { FaRegHeart, FaStar } from 'react-icons/fa';
 import { MdOutlineBakeryDining } from 'react-icons/md';
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { SafeRecipe } from '@/types';
+import useWindowWidth from '@/hooks/useWindowWidth';
 
 interface RecipeCardProps {
   recipe: SafeRecipe;
@@ -60,29 +61,17 @@ const CardFooter: React.FC<{
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   const { id, title, image, averageRating } = recipe;
   // next js has an error on refresh window is not defined
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const width = useWindowWidth();
 
   const iconSize = useMemo(() => {
     let size = 80;
-    if (windowWidth < 768) {
+    if (width < 768) {
       size = 150;
-    } else if (windowWidth < 1024) {
+    } else if (width < 1024) {
       size = 80;
     }
     return size;
-  }, [windowWidth]);
-
-  useEffect(() => {
-    console.log('useEffect');
-    // TODO: this doesnt work reliably
-    // there are issues with next js and window on refresh
-    function handleResize() {
-      setWindowWidth(windowWidth);
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [windowWidth]);
+  }, [width]);
 
   return (
     <div className="flex flex-col gap-2 group col-span-1 dark:bg-neutral-950 rounded-lg p-3 shadow-lg shadow-neutral-950/50">
