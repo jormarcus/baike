@@ -1,25 +1,15 @@
 'use server';
 
 import prisma from '@/lib/prismadb';
-import { convertToInterval } from '@/helpers/date-time-helper';
 import { SafeRecipe } from '../../types';
 import { formatSafeRecipe } from '@/helpers/format-dto';
-import { isNullOrUndefined } from '@/lib/utils';
 
 export async function createRecipe(recipe: SafeRecipe) {
-  const { prepTime, cookTime, createdAt, updatedAt } = recipe;
-  const prepTimeStr: string = !isNullOrUndefined(prepTime)
-    ? convertToInterval(prepTime)
-    : '';
-  const cookTimeStr: string = !isNullOrUndefined(cookTime)
-    ? convertToInterval(cookTime)
-    : '';
+  const { createdAt, updatedAt } = recipe;
 
   const newRecipe = await prisma.recipe.create({
     data: {
       ...recipe,
-      prepTime: prepTimeStr,
-      cookTime: cookTimeStr,
       isPrivate: recipe.isPrivate || false,
       createdAt: createdAt ? new Date(createdAt) : new Date(),
       updatedAt: updatedAt ? new Date(updatedAt) : new Date(),
@@ -29,7 +19,7 @@ export async function createRecipe(recipe: SafeRecipe) {
   return formatSafeRecipe(newRecipe);
 }
 
-export async function getRecipeById(id: string) {
+export async function getRecipeById(id: number) {
   const recipe = await prisma.recipe.findUnique({
     where: {
       id,
@@ -44,13 +34,13 @@ export async function getRecipeById(id: string) {
 }
 
 export async function getRecipesByUserId(
-  userId: string,
+  userId: number,
   pageNumber: number,
   pageSize: number
 ) {
   const userRecipes = await prisma.userRecipeCollection.findMany({
     where: {
-      userId: userId,
+      userId,
     },
     include: {
       recipe: true,
@@ -63,13 +53,7 @@ export async function getRecipesByUserId(
 }
 
 export async function updateRecipe(recipe: SafeRecipe) {
-  const { prepTime, cookTime, createdAt, updatedAt } = recipe;
-  const prepTimeStr: string = !isNullOrUndefined(prepTime)
-    ? convertToInterval(prepTime)
-    : '';
-  const cookTimeStr: string = !isNullOrUndefined(cookTime)
-    ? convertToInterval(cookTime)
-    : '';
+  const { createdAt, updatedAt } = recipe;
 
   const updatedRecipe = await prisma.recipe.update({
     where: {
@@ -77,8 +61,6 @@ export async function updateRecipe(recipe: SafeRecipe) {
     },
     data: {
       ...recipe,
-      prepTime: prepTimeStr,
-      cookTime: cookTimeStr,
       createdAt: createdAt ? new Date(createdAt) : new Date(),
       updatedAt: updatedAt ? new Date(updatedAt) : new Date(),
     },
@@ -87,7 +69,7 @@ export async function updateRecipe(recipe: SafeRecipe) {
   return formatSafeRecipe(updatedRecipe);
 }
 
-export async function deleteRecipe(id: string) {
+export async function deleteRecipe(id: number) {
   const deletedRecipe = await prisma.recipe.delete({
     where: {
       id,
@@ -135,14 +117,13 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
   console.log('importing recipe from url: ', url);
   // TODO - Replace this with call to flask app
   return {
-    id: '1',
-    title: 'test',
-    description: 'test',
+    id: 1,
+    name: 'test',
     image: null,
-    prepTime: 10,
-    prepTimeStr: '10 minutes',
-    cookTime: 5,
-    cookTimeStr: '5 minutes',
+    prepHours: 10,
+    prepMinutes: 10,
+    cookHours: 5,
+    cookMinutes: 5,
     servings: 1,
     isPrivate: false,
     createdAt: new Date().toISOString(),
@@ -150,8 +131,11 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
     averageRating: 5,
     ratingsCount: 1,
     likesCount: 1,
-    instructions: '',
     notesCount: 0,
+    instructions: [],
+    ingredients: [],
     reviewsCount: 1,
+    authorId: 1,
+    url: '',
   };
 }

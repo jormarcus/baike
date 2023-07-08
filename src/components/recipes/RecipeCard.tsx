@@ -15,15 +15,15 @@ interface RecipeCardProps {
 
 const CardContent: React.FC<{
   image: string | null;
-  title: string;
+  name: string;
   size: number;
-}> = ({ image, title, size }) => (
+}> = ({ image, name, size }) => (
   <div className="relative aspect-square w-full overflow-hidden rounded-xl">
     {image ? (
       <Image
         fill
         src={image}
-        alt={title}
+        alt={name}
         width={300}
         height={300}
         decoding="async"
@@ -44,12 +44,12 @@ const CardContent: React.FC<{
 );
 
 const CardFooter: React.FC<{
-  title: string;
+  name: string;
   averageRating: number;
-}> = ({ title, averageRating }) => (
+}> = ({ name, averageRating }) => (
   <div className="flex flex-col">
     <div className="flex flex-row justify-between items-center gap-3">
-      <div className="text-md font-semibold truncate">{title}</div>
+      <div className="text-md font-semibold truncate">{name}</div>
       <div className="flex flex-row gap-2 items-center">
         <FaStar size={14} />
         <div className="text-md font-semibold">{averageRating}</div>
@@ -59,7 +59,7 @@ const CardFooter: React.FC<{
 );
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
-  const { id, title, image, averageRating } = recipe;
+  const { id, name, image, averageRating } = recipe;
   // next js has an error on refresh window is not defined
   const width = useWindowWidth();
 
@@ -76,8 +76,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   return (
     <div className="flex flex-col gap-2 group col-span-1 dark:bg-neutral-950 rounded-lg p-3 shadow-lg shadow-neutral-950/50">
       <Link href={`/recipe/${id}`}>
-        <CardContent image={image} title={title} size={iconSize} />
-        <CardFooter title={title} averageRating={averageRating} />
+        <CardContent image={image} name={name} size={iconSize} />
+        <CardFooter name={name} averageRating={averageRating} />
       </Link>
     </div>
   );

@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String  @map("user_id")
+  id                Int     @id @default(autoincrement())
+  userId            Int     @map("user_id")
   type              String
   provider          String
   providerAccountId String  @map("provider_account_id")
@@ -31,9 +31,9 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           Int      @id @default(autoincrement())
   sessionToken String   @unique @map("session_token")
-  userId       String   @map("user_id")
+  userId       Int      @map("user_id")
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -41,7 +41,7 @@ model Session {
 }
 
 model User {
-  id                   String                 @id @default(cuid())
+  id                   Int                    @id @default(autoincrement())
   name                 String?
   email                String?                @unique
   emailVerified        DateTime?              @map("email_verified")
@@ -73,13 +73,16 @@ model VerificationToken {
 }
 
 model Recipe {
-  id                   String                 @id @default(cuid())
-  authorId             String                 @map("user_id")
-  title                String
-  description          String?
-  instructions         String?
-  prepTime             DateTime?
-  cookTime             DateTime?
+  id                   Int                    @id @default(autoincrement())
+  authorId             Int                    @map("user_id")
+  name                 String
+  url                  String?
+  ingredients          String[]
+  instructions         String[]
+  prepHours            Int?
+  prepMinutes          Int?
+  cookHours            Int?
+  cookMinutes          Int?
   servings             Int?
   image                String?
   createdAt            DateTime               @default(now())
@@ -95,10 +98,26 @@ model Recipe {
   reviews              Review[]
   reviewsCount         Int                    @default(0)
   userRecipeCollection UserRecipeCollection[]
+  RecipeIngredients    RecipeIngredients[]
+}
+
+model Ingredient {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  description       String?
+  RecipeIngredients RecipeIngredients[]
+}
+
+model RecipeIngredients {
+  id           Int        @id @default(autoincrement())
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipeId     Int        @map("recipe_id")
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId Int        @map("ingredient_id")
 }
 
 model Collection {
-  id                   String                 @id @default(cuid())
+  id                   Int                    @id @default(autoincrement())
   userId               String                 @map("user_id")
   name                 String
   createdAt            DateTime               @default(now())
@@ -110,10 +129,10 @@ model Collection {
 }
 
 model UserRecipeCollection {
-  id           String     @id @default(cuid())
-  userId       String     @map("user_id")
-  recipeId     String     @map("recipe_id")
-  collectionId String     @map("collection_id")
+  id           Int        @id @default(autoincrement())
+  userId       Int        @map("user_id")
+  recipeId     Int        @map("recipe_id")
+  collectionId Int        @map("collection_id")
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   user         User       @relation(fields: [userId], references: [id])
@@ -125,11 +144,11 @@ model UserRecipeCollection {
 }
 
 model Like {
-  id           String     @id @default(cuid())
-  userId       String     @map("user_id")
-  recipeId     String     @map("recipe_id")
-  reviewId     String     @map("review_id")
-  collectionId String     @map("collection_id")
+  id           Int        @id @default(autoincrement())
+  userId       Int        @map("user_id")
+  recipeId     Int        @map("recipe_id")
+  reviewId     Int        @map("review_id")
+  collectionId Int        @map("collection_id")
   user         User       @relation(fields: [userId], references: [id])
   recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   review       Review     @relation(fields: [reviewId], references: [id], onDelete: Cascade)
@@ -137,18 +156,18 @@ model Like {
 }
 
 model Rating {
-  id       String @id @default(cuid())
-  userId   String @map("user_id")
-  recipeId String @map("recipe_id")
+  id       Int    @id @default(autoincrement())
+  userId   Int    @map("user_id")
+  recipeId Int    @map("recipe_id")
   rating   Int
   user     User   @relation(fields: [userId], references: [id])
   recipe   Recipe @relation(fields: [recipeId], references: [id])
 }
 
 model Note {
-  id       String     @id @default(cuid())
-  userId   String     @map("user_id")
-  recipeId String     @map("recipe_id")
+  id       Int        @id @default(autoincrement())
+  userId   Int        @map("user_id")
+  recipeId Int        @map("recipe_id")
   note     String
   user     User       @relation(fields: [userId], references: [id])
   recipe   Recipe     @relation(fields: [recipeId], references: [id])
@@ -156,9 +175,9 @@ model Note {
 }
 
 model Review {
-  id         String       @id @default(cuid())
-  userId     String       @map("user_id")
-  recipeId   String       @map("recipe_id")
+  id         Int          @id @default(autoincrement())
+  userId     Int          @map("user_id")
+  recipeId   Int          @map("recipe_id")
   review     String
   User       User         @relation(fields: [userId], references: [id])
   recipe     Recipe       @relation(fields: [recipeId], references: [id])
@@ -168,37 +187,37 @@ model Review {
 }
 
 model ReviewLike {
-  id       String @id @default(cuid())
-  userId   String @map("user_id")
-  reviewId String @map("review_id")
+  id       Int    @id @default(autoincrement())
+  userId   Int    @map("user_id")
+  reviewId Int    @map("review_id")
   user     User   @relation(fields: [userId], references: [id])
   review   Review @relation(fields: [reviewId], references: [id])
 }
 
 model NoteLike {
-  id     String @id @default(cuid())
-  userId String @map("user_id")
-  noteId String @map("note_id")
-  user   User   @relation(fields: [userId], references: [id])
-  note   Note   @relation(fields: [noteId], references: [id])
+  id     Int  @id @default(autoincrement())
+  userId Int  @map("user_id")
+  noteId Int  @map("note_id")
+  user   User @relation(fields: [userId], references: [id])
+  note   Note @relation(fields: [noteId], references: [id])
 }
 
 model Chat {
-  id        String    @id @default(cuid())
+  id        Int       @id @default(autoincrement())
   title     String
-  userId    String?   @map("user_id")
+  userId    Int       @map("user_id")
   messages  Message[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  user      User?     @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
 }
 
 model Message {
-  id            String   @id @default(cuid())
+  id            Int      @id @default(autoincrement())
   isUserMessage Boolean
   text          String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  chatId        String   @map("chat_id")
+  chatId        Int      @map("chat_id")
   chat          Chat     @relation(fields: [chatId], references: [id])
 }
