@@ -3,13 +3,14 @@ import { z } from 'zod';
 export const RecipeSchema = z.object({
   name: z.string(),
   url: z.string(),
-  // instructions: z.array(z.string()),
-  // ingredients: z.array(z.string()),
-  // prepHours: z.number(),
-  // prepMinutes: z.number(),
-  // cookHours: z.number(),
-  // cookMinutes: z.number(),
-  // servings: z.number(),
+  servings: z.string(),
+  instructions: z.array(z.string()),
+  ingredients: z.array(z.string()),
+  prepHours: z.string(),
+  prepMinutes: z.string(),
+  cookHours: z.string(),
+  cookMinutes: z.string(),
+  notes: z.string(),
   // image: z.string(),
 });
 
