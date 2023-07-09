@@ -68,16 +68,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
         href: '/threads',
       },
       {
-        label: 'Tags',
-        href: '/tags',
-      },
-      {
-        label: 'Ingredients',
-        href: '/ingredients',
-      },
-      {
-        label: 'Shopping List',
-        href: '/shopping-list',
+        label: 'Collections',
+        href: '/collections',
       },
       {
         label: 'Profile',
