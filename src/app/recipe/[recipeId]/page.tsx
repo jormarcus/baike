@@ -11,7 +11,7 @@ interface RecipePageProps {
 export default async function RecipePage({
   params: { recipeId },
 }: RecipePageProps) {
-  const recipe: SafeRecipe | null = await getRecipeById(recipeId);
+  const recipe: SafeRecipe | null = await getRecipeById(Number(recipeId));
 
   if (!recipe) {
     return <EmptyState title="Recipe not found" />;
@@ -20,7 +20,7 @@ export default async function RecipePage({
   return (
     <div>
       <h1>Recipe Page</h1>
-      <div>{recipe.title}</div>
+      <div>{recipe.name}</div>
     </div>
   );
 }

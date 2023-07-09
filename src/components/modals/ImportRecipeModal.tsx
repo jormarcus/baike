@@ -71,7 +71,6 @@ const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
               className="col-span-3"
               required
               {...register('importUrl', { required: true })}
-              errors={errors}
               disabled={isLoading}
             />
           </div>

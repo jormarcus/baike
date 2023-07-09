@@ -1,24 +1,13 @@
 import { SafeMessage } from '@/types';
 import { nanoid } from 'nanoid';
 
-export function createEmptyMessage(): SafeMessage {
-  return {
-    id: nanoid(),
-    isUserMessage: false,
-    text: '',
-    chatId: '',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
-}
-
-export function createSafeMessage(
+export function createTempMessage(
   text: string,
-  chatId: string,
+  chatId: number,
   isUserMessage: boolean
 ): SafeMessage {
   return {
-    id: nanoid(),
+    id: Math.floor(Math.random() * 1000),
     isUserMessage,
     text,
     chatId,

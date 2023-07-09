@@ -36,7 +36,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
 
   const chatGPTMessages: ChatGPTMessage[] = useMemo(() => {
     return safeMessages.map((m) => ({
-      id: m.id,
+      id: m.id.toString(),
       content: m.text,
       role: m.isUserMessage ? ('user' as Role) : ('system' as Role),
     }));

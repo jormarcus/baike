@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 import ChatInput from './ChatInput';
 import { MessagesContext } from '@/context/MessagesContext';
-import { createSafeMessage } from '@/helpers/messages-helper';
+import { createTempMessage } from '@/helpers/messages-helper';
 import { createThread } from '@/services/thread-services';
 
 const ChatInputHome: React.FC = () => {
@@ -23,7 +23,7 @@ const ChatInputHome: React.FC = () => {
       toast.error('Something went wrong!');
       return;
     }
-    const message = createSafeMessage(inputValue, data.id, true);
+    const message = createTempMessage(inputValue, data.id, true);
     // add message to chat context
     addMessage(message);
 

@@ -1,7 +1,7 @@
 import { createMessage } from '@/app/_actions/message-actions';
 import { recipePrompt } from '@/helpers/prompts/recipePrompt';
 import { ChatGPTMessage } from '@/types';
-import { Message } from '@prisma/client';
+import { Message, MessagePayload } from '@prisma/client';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { nanoid } from 'nanoid';
 import { Configuration, OpenAIApi } from 'openai-edge';
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   // Extract the `messages` from the body of the request
   const data = await req.json();
   const messages = data.messages;
-  const chatId: string = data.chatId;
+  const chatId: number = parseInt(data.chatId);
 
   messages.unshift({
     role: 'system',
@@ -42,7 +42,6 @@ export async function POST(req: Request) {
       // You can use this to save the prompt to your database
       const formattedMessages = messages.map((message: ChatGPTMessage) => {
         return {
-          id: nanoid(),
           text: message.content,
           isUserMessage: message.role === 'user',
           createdAt: new Date(),
@@ -60,8 +59,7 @@ export async function POST(req: Request) {
     onCompletion: async (completion: string) => {
       // This callback is called when the stream completes
       // You can use this to save the final completion to your database
-      const message: Message = {
-        id: nanoid(),
+      const message = {
         text: completion,
         isUserMessage: false,
         createdAt: new Date(),
