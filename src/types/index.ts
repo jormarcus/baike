@@ -11,18 +11,12 @@ export type SafeUser = Omit<
 
 export type SafeRecipe = Omit<
   Recipe,
-  'createdAt' | 'updatedAt' | 'prepTime' | 'cookTime'
+  'id' | 'createdAt' | 'updatedAt' | 'authorId'
 > & {
+  id?: number;
   createdAt?: string | null;
   updatedAt?: string | null;
-  prepTimeStr?: string | null;
-  prepTime?: number | null;
-  cookTimeStr?: string | null;
-  cookTime?: number | null;
-  isPrivate: boolean | null;
-  likesCount: number | null;
-  averageRating: number | null;
-  ratingsCount: number | null;
+  authorId: number;
 };
 
 export type SafeMessage = Omit<Message, 'createdAt' | 'updatedAt'> & {

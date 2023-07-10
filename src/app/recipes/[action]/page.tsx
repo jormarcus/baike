@@ -1,8 +1,10 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
 
 import { Input } from '@/components/inputs/Input';
 import {
@@ -27,6 +29,9 @@ import { Recipe, RecipeSchema } from '@/lib/validators/recipe-validator';
 import { Icons } from '@/components/Icons';
 import { useRange } from '@/hooks/useGenerateRange';
 import Textarea from '@/components/inputs/Textarea';
+import { createRecipe } from '@/app/_actions/recipe-actions';
+import { Switch } from '@/components/ui/Switch';
+import { Button } from '@/components/ui/Button';
 
 interface AddEditRecipePageProps {
   params: {
@@ -39,29 +44,47 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
   const servingsRange = useRange(1, 999);
   const hoursRange = useRange(1, 24);
   const minutesRange = useRange(1, 59);
+  const [isPending, startTransition] = useTransition();
+
+  const session = useSession();
+  console.log('session', session);
 
   const form = useForm<Recipe>({
     resolver: zodResolver(RecipeSchema),
     defaultValues: {
       name: '',
       url: '',
-      servings: '',
+      servings: 0,
+      isPublic: true,
+      prepHours: 0,
+      prepMinutes: 0,
+      cookHours: 0,
+      cookMinutes: 0,
       instructions: [],
       ingredients: [],
-      prepHours: '',
-      prepMinutes: '',
-      cookHours: '',
-      cookMinutes: '',
-      notes: '',
-      // image: '',
+      image: '',
     },
   });
 
-  const onSubmit = (values: Recipe) => {};
+  const onSubmit = (values: Recipe) => {
+    console.log('values', values);
+
+    startTransition(() => {
+      try {
+        createRecipe(values);
+        // router.push('/recipes');
+        // toast.success('Product added successfully.');
+        // form.reset();
+      } catch (error) {
+        console.log('error', error);
+        toast.error('There was an error creating the recipe.');
+      }
+    });
+  };
 
   return (
     <div className="flex justify-center items-center">
-      <div className="mt-16 md:p-12 p-4 w-full max-w-2xl flex flex-col dark:bg-neutral-950 rounded-lg shadow-lg shadow-neutral-950/50">
+      <div className="mt-16 md:p-12 p-4 w-full max-w-3xl flex flex-col dark:bg-neutral-950 rounded-lg shadow-lg shadow-neutral-950/50">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -100,31 +123,32 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                 </FormItem>
               </div>
             </div>
-            <div className="flex flex-row gap-4 grow w-full whitespace-nowrap mt-8">
+            <div className="flex flex-row gap-32 justify-start items-end w-full mt-8">
               <FormField
                 control={form.control}
                 name="servings"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-36">
                     <FormLabel>Servings</FormLabel>
                     <FormControl>
                       <Select
-                        value={field.value}
-                        onValueChange={(value: typeof field.value) =>
-                          field.onChange(value)
+                        value={field.value.toString()}
+                        onValueChange={(value: string) =>
+                          field.onChange(Number(value))
                         }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder={field.value} />
                         </SelectTrigger>
                         <SelectContent>
-                          {/* <SelectGroup> */}
                           {servingsRange.map((option) => (
-                            <SelectItem key={option} value={option}>
+                            <SelectItem
+                              key={option}
+                              value={option === '--' ? '0' : option}
+                            >
                               {option}
                             </SelectItem>
                           ))}
-                          {/* </SelectGroup> */}
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -132,6 +156,8 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                   </FormItem>
                 )}
               />
+            </div>
+            <div className="flex flex-row gap-4 grow w-full whitespace-nowrap mt-8">
               <FormField
                 control={form.control}
                 name="prepHours"
@@ -140,22 +166,23 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                     <FormLabel>Prep hours</FormLabel>
                     <FormControl>
                       <Select
-                        value={field.value}
-                        onValueChange={(value: typeof field.value) =>
-                          field.onChange(value)
+                        value={field.value.toString()}
+                        onValueChange={(value: string) =>
+                          field.onChange(Number(value))
                         }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder={field.value} />
                         </SelectTrigger>
                         <SelectContent>
-                          {/* <SelectGroup> */}
                           {hoursRange.map((option) => (
-                            <SelectItem key={option} value={option}>
+                            <SelectItem
+                              key={option}
+                              value={option === '--' ? '0' : option}
+                            >
                               {option}
                             </SelectItem>
                           ))}
-                          {/* </SelectGroup> */}
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -171,22 +198,23 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                     <FormLabel>Prep Minutes</FormLabel>
                     <FormControl>
                       <Select
-                        value={field.value}
-                        onValueChange={(value: typeof field.value) =>
-                          field.onChange(value)
+                        value={field.value.toString()}
+                        onValueChange={(value: string) =>
+                          field.onChange(Number(value))
                         }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder={field.value} />
                         </SelectTrigger>
                         <SelectContent>
-                          {/* <SelectGroup> */}
                           {minutesRange.map((option) => (
-                            <SelectItem key={option} value={option}>
+                            <SelectItem
+                              key={option}
+                              value={option === '--' ? '0' : option}
+                            >
                               {option}
                             </SelectItem>
                           ))}
-                          {/* </SelectGroup> */}
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -194,6 +222,8 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                   </FormItem>
                 )}
               />
+            </div>
+            <div className="flex flex-row gap-4 grow w-full whitespace-nowrap mt-4">
               <FormField
                 control={form.control}
                 name="cookHours"
@@ -202,22 +232,23 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                     <FormLabel>Cook hours</FormLabel>
                     <FormControl>
                       <Select
-                        value={field.value}
-                        onValueChange={(value: typeof field.value) =>
-                          field.onChange(value)
+                        value={field.value.toString()}
+                        onValueChange={(value: string) =>
+                          field.onChange(Number(value))
                         }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder={field.value} />
                         </SelectTrigger>
                         <SelectContent>
-                          {/* <SelectGroup> */}
                           {hoursRange.map((option) => (
-                            <SelectItem key={option} value={option}>
+                            <SelectItem
+                              key={option}
+                              value={option === '--' ? '0' : option}
+                            >
                               {option}
                             </SelectItem>
                           ))}
-                          {/* </SelectGroup> */}
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -233,22 +264,23 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                     <FormLabel>Cook Minutes</FormLabel>
                     <FormControl>
                       <Select
-                        value={field.value}
-                        onValueChange={(value: typeof field.value) =>
-                          field.onChange(value)
+                        value={field.value.toString()}
+                        onValueChange={(value: string) =>
+                          field.onChange(Number(value))
                         }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder={field.value} />
                         </SelectTrigger>
                         <SelectContent>
-                          {/* <SelectGroup> */}
                           {minutesRange.map((option) => (
-                            <SelectItem key={option} value={option}>
+                            <SelectItem
+                              key={option}
+                              value={option === '--' ? '0' : option}
+                            >
                               {option}
                             </SelectItem>
                           ))}
-                          {/* </SelectGroup> */}
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -279,7 +311,33 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
               </FormItem>
             </div>
             <hr className="text-neutral-500 w-full my-8" />
-            <div className="flex items-center justify-center w-full">
+            <div className="w-full">
+              <FormField
+                control={form.control}
+                name="isPublic"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <FormLabel className="text-base">Public</FormLabel>
+                      <FormDescription>
+                        Allow other users to see your recipe.
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        disabled={isPending}
+                        aria-readonly
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <hr className="text-neutral-500 w-full my-8" />
+
+            {/* <div className="flex items-center justify-center w-full">
               <FormItem className="flex-1">
                 <FormLabel>Notes</FormLabel>
                 <FormControl>
@@ -289,6 +347,23 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                   />
                 </FormControl>
               </FormItem>
+            </div> 
+            <hr className="text-neutral-500 w-full my-8" />*/}
+            <div className="flex items-center justify-end w-full">
+              <Button
+                type="submit"
+                className="w-fit dark:bg-amber-500 dark:text-white font-bold"
+                disabled={isPending}
+              >
+                {isPending && (
+                  <Icons.spinner
+                    className="mr-2 h-4 w-4 animate-spin"
+                    aria-hidden="true"
+                  />
+                )}
+                Add Recipe
+                <span className="sr-only">Add Recipe</span>
+              </Button>
             </div>
           </form>
         </Form>

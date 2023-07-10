@@ -1,18 +1,23 @@
 'use server';
 
 import prisma from '@/lib/prismadb';
-import { SafeRecipe } from '../../types';
-import { formatSafeRecipe } from '@/helpers/format-dto';
 
-export async function createRecipe(recipe: SafeRecipe) {
-  const { createdAt, updatedAt } = recipe;
+import { formatSafeRecipe } from '@/helpers/format-dto';
+import { getCurrentUser } from './user-actions';
+import { Recipe } from '@/lib/validators/recipe-validator';
+import { SafeRecipe } from '@/types';
+
+export async function createRecipe(recipe: Recipe) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    throw new Error('User not found');
+  }
 
   const newRecipe = await prisma.recipe.create({
     data: {
       ...recipe,
-      isPrivate: recipe.isPrivate || false,
-      createdAt: createdAt ? new Date(createdAt) : new Date(),
-      updatedAt: updatedAt ? new Date(updatedAt) : new Date(),
+      authorId: user.id,
     },
   });
 
@@ -54,6 +59,10 @@ export async function getRecipesByUserId(
 
 export async function updateRecipe(recipe: SafeRecipe) {
   const { createdAt, updatedAt } = recipe;
+
+  if (recipe.id === null) {
+    throw new Error('Recipe id cannot be null');
+  }
 
   const updatedRecipe = await prisma.recipe.update({
     where: {
@@ -105,7 +114,7 @@ export async function getPopularFeedRecipes() {
       },
     },
     orderBy: {
-      likesCount: 'desc',
+      // likesCount: 'desc',
     },
     take: 10,
   });
@@ -128,13 +137,13 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
     isPrivate: false,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    averageRating: 5,
-    ratingsCount: 1,
-    likesCount: 1,
-    notesCount: 0,
+    // averageRating: 5,
+    // ratingsCount: 1,
+    // likesCount: 1,
+    // notesCount: 0,
     instructions: [],
     ingredients: [],
-    reviewsCount: 1,
+    // reviewsCount: 1,
     authorId: 1,
     url: '',
   };
