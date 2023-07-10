@@ -1,18 +1,23 @@
 import { z } from 'zod';
 
 export const RecipeSchema = z.object({
-  id: z.string().optional(),
-  name: z.string(),
+  id: z.number().optional(),
+  name: z.string().min(1, {
+    message: 'Must be at least 1 character',
+  }),
   url: z.string(),
-  servings: z.string(),
+  servings: z.number(),
+  isPublic: z.boolean(),
+  prepHours: z.number(),
+  prepMinutes: z.number(),
+  cookHours: z.number(),
+  cookMinutes: z.number(),
   instructions: z.array(z.string()),
   ingredients: z.array(z.string()),
-  prepHours: z.string(),
-  prepMinutes: z.string(),
-  cookHours: z.string(),
-  cookMinutes: z.string(),
-  notes: z.string(),
-  // image: z.string(),
+  // notes: z.array(z.string()),
+  image: z.string(),
+
+  authorId: z.number().optional(),
 });
 
 export type Recipe = z.infer<typeof RecipeSchema>;

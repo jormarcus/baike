@@ -87,16 +87,16 @@ model Recipe {
   image                String?
   createdAt            DateTime               @default(now())
   updatedAt            DateTime               @updatedAt
-  isPrivate            Boolean                @default(false)
-  likes                Like[]
-  likesCount           Int                    @default(0)
-  averageRating        Float                  @default(0)
-  ratings              Rating[]
-  ratingsCount         Int                    @default(0)
-  notes                Note[]
-  notesCount           Int                    @default(0)
-  reviews              Review[]
-  reviewsCount         Int                    @default(0)
+  isPublic             Boolean                @default(true)
+  // likes                Like[]
+  // likesCount           Int?                   @default(0)
+  // averageRating        Float?                 @default(0)
+  // ratings              Rating[]
+  // ratingsCount         Int?                   @default(0)
+  // notes                Note[]
+  // notesCount           Int                    @default(0)
+  // reviews              Review[]
+  // reviewsCount         Int                    @default(0)
   userRecipeCollection UserRecipeCollection[]
   RecipeIngredients    RecipeIngredients[]
 }
@@ -150,18 +150,18 @@ model Like {
   reviewId     Int        @map("review_id")
   collectionId Int        @map("collection_id")
   user         User       @relation(fields: [userId], references: [id])
-  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  // recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   review       Review     @relation(fields: [reviewId], references: [id], onDelete: Cascade)
   collection   Collection @relation(fields: [collectionId], references: [id])
 }
 
 model Rating {
-  id       Int    @id @default(autoincrement())
-  userId   Int    @map("user_id")
-  recipeId Int    @map("recipe_id")
+  id       Int  @id @default(autoincrement())
+  userId   Int  @map("user_id")
+  recipeId Int  @map("recipe_id")
   rating   Int
-  user     User   @relation(fields: [userId], references: [id])
-  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  user     User @relation(fields: [userId], references: [id])
+  // recipe   Recipe @relation(fields: [recipeId], references: [id])
 }
 
 model Note {
@@ -170,7 +170,7 @@ model Note {
   recipeId Int        @map("recipe_id")
   note     String
   user     User       @relation(fields: [userId], references: [id])
-  recipe   Recipe     @relation(fields: [recipeId], references: [id])
+  // recipe   Recipe     @relation(fields: [recipeId], references: [id])
   noteLike NoteLike[]
 }
 
@@ -180,7 +180,7 @@ model Review {
   recipeId   Int          @map("recipe_id")
   review     String
   User       User         @relation(fields: [userId], references: [id])
-  recipe     Recipe       @relation(fields: [recipeId], references: [id])
+  // recipe     Recipe       @relation(fields: [recipeId], references: [id])
   reviewLike ReviewLike[]
   like       Like[]
   likeCount  Int          @default(0)
