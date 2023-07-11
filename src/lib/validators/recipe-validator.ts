@@ -5,6 +5,7 @@ export const RecipeSchema = z.object({
   name: z.string().min(1, {
     message: 'Must be at least 1 character',
   }),
+  imageSrc: z.string(),
   url: z.string(),
   servings: z.number(),
   isPublic: z.boolean(),
@@ -15,7 +16,6 @@ export const RecipeSchema = z.object({
   instructions: z.string(),
   ingredients: z.string(),
   // notes: z.array(z.string()),
-  image: z.string(),
 
   authorId: z.number().optional(),
 });

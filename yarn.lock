@@ -19,6 +19,33 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
+"@cloudinary-util/url-loader@^3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary-util/url-loader/-/url-loader-3.9.0.tgz#c3b7c40f525aba8c58edbdf784addc3c51e3e642"
+  integrity sha512-DJiu+a3Mr2GEyjAo4Gy2KWX0YoXoP0CFp2jvw8+3gJj7wvmIb7mcjRk1yHSGIyJcolb0uR+tWGO6KVhStpreMg==
+  dependencies:
+    "@cloudinary-util/util" "2.1.0"
+    "@cloudinary/url-gen" "^1.10.1"
+
+"@cloudinary-util/util@2.1.0", "@cloudinary-util/util@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary-util/util/-/util-2.1.0.tgz#1f8152b228cdd92e8ccc1fa0200d4eeeb6ef73ae"
+  integrity sha512-PGjVxyhhOP8IaD6uawXzfDnI8ArPqpiLfIXc8TEjhv3CGhDFBAM3dCT3xeAgg+92sQsx/AN74j+qckdWPfoO6w==
+
+"@cloudinary/transformation-builder-sdk@^1.2.7":
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/@cloudinary/transformation-builder-sdk/-/transformation-builder-sdk-1.2.10.tgz#646b605d358b28048e87b415f26cca3553a19e6d"
+  integrity sha512-R2UvWqX/eqHu7JaSk8lwl3wf1aBsmUXsBZf9kURsrGeV2rg1zzLZJuGsBFRWmOO01k/GB9ruTWsODV5oiRIxiA==
+  dependencies:
+    "@cloudinary/url-gen" "^1.7.0"
+
+"@cloudinary/url-gen@^1.10.1", "@cloudinary/url-gen@^1.7.0":
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/@cloudinary/url-gen/-/url-gen-1.10.1.tgz#b5b49e03252a90bba17038024f206328482eac96"
+  integrity sha512-6pBmapnL7G231NbNWhKbi+08HcpNASci7M3OmZWaUCQWUfdmo3au27HT3Zqg9NMsisfyer3t7o0RXzPQ4XlmMg==
+  dependencies:
+    "@cloudinary/transformation-builder-sdk" "^1.2.7"
+
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz#a23514e8fb9af1269d5f7788aa556798d61c6b59"
@@ -2233,6 +2260,15 @@ next-auth@^4.22.1:
     preact "^10.6.3"
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
+
+next-cloudinary@^4.14.1:
+  version "4.14.1"
+  resolved "https://registry.yarnpkg.com/next-cloudinary/-/next-cloudinary-4.14.1.tgz#b5cdda2052b43be4b79233c931a6954e7b6144b0"
+  integrity sha512-hl1PHBs4WZO05DoGmNoX+AD5AtWKVV3BT+Q/72CHIjnUrh7O+szWSKI5Y+nXBoiEfgs/Zk/YTIZGVZtlYjZwMA==
+  dependencies:
+    "@cloudinary-util/url-loader" "^3.9.0"
+    "@cloudinary-util/util" "^2.1.0"
+    "@cloudinary/url-gen" "^1.10.1"
 
 next-themes@^0.2.1:
   version "0.2.1"

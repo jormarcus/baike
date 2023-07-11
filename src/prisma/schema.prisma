@@ -74,8 +74,9 @@ model VerificationToken {
 
 model Recipe {
   id                   Int                    @id @default(autoincrement())
-  authorId             Int                    @map("user_id")
   name                 String
+  imageSrc             String?
+  authorId             Int                    @map("user_id")
   url                  String?
   ingredients          String[]
   instructions         String[]
@@ -84,7 +85,6 @@ model Recipe {
   cookHours            Int?
   cookMinutes          Int?
   servings             Int?
-  image                String?
   createdAt            DateTime               @default(now())
   updatedAt            DateTime               @updatedAt
   isPublic             Boolean                @default(true)

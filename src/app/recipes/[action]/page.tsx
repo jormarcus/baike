@@ -30,6 +30,7 @@ import Textarea from '@/components/inputs/Textarea';
 import { createRecipe } from '@/app/_actions/recipe-actions';
 import { Switch } from '@/components/ui/Switch';
 import { Button } from '@/components/ui/Button';
+import ImageUploader from '@/components/ImageUploader';
 
 interface AddEditRecipePageProps {
   params: {
@@ -56,7 +57,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
       cookMinutes: 0,
       instructions: '',
       ingredients: '',
-      image: '',
+      imageSrc: '',
     },
   });
 
@@ -70,6 +71,10 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
     });
   };
 
+  const imageSrc = form.watch('imageSrc');
+
+  console.log('imageSrc', imageSrc);
+
   return (
     <div className="flex justify-center items-center">
       <div className="mt-16 md:p-12 p-4 w-full max-w-3xl flex flex-col dark:bg-neutral-950 rounded-lg shadow-lg shadow-neutral-950/50">
@@ -79,9 +84,16 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
             className="flex flex-col items-start justify-center"
           >
             <div className="flex flex-row gap-4 grow w-full">
-              <div className="mt-1 flex justify-center items-center dark:bg-neutral-800 rounded-xl aspect-square w-36 h-36 basis-1/4">
-                <Icons.imagePlus className="h-12 w-12" />
-              </div>
+              <FormItem>
+                <FormControl>
+                  <ImageUploader
+                    handleChange={(value) => form.setValue('imageSrc', value)}
+                    value={imageSrc}
+                    {...form.register('imageSrc')}
+                  />
+                </FormControl>
+              </FormItem>
+
               <div className="basis-3/4">
                 <FormItem>
                   <FormLabel>Name</FormLabel>
@@ -111,7 +123,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                 </FormItem>
               </div>
             </div>
-            <div className="flex flex-row gap-32 justify-start items-end w-full mt-8">
+            <div className="flex flex-row gap-4 justify-start items-center w-full mt-8 whitespace-nowrap">
               <FormField
                 control={form.control}
                 name="servings"
@@ -144,13 +156,11 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                   </FormItem>
                 )}
               />
-            </div>
-            <div className="flex flex-row gap-4 grow w-full whitespace-nowrap mt-8">
               <FormField
                 control={form.control}
                 name="prepHours"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-36">
                     <FormLabel>Prep hours</FormLabel>
                     <FormControl>
                       <Select
@@ -182,7 +192,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                 control={form.control}
                 name="prepMinutes"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-36">
                     <FormLabel>Prep Minutes</FormLabel>
                     <FormControl>
                       <Select
@@ -210,13 +220,11 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                   </FormItem>
                 )}
               />
-            </div>
-            <div className="flex flex-row gap-4 grow w-full whitespace-nowrap mt-4">
               <FormField
                 control={form.control}
                 name="cookHours"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-36">
                     <FormLabel>Cook hours</FormLabel>
                     <FormControl>
                       <Select
@@ -248,7 +256,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                 control={form.control}
                 name="cookMinutes"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-36">
                     <FormLabel>Cook Minutes</FormLabel>
                     <FormControl>
                       <Select
@@ -277,7 +285,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                 )}
               />
             </div>
-            <hr className="text-neutral-500 w-full my-8" />
+            <hr className="text-neutral-500 w-full my-6" />
             <div className="flex flex-row gap-24 w-full pr-12">
               <FormItem className="flex-1">
                 <FormLabel>Ingredients</FormLabel>
@@ -298,7 +306,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                 </FormControl>
               </FormItem>
             </div>
-            <hr className="text-neutral-500 w-full my-8" />
+            <hr className="text-neutral-500 w-full my-6" />
             <div className="w-full">
               <FormField
                 control={form.control}
@@ -323,7 +331,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                 )}
               />
             </div>
-            <hr className="text-neutral-500 w-full my-8" />
+            <hr className="text-neutral-500 w-full my-6" />
 
             {/* <div className="flex items-center justify-center w-full">
               <FormItem className="flex-1">

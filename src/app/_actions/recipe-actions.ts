@@ -42,7 +42,7 @@ export async function addRecipe(recipe: FormData) {
       cookMinutes: Number(cookMinutes),
       ingredients: [ingredients],
       instructions: [instructions],
-      image,
+      imageSrc: image,
       authorId: user.id,
     },
   });
@@ -168,7 +168,7 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
   return {
     id: 1,
     name: 'test',
-    image: null,
+    imageSrc: null,
     prepHours: 10,
     prepMinutes: 10,
     cookHours: 5,
