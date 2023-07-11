@@ -56,7 +56,7 @@ export async function createRecipe(recipe: Recipe) {
     throw new Error('User not found');
   }
 
-  await prisma.recipe.create({
+  const newRecipe = await prisma.recipe.create({
     data: {
       ...recipe,
       ingredients: [recipe.ingredients],
@@ -64,7 +64,7 @@ export async function createRecipe(recipe: Recipe) {
       authorId: user.id,
     },
   });
-  revalidatePath('/recipes');
+  revalidatePath(`/recipe/${newRecipe.id}`);
 }
 
 export async function getRecipeById(id: number) {
