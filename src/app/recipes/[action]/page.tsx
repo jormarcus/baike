@@ -3,7 +3,6 @@
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
 
 import { Input } from '@/components/inputs/Input';
@@ -20,7 +19,6 @@ import {
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -40,14 +38,10 @@ interface AddEditRecipePageProps {
 }
 
 const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
-  console.log('params', params);
   const servingsRange = useRange(1, 999);
   const hoursRange = useRange(1, 24);
   const minutesRange = useRange(1, 59);
   const [isPending, startTransition] = useTransition();
-
-  const session = useSession();
-  console.log('session', session);
 
   const form = useForm<Recipe>({
     resolver: zodResolver(RecipeSchema),
@@ -60,25 +54,19 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
       prepMinutes: 0,
       cookHours: 0,
       cookMinutes: 0,
-      instructions: [],
-      ingredients: [],
+      instructions: '',
+      ingredients: '',
       image: '',
     },
   });
 
-  const onSubmit = (values: Recipe) => {
-    console.log('values', values);
-
+  const onSubmit = async (data: Recipe) => {
+    console.log('data', data);
     startTransition(() => {
-      try {
-        createRecipe(values);
-        // router.push('/recipes');
-        // toast.success('Product added successfully.');
-        // form.reset();
-      } catch (error) {
-        console.log('error', error);
-        toast.error('There was an error creating the recipe.');
-      }
+      (async () => {
+        await createRecipe(data);
+        form.reset();
+      })();
     });
   };
 

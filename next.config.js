@@ -3,7 +3,6 @@ const nextConfig = {
   experimental: {
     serverActions: true,
     appDir: true,
-    experimentalReact: true,
   },
   images: {
     domains: [
