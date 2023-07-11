@@ -15,15 +15,25 @@ const RecipesPage = async ({}) => {
   }
 
   const recipes = await getRecipesByUserId(currentUser.id, 1, 10);
+
   return (
     <div className="mt-16 flex flex-col justify-center px-12">
       <RecipePageHeader />
-      <RecipeSearch />
-      <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 grid-auto-rows-auto">
-        {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
-        ))}
-      </div>
+      {recipes && recipes.length > 0 ? (
+        <div>
+          <RecipeSearch />
+          <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 grid-auto-rows-auto">
+            {recipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <EmptyState
+          title="No recipes available"
+          subtitle="Add or import a recipe"
+        />
+      )}
     </div>
   );
 };
