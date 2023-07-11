@@ -77,6 +77,7 @@ const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
         </div>
         <DialogFooter>
           <Button
+            className="dark:bg-amber-500 dark:text-white dark:hover:bg-amber-400"
             type="submit"
             disabled={!!errors.root?.message || isLoading}
             onClick={handleSubmit(onImport)}
