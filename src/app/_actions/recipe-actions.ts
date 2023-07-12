@@ -10,43 +10,43 @@ import { SafeRecipe } from '@/types';
 
 // used this from the form's action
 // possibly delete in future
-export async function addRecipe(recipe: FormData) {
-  'use server';
+// export async function addRecipe(recipe: FormData) {
+//   'use server';
 
-  console.log('creating recipe: ', recipe);
-  const user = await getCurrentUser();
-  if (!user) {
-    throw new Error('User not found');
-  }
-  const name = recipe.get('name') as string;
-  const url = recipe.get('url') as string;
-  const isPublic = recipe.get('isPublic') as string;
-  const servings = recipe.get('servings') as string;
-  const prepHours = recipe.get('prepHours') as string;
-  const prepMinutes = recipe.get('prepMinutes') as string;
-  const cookHours = recipe.get('cookHours') as string;
-  const cookMinutes = recipe.get('cookMinutes') as string;
-  const instructions = recipe.get('instructions') as string;
-  const ingredients = recipe.get('ingredients') as string;
-  const image = recipe.get('image') as string;
+//   console.log('creating recipe: ', recipe);
+//   const user = await getCurrentUser();
+//   if (!user) {
+//     throw new Error('User not found');
+//   }
+//   const name = recipe.get('name') as string;
+//   const url = recipe.get('url') as string;
+//   const isPublic = recipe.get('isPublic') as string;
+//   const servings = recipe.get('servings') as string;
+//   const prepHours = recipe.get('prepHours') as string;
+//   const prepMinutes = recipe.get('prepMinutes') as string;
+//   const cookHours = recipe.get('cookHours') as string;
+//   const cookMinutes = recipe.get('cookMinutes') as string;
+//   const instructions = recipe.get('instructions') as string;
+//   const ingredients = recipe.get('ingredients') as string;
+//   const image = recipe.get('image') as string;
 
-  await prisma.recipe.create({
-    data: {
-      name,
-      url,
-      isPublic: isPublic === 'true',
-      servings: Number(servings),
-      prepHours: Number(prepHours),
-      prepMinutes: Number(prepMinutes),
-      cookHours: Number(cookHours),
-      cookMinutes: Number(cookMinutes),
-      ingredients: [ingredients],
-      instructions: [instructions],
-      imageSrc: image,
-      authorId: user.id,
-    },
-  });
-}
+//   await prisma.recipe.create({
+//     data: {
+//       name,
+//       url,
+//       isPublic: isPublic === 'true',
+//       servings: Number(servings),
+//       prepHours: Number(prepHours),
+//       prepMinutes: Number(prepMinutes),
+//       cookHours: Number(cookHours),
+//       cookMinutes: Number(cookMinutes),
+//       ingredients: [ingredients],
+//       instructions: [instructions],
+//       imageSrc: image,
+//       authorId: user.id,
+//     },
+//   });
+// }
 
 export async function createRecipe(recipe: Recipe) {
   console.log('creating recipe: ', recipe);
@@ -59,12 +59,11 @@ export async function createRecipe(recipe: Recipe) {
   const newRecipe = await prisma.recipe.create({
     data: {
       ...recipe,
-      ingredients: [recipe.ingredients],
-      instructions: [recipe.instructions],
       authorId: user.id,
     },
   });
   revalidatePath(`/recipe/${newRecipe.id}`);
+  // return formatSafeRecipe(newRecipe);
 }
 
 export async function getRecipeById(id: number) {

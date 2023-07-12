@@ -31,12 +31,20 @@ import { createRecipe } from '@/app/_actions/recipe-actions';
 import { Switch } from '@/components/ui/Switch';
 import { Button } from '@/components/ui/Button';
 import ImageUploader from '@/components/ImageUploader';
+import InputList from '@/components/inputs/InputList';
+import { Label } from '@radix-ui/react-label';
+import { revalidatePath } from 'next/cache';
 
 interface AddEditRecipePageProps {
   params: {
     recipeId: string;
   };
 }
+
+export type InputListValues = {
+  instructions: string;
+  ingredients: string;
+};
 
 const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
   const servingsRange = useRange(1, 999);
@@ -55,8 +63,8 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
       prepMinutes: 0,
       cookHours: 0,
       cookMinutes: 0,
-      instructions: '',
-      ingredients: '',
+      ingredients: [''],
+      instructions: [''],
       imageSrc: '',
     },
   });
@@ -67,13 +75,37 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
       (async () => {
         await createRecipe(data);
         form.reset();
+        // revalidatePath(`/recipe/${newRecipe.id}`);
       })();
     });
   };
 
   const imageSrc = form.watch('imageSrc');
 
-  console.log('imageSrc', imageSrc);
+  const handleInputListChange = (
+    field: keyof InputListValues,
+    value: string,
+    index: number
+  ) => {
+    const fieldData = form.getValues(field);
+    const newInputs = [...fieldData];
+
+    newInputs[index] = value;
+
+    // add a new input, if typing into the last input
+    if (index === fieldData.length - 1 && value !== '') {
+      newInputs.push('');
+    }
+
+    form.setValue(field, newInputs);
+  };
+
+  const handleInputListBlur = (
+    field: keyof InputListValues,
+    updatedInputList: string[]
+  ) => {
+    form.setValue(field, updatedInputList);
+  };
 
   return (
     <div className="flex justify-center items-center">
@@ -286,8 +318,32 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
               />
             </div>
             <hr className="text-neutral-500 w-full my-6" />
-            <div className="flex flex-row gap-24 w-full pr-12">
-              <FormItem className="flex-1">
+            <div className="flex flex-row items-baseline gap-24 w-full pr-12">
+              <div className="flex flex-col flex-1 w-full">
+                <Label className="mb-2">Ingredients</Label>
+                <InputList
+                  className="flex-1 w-full"
+                  fieldName="ingredients"
+                  inputValues={form.watch('ingredients')}
+                  firstPlaceholder="First ingredient"
+                  followingPlaceholder="Add an ingredient..."
+                  handleInputListChange={handleInputListChange}
+                  handleInputListBlur={handleInputListBlur}
+                />
+              </div>
+              <div className="flex flex-col flex-1 w-full">
+                <Label className="mb-2">Instructions</Label>
+                <InputList
+                  className="flex-1 w-full"
+                  fieldName="instructions"
+                  inputValues={form.watch('instructions')}
+                  firstPlaceholder="First step"
+                  followingPlaceholder="Next step..."
+                  handleInputListChange={handleInputListChange}
+                  handleInputListBlur={handleInputListBlur}
+                />
+              </div>
+              {/* <FormItem className="flex-1">
                 <FormLabel>Ingredients</FormLabel>
                 <FormControl>
                   <Input
@@ -295,8 +351,8 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                     {...form.register('ingredients')}
                   />
                 </FormControl>
-              </FormItem>
-              <FormItem className="flex-1">
+              </FormItem> */}
+              {/* <FormItem className="flex-1">
                 <FormLabel>Instructions</FormLabel>
                 <FormControl>
                   <Input
@@ -304,7 +360,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                     {...form.register('instructions')}
                   />
                 </FormControl>
-              </FormItem>
+              </FormItem> */}
             </div>
             <hr className="text-neutral-500 w-full my-6" />
             <div className="w-full">
