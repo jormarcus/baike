@@ -22,10 +22,9 @@ const CardContent: React.FC<{
     {image ? (
       <Image
         fill
+        sizes="(max-width: 768px) 33vw, (max-width: 1200px) 50vw, 33vw"
         src={image}
         alt={name}
-        width={300}
-        height={300}
         decoding="async"
         className="h-full w-full object-cover transition group-hover:scale-110"
       />
@@ -59,7 +58,7 @@ const CardFooter: React.FC<{
 );
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
-  const { id, name, image, averageRating } = recipe;
+  const { id, name, imageSrc } = recipe;
   // next js has an error on refresh window is not defined
   const width = useWindowWidth();
 
@@ -76,8 +75,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   return (
     <div className="flex flex-col gap-2 group col-span-1 dark:bg-neutral-950 rounded-lg p-3 shadow-lg shadow-neutral-950/50">
       <Link href={`/recipe/${id}`}>
-        <CardContent image={image} name={name} size={iconSize} />
-        <CardFooter name={name} averageRating={averageRating} />
+        <CardContent image={imageSrc} name={name} size={iconSize} />
+        <CardFooter name={name} averageRating={5} />
       </Link>
     </div>
   );
