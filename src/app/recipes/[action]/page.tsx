@@ -66,6 +66,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
       ingredients: [''],
       instructions: [''],
       imageSrc: '',
+      notes: '',
     },
   });
 
@@ -74,7 +75,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
     startTransition(() => {
       (async () => {
         await createRecipe(data);
-        form.reset();
+        // form.reset();
         // revalidatePath(`/recipe/${newRecipe.id}`);
       })();
     });
@@ -388,8 +389,7 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
               />
             </div>
             <hr className="text-neutral-500 w-full my-6" />
-
-            {/* <div className="flex items-center justify-center w-full">
+            <div className="flex items-center justify-center w-full">
               <FormItem className="flex-1">
                 <FormLabel>Notes</FormLabel>
                 <FormControl>
@@ -399,8 +399,8 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                   />
                 </FormControl>
               </FormItem>
-            </div> 
-            <hr className="text-neutral-500 w-full my-8" />*/}
+            </div>
+            <hr className="text-neutral-500 w-full my-8" />
             <div className="flex items-center justify-end w-full">
               <Button
                 type="submit"

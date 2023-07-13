@@ -185,5 +185,6 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
     // reviewsCount: 1,
     authorId: 1,
     url: '',
+    notes: '',
   };
 }

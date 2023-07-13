@@ -93,7 +93,7 @@ model Recipe {
   // averageRating        Float?                 @default(0)
   // ratings              Rating[]
   // ratingsCount         Int?                   @default(0)
-  // notes                Note[]
+  notes                String?
   // notesCount           Int                    @default(0)
   // reviews              Review[]
   // reviewsCount         Int                    @default(0)
