@@ -1,6 +1,10 @@
 import { getRecipeById } from '@/app/_actions/recipe-actions';
+import { Button } from '@/components/ui/Button';
 import EmptyState from '@/components/ui/EmptyState';
 import { SafeRecipe } from '@/types';
+
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface RecipePageProps {
   params: {
@@ -18,9 +22,76 @@ export default async function RecipePage({
   }
 
   return (
-    <div>
-      <h1>Recipe Page</h1>
-      <div>{recipe.name}</div>
+    <div className="mx-auto flex max-w-4xl flex-col space-y-8 mt-16 px-12">
+      <div className="flex justify-between gap-2 sm:gap-4">
+        <Link href={`recipe/${recipeId}/edit`}>Edit</Link>
+        <Button>Share</Button>
+        <Button>Favorite</Button>
+        <Button>Add to collection</Button>
+        <Button>Delete</Button>
+      </div>
+      <div className="flex gap-6">
+        <Image
+          src={recipe?.imageSrc || '/images/placeholder'}
+          alt={recipe.name}
+          width={400}
+          height={400}
+          fetchPriority="high"
+          decoding="async"
+          className="rounded-md"
+        />
+        <div className="flex flex-col space-y-2 items-start">
+          <h1 className="font-serif font-extrabold tracking-tight text-3xl lg:text-4xl">
+            {recipe.name}
+          </h1>
+          <div>* * * * *</div>
+          <div className="flex items-center gap-1">
+            <div>Tags</div>
+            <Button>Source</Button>
+          </div>
+          <p className="leading-7">
+            All you need are a few simple ingredients to make this Chicken
+            Noodle Soup. Filling, healthy, and delicious, this soup comes
+            together quickly.
+          </p>
+          <div className="flex items-center justify-start gap-6">
+            <span>Prep Time: {recipe.prepMinutes}</span>
+            <span>Cook Time: {recipe.cookMinutes}</span>
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-6 print:grid-cols-5 sm:grid-cols-5 sm:gap-10">
+        <div className="col-span-1 print:col-span-2 sm:col-span-2">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between text-ellipsis">
+              Ingredients
+            </h4>
+            <div className="text-sm font-medium leading-none inline-block whitespace-nowrap">
+              Servings Modifier
+            </div>
+          </div>
+          <div>
+            {recipe.ingredients.map((ingredient, index) => (
+              <div key={index}>
+                <div>{ingredient}</div>
+                {/* <div>{ingredient.quantity}</div>
+              <div>{ingredient.unit}</div>
+              <div>{ingredient.name}</div> */}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          {recipe.instructions.map((instruction, index) => (
+            <div key={index}>
+              <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between">
+                Step {index + 1}
+              </h4>
+              <div>{instruction}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
