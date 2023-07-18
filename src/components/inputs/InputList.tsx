@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { Input } from './Input';
-import { InputListValues } from '@/app/recipes/[action]/page';
+import { InputListValues } from '@/types';
 
 interface InputListProps {
   fieldName: keyof InputListValues;

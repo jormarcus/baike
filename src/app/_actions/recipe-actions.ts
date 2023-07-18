@@ -96,9 +96,7 @@ export async function getRecipesByUserId(
   return recipes.map((recipe) => formatSafeRecipe(recipe));
 }
 
-export async function updateRecipe(recipe: SafeRecipe) {
-  const { createdAt, updatedAt } = recipe;
-
+export async function updateRecipe(recipe: Recipe) {
   if (recipe.id === null) {
     throw new Error('Recipe id cannot be null');
   }
@@ -107,11 +105,7 @@ export async function updateRecipe(recipe: SafeRecipe) {
     where: {
       id: recipe.id,
     },
-    data: {
-      ...recipe,
-      createdAt: createdAt ? new Date(createdAt) : new Date(),
-      updatedAt: updatedAt ? new Date(updatedAt) : new Date(),
-    },
+    data: recipe,
   });
 
   return formatSafeRecipe(updatedRecipe);

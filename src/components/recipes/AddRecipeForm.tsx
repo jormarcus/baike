@@ -34,19 +34,9 @@ import ImageUploader from '@/components/ImageUploader';
 import InputList from '@/components/inputs/InputList';
 import { Label } from '@radix-ui/react-label';
 import { revalidatePath } from 'next/cache';
+import { InputListValues } from '@/types';
 
-interface AddEditRecipePageProps {
-  params: {
-    recipeId: string;
-  };
-}
-
-export type InputListValues = {
-  instructions: string;
-  ingredients: string;
-};
-
-const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
+const AddRecipeForm: React.FC = () => {
   const servingsRange = useRange(1, 999);
   const hoursRange = useRange(1, 24);
   const minutesRange = useRange(1, 59);
@@ -344,24 +334,6 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
                   handleInputListBlur={handleInputListBlur}
                 />
               </div>
-              {/* <FormItem className="flex-1">
-                <FormLabel>Ingredients</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="First ingredient"
-                    {...form.register('ingredients')}
-                  />
-                </FormControl>
-              </FormItem> */}
-              {/* <FormItem className="flex-1">
-                <FormLabel>Instructions</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="First step"
-                    {...form.register('instructions')}
-                  />
-                </FormControl>
-              </FormItem> */}
             </div>
             <hr className="text-neutral-500 w-full my-6" />
             <div className="w-full">
@@ -424,4 +396,4 @@ const AddEditRecipePage: React.FC<AddEditRecipePageProps> = ({ params }) => {
   );
 };
 
-export default AddEditRecipePage;
+export default AddRecipeForm;

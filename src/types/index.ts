@@ -36,3 +36,8 @@ export type ChatGPTMessage = {
   role: Role;
   content: string;
 };
+
+export type InputListValues = {
+  instructions: string;
+  ingredients: string;
+};

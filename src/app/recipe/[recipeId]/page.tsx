@@ -1,10 +1,11 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import { Edit, Share, Trash } from 'lucide-react';
+
 import { getRecipeById } from '@/app/_actions/recipe-actions';
 import { Button } from '@/components/ui/Button';
 import EmptyState from '@/components/ui/EmptyState';
 import { SafeRecipe } from '@/types';
-
-import Image from 'next/image';
-import Link from 'next/link';
 
 interface RecipePageProps {
   params: {
@@ -24,11 +25,27 @@ export default async function RecipePage({
   return (
     <div className="mx-auto flex max-w-4xl flex-col space-y-8 mt-16 px-12">
       <div className="flex justify-between gap-2 sm:gap-4">
-        <Link href={`recipe/${recipeId}/edit`}>Edit</Link>
-        <Button>Share</Button>
-        <Button>Favorite</Button>
-        <Button>Add to collection</Button>
-        <Button>Delete</Button>
+        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
+          <Link
+            href={`/recipe/${recipeId}/edit`}
+            className="flex flex-nowrap items-center"
+          >
+            <Edit className="mr-2 h-4 w-4" />
+            Edit
+          </Link>
+        </Button>
+        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 whitespace-nowrap">
+          Add to collections
+        </Button>
+        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
+          Share
+        </Button>
+        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
+          Favorite
+        </Button>
+        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
+          Delete
+        </Button>
       </div>
       <div className="flex gap-6">
         <Image
@@ -47,7 +64,9 @@ export default async function RecipePage({
           <div>* * * * *</div>
           <div className="flex items-center gap-1">
             <div>Tags</div>
-            <Button>Source</Button>
+            <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
+              Source
+            </Button>
           </div>
           <p className="leading-7">
             All you need are a few simple ingredients to make this Chicken
@@ -60,15 +79,15 @@ export default async function RecipePage({
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-6 print:grid-cols-5 sm:grid-cols-5 sm:gap-10">
+      <div className="text-sm font-medium leading-none inline-block whitespace-nowrap">
+        Servings Modifier
+      </div>
+      <div className="grid grid-cols-1 gap-3 print:grid-cols-5 sm:grid-cols-5 sm:gap-10">
         <div className="col-span-1 print:col-span-2 sm:col-span-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between text-ellipsis">
               Ingredients
             </h4>
-            <div className="text-sm font-medium leading-none inline-block whitespace-nowrap">
-              Servings Modifier
-            </div>
           </div>
           <div>
             {recipe.ingredients.map((ingredient, index) => (
@@ -81,7 +100,7 @@ export default async function RecipePage({
             ))}
           </div>
         </div>
-        <div>
+        <div className="col-span-1 print:col-span-2 sm:col-span-2">
           {recipe.instructions.map((instruction, index) => (
             <div key={index}>
               <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between">
