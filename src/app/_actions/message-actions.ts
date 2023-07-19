@@ -4,6 +4,7 @@ import prisma from '@/lib/prismadb';
 import { formatSafeMessage } from '@/helpers/format-dto';
 import { Message } from '@prisma/client';
 import { Message as ValidationMessage } from '@/lib/validators/message-validator';
+import { extendedPrisma } from '@/prisma/middlware';
 
 export async function getMessages(chatId: number, startIndex: number) {
   const messages = await prisma.message.findMany({
@@ -19,7 +20,7 @@ export async function getMessages(chatId: number, startIndex: number) {
 }
 
 export async function createMessage(message: ValidationMessage) {
-  const newMessage: Message = await prisma.message.create({
+  const newMessage: Message = await extendedPrisma.message.create({
     data: message,
   });
 
