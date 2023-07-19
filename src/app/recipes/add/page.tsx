@@ -17,7 +17,7 @@ export default async function AddRecipePage({
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect('/sigin');
+    return <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
 
   return (

@@ -1,4 +1,4 @@
-import { Chat, Message, Recipe, User } from '@prisma/client';
+import { Chat, Collection, Message, Recipe, User } from '@prisma/client';
 
 export type SafeUser = Omit<
   User,
@@ -40,4 +40,16 @@ export type ChatGPTMessage = {
 export type InputListValues = {
   instructions: string;
   ingredients: string;
+};
+
+export type SafeCollection = Omit<
+  Collection,
+  'id' | 'createdAt' | 'updatedAt'
+> & {
+  id?: number;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+  image: string | null;
+  recipes: string[];
+  recipesCount: number;
 };

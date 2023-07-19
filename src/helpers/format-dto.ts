@@ -1,5 +1,5 @@
-import { SafeChat, SafeMessage, SafeRecipe } from '@/types';
-import { Chat, Message, Recipe } from '@prisma/client';
+import { SafeChat, SafeCollection, SafeMessage, SafeRecipe } from '@/types';
+import { Chat, Collection, Message, Recipe } from '@prisma/client';
 
 export function formatSafeRecipe(recipe: Recipe): SafeRecipe {
   return {
@@ -41,5 +41,16 @@ export function formatMessageDTO(message: SafeMessage): Message {
     chatId,
     createdAt: createdAt ? new Date(createdAt) : new Date(),
     updatedAt: updatedAt ? new Date(updatedAt) : new Date(),
+  };
+}
+
+export function formatSafeCollection(collection: Collection): SafeCollection {
+  return {
+    ...collection,
+    createdAt: collection.createdAt?.toISOString() ?? '',
+    updatedAt: collection.updatedAt?.toISOString() ?? '',
+    image: '',
+    recipes: [],
+    recipesCount: 0,
   };
 }
