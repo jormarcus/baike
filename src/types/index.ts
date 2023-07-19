@@ -27,6 +27,7 @@ export type SafeMessage = Omit<Message, 'createdAt' | 'updatedAt'> & {
 export type SafeChat = Omit<Chat, 'createdAt' | 'updatedAt' | 'userId'> & {
   createdAt: string;
   updatedAt: string;
+  firstAnswer: string | null;
 };
 
 export type Role = 'function' | 'user' | 'system' | 'assistant';

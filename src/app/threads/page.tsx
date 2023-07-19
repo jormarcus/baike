@@ -1,7 +1,28 @@
+import EmptyState from '@/components/ui/EmptyState';
+import { getCurrentUser } from '../_actions/user-actions';
+import { getChatsById } from '../_actions/chat-actions';
+import ThreadCard from '@/components/chat/ThreadCard';
+
 interface ThreadsPageProps {}
 
-const ThreadsPage: React.FC<ThreadsPageProps> = ({}) => {
-  return <div>ThreadsPage</div>;
-};
+export default async function ThreadsPage() {
+  const currentUser = await getCurrentUser();
 
-export default ThreadsPage;
+  if (!currentUser) {
+    return <EmptyState title="Unauthorized" subtitle="Please login" />;
+  }
+
+  const threads = await getChatsById(currentUser.id);
+
+  return (
+    <div className="mt-16 flex flex-col justify-center gap-2 px-12">
+      {threads && threads.length > 0 ? (
+        threads.map((thread) => <ThreadCard key={thread.id} thread={thread} />)
+      ) : (
+        <div className="flex flex-col items-center">
+          <EmptyState title="No threads available" />
+        </div>
+      )}
+    </div>
+  );
+}

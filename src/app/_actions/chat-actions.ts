@@ -21,7 +21,7 @@ export async function createChat() {
   return formatSafeChat(newChat);
 }
 
-export async function getChatById(id: string) {
+export async function getChatById(id: number) {
   const chat = await prisma.chat.findUnique({
     where: {
       id,
@@ -35,7 +35,17 @@ export async function getChatById(id: string) {
   return formatSafeChat(chat);
 }
 
-export async function getChatWithMessagesById(id: string) {
+export async function getChatsById(id: number) {
+  const chats = await prisma.chat.findMany({
+    where: {
+      id,
+    },
+  });
+
+  return chats.map(formatSafeChat);
+}
+
+export async function getChatWithMessagesById(id: number) {
   const chat = await prisma.chat.findUnique({
     where: {
       id,
@@ -52,7 +62,7 @@ export async function getChatWithMessagesById(id: string) {
   return formatSafeChat(chat);
 }
 
-export async function deleteChat(id: string) {
+export async function deleteChat(id: number) {
   const chat = await prisma.chat.delete({
     where: {
       id,
