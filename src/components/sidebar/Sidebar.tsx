@@ -40,7 +40,7 @@ const SidebarToggle: React.FC<{
 );
 
 const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
-  const [activeItem, setActiveItem] = useState('Trending');
+  const [activeItem, setActiveItem] = useState('Discover');
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleOpen = () => {
@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   const sideBarItems = useMemo(() => {
     return [
       {
-        label: 'Trending',
+        label: 'Discover',
         href: '/',
       },
       {
