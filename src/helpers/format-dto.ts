@@ -9,17 +9,17 @@ export function formatSafeRecipe(recipe: Recipe): SafeRecipe {
   };
 }
 
-export function formatSafeChat({
-  id,
-  title,
-  createdAt,
-  updatedAt,
-}: Chat): SafeChat {
+export function formatSafeChat(
+  { id, title, createdAt, updatedAt, userMessagesCount }: Chat,
+  firstAnswer = ''
+): SafeChat {
   return {
     id,
     title,
     createdAt: createdAt.toISOString(),
     updatedAt: updatedAt.toISOString(),
+    userMessagesCount,
+    firstAnswer,
   };
 }
 

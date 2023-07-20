@@ -27,7 +27,7 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread }) => {
       <div className="flex gap-6 text-sm font-semibold pt-2">
         <div className="flex items-center gap-1">
           <MessageSquare height={14} width={14} />
-          <div>{thread.userMessageCount} messages</div>
+          <div>{thread.userMessagesCount} messages</div>
         </div>
         <div className="flex items-center gap-1">
           <Clock4 height={14} width={14} />
