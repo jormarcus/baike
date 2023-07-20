@@ -1,13 +1,18 @@
 import { SafeChat } from '@/types';
 import { Clock4, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
-<MessageSquare />;
+import { useMemo } from 'react';
+import { timeAgo } from '@/helpers/date-time-helper';
 
 interface ThreadCardProps {
   thread: SafeChat;
 }
 
 const ThreadCard: React.FC<ThreadCardProps> = ({ thread }) => {
+  const time = useMemo(() => {
+    return timeAgo(new Date(thread.createdAt));
+  }, [thread.createdAt]);
+
   return (
     <div className="flex flex-col space-y-2 w-full border p-2 border-neutral-600 rounded-md cursor-pointer hover:border-500">
       <Link
@@ -26,7 +31,7 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread }) => {
         </div>
         <div className="flex items-center gap-1">
           <Clock4 height={14} width={14} />
-          <div>{thread.createdAt} ago</div>
+          <div>{time}</div>
         </div>
       </div>
     </div>
