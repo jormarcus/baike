@@ -1,17 +1,12 @@
 'use client';
 
 import { Input } from '@/components/inputs/Input';
-import { MessagesContext } from '@/context/MessagesContext';
-import { ChatGPTMessage, Role } from '@/types';
-import { useChat } from 'ai/react';
-import {
-  FormEvent,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  useTransition,
-} from 'react';
+import { ChatContext } from '@/context/ChatContext';
+import { formatChatGPTMessage } from '@/helpers/format-dto';
+import { getMessages } from '@/services/message-services';
+import { SafeMessage } from '@/types';
+import { useSearchParams } from 'next/navigation';
+import { FormEvent, useContext, useEffect, useMemo, useState } from 'react';
 
 interface ChatPageProps {
   params: {
@@ -21,31 +16,27 @@ interface ChatPageProps {
 
 const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+
   const chatIdEncoded = params.searchId;
   const chatId = chatIdEncoded ? decodeURIComponent(chatIdEncoded) : '';
 
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    setMessages,
-    reload,
-  } = useChat();
-  const { messages: safeMessages } = useContext(MessagesContext);
-
-  const chatGPTMessages: ChatGPTMessage[] = useMemo(() => {
-    return safeMessages.map((m) => ({
-      id: m.id.toString(),
-      content: m.text,
-      role: m.isUserMessage ? ('user' as Role) : ('system' as Role),
-    }));
-  }, [safeMessages]);
+  const { messages, input, handleInputChange, handleSubmit, setMessages } =
+    useContext(ChatContext);
 
   useEffect(() => {
     setIsLoading(true);
-    setMessages(chatGPTMessages);
-    reload({ options: { body: { chatId } } });
+
+    async function getChatHistory() {
+      const messageHistory: SafeMessage[] = await getMessages(parseInt(chatId));
+      const safeMessages = messageHistory.map(formatChatGPTMessage);
+      setMessages(safeMessages);
+    }
+
+    if (searchParams.get('prev') === 'threads') {
+      getChatHistory();
+    }
+
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

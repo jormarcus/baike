@@ -2,24 +2,22 @@
 
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
-import { useChat } from 'ai/react';
 import toast from 'react-hot-toast';
 
 import ChatInput from './ChatInput';
-import { MessagesContext } from '@/context/MessagesContext';
 import { createTempMessage } from '@/helpers/messages-helper';
 import { createThread } from '@/services/thread-services';
+import { formatChatGPTMessage } from '@/helpers/format-dto';
+import { ChatContext } from '@/context/ChatContext';
 
 const ChatInputHome: React.FC = () => {
   const router = useRouter();
-  const { addMessage, setMessages: setSafeMessages } =
-    useContext(MessagesContext);
-  const { setMessages } = useChat();
+  const { setMessages, reload } = useContext(ChatContext);
 
   useEffect(() => {
     setMessages([]);
-    setSafeMessages([]);
-  }, [setMessages, setSafeMessages]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = async (inputValue: string) => {
     // create thread instance and save to db
@@ -28,10 +26,15 @@ const ChatInputHome: React.FC = () => {
       toast.error('Something went wrong!');
       return;
     }
+
+    // TODO the id for the message is not good
+    // should i save the message and then call
     const message = createTempMessage(inputValue, data.id, true);
-    // add message to chat context
-    // using the setMessages function from the useChat hook isnt working from here...
-    addMessage(message);
+
+    const chatGPTMessage = formatChatGPTMessage(message);
+    setMessages([chatGPTMessage]);
+
+    reload({ options: { body: { chatId: data.id } } });
 
     router.push(`/search/${data.id}`);
   };

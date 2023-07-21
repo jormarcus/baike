@@ -54,7 +54,10 @@ export async function getChatsByUserId(userId: number) {
   });
 
   return chats.map((chat) =>
-    formatSafeChat(chat, chat.messages[0]['text'] ?? '')
+    formatSafeChat(
+      chat,
+      chat.messages && chat.messages.length > 0 ? chat.messages[0]['text'] : ''
+    )
   );
 }
 

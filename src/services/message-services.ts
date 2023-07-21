@@ -15,3 +15,18 @@ export async function sendMessage(messages: SafeMessage[]) {
 
   return response.body;
 }
+
+export async function getMessages(chatId: number) {
+  const response = await fetch(`/api/message/${chatId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Something went wrong.');
+  }
+
+  return response.json();
+}

@@ -16,7 +16,7 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread }) => {
   return (
     <div className="flex flex-col space-y-2 w-full border p-2 border-neutral-600 rounded-md cursor-pointer hover:border-500">
       <Link
-        href={`/search/${thread.id}}`}
+        href={`/search/${thread.id}?prev=threads`}
         className="flex flex-col items w-full pr-4"
       >
         <div className="text-xl font-bold">{thread.title}</div>

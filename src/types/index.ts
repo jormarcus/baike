@@ -13,7 +13,7 @@ export type SafeRecipe = Omit<
   Recipe,
   'id' | 'createdAt' | 'updatedAt' | 'authorId'
 > & {
-  id?: number;
+  id: number;
   createdAt?: string | null;
   updatedAt?: string | null;
   authorId: number;

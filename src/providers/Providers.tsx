@@ -3,10 +3,10 @@
 import { ThemeProvider } from 'next-themes';
 import { FC, ReactNode } from 'react';
 
-import { MessagesProvider } from '@/context/MessagesContext';
 import { LoginModalProvider } from '@/context/LoginModalContext';
 import { RegisterModalProvider } from '@/context/RegisterModalContext';
 import AuthContext from '@/context/AuthContext';
+import { ChatProvider } from '@/context/ChatContext';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -18,7 +18,7 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
       <AuthContext>
         <RegisterModalProvider>
           <LoginModalProvider>
-            <MessagesProvider>{children}</MessagesProvider>
+            <ChatProvider>{children}</ChatProvider>
           </LoginModalProvider>
         </RegisterModalProvider>
       </AuthContext>

@@ -1,11 +1,12 @@
 'use client';
 
-import { useRef, useState, HTMLAttributes } from 'react';
+import { useRef, useState, HTMLAttributes, useContext } from 'react';
 
 import { Button } from '../ui/Button';
 import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
 import Textarea from '../inputs/Textarea';
+import { ChatContext } from '@/context/ChatContext';
 
 interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
   handleSubmit: (e: any) => Promise<void>;
@@ -13,8 +14,8 @@ interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
 
 const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { input, handleInputChange, setInput } = useContext(ChatContext);
 
   const isEmpty = input.length === 0;
 
@@ -41,7 +42,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ className, handleSubmit }) => {
           value={input}
           autoFocus
           disabled={isLoading}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={handleInputChange}
           placeholder="Find your next recipe..."
           className="
           grow

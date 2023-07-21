@@ -1,4 +1,11 @@
-import { SafeChat, SafeCollection, SafeMessage, SafeRecipe } from '@/types';
+import {
+  ChatGPTMessage,
+  Role,
+  SafeChat,
+  SafeCollection,
+  SafeMessage,
+  SafeRecipe,
+} from '@/types';
 import { Chat, Collection, Message, Recipe } from '@prisma/client';
 
 export function formatSafeRecipe(recipe: Recipe): SafeRecipe {
@@ -29,6 +36,14 @@ export function formatSafeMessage(message: Message): SafeMessage {
     ...message,
     createdAt: createdAt.toISOString(),
     updatedAt: updatedAt.toISOString(),
+  };
+}
+
+export function formatChatGPTMessage(safeMessage: SafeMessage): ChatGPTMessage {
+  return {
+    id: safeMessage.id.toString(),
+    content: safeMessage.text,
+    role: safeMessage.isUserMessage ? ('user' as Role) : ('system' as Role),
   };
 }
 
