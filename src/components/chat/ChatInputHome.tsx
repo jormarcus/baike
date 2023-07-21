@@ -1,8 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { startTransition, useCallback, useContext } from 'react';
-import { nanoid } from 'nanoid';
+import { useContext, useEffect } from 'react';
 import { useChat } from 'ai/react';
 import toast from 'react-hot-toast';
 
@@ -13,8 +12,14 @@ import { createThread } from '@/services/thread-services';
 
 const ChatInputHome: React.FC = () => {
   const router = useRouter();
-  const { addMessage } = useContext(MessagesContext);
-  const { append, setMessages } = useChat();
+  const { addMessage, setMessages: setSafeMessages } =
+    useContext(MessagesContext);
+  const { setMessages } = useChat();
+
+  useEffect(() => {
+    setMessages([]);
+    setSafeMessages([]);
+  }, [setMessages, setSafeMessages]);
 
   const handleSubmit = async (inputValue: string) => {
     // create thread instance and save to db
@@ -25,6 +30,7 @@ const ChatInputHome: React.FC = () => {
     }
     const message = createTempMessage(inputValue, data.id, true);
     // add message to chat context
+    // using the setMessages function from the useChat hook isnt working from here...
     addMessage(message);
 
     router.push(`/search/${data.id}`);
