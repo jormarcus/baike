@@ -1,6 +1,6 @@
 import EmptyState from '@/components/ui/EmptyState';
 import { getCurrentUser } from '../_actions/user-actions';
-import { getChatsById } from '../_actions/chat-actions';
+import { getChatsByUserId } from '../_actions/chat-actions';
 import ThreadCard from '@/components/chat/ThreadCard';
 
 interface ThreadsPageProps {}
@@ -12,7 +12,7 @@ export default async function ThreadsPage() {
     return <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
 
-  const threads = await getChatsById(currentUser.id);
+  const threads = await getChatsByUserId(currentUser.id);
 
   return (
     <div className="mt-16 flex flex-col justify-center gap-2 px-12">
