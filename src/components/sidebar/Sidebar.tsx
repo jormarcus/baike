@@ -83,7 +83,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
       <aside
         className={cn(
           'px-2 w-64 flex-none border border-neutral-600 bg-transparent transition ease-in-out duration-300',
-          isOpen ? '-translate-x-0 ml-0' : '-translate-x-full ml-[-250px]'
+          isOpen
+            ? '-translate-x-0 ml-0 h-full'
+            : '-translate-x-full ml-[-250px]'
         )}
       >
         <div className="pt-2 sticky flex flex-col h-screen w-full">
