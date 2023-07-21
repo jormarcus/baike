@@ -5,7 +5,7 @@ import { Button } from '../ui/Button';
 import { addComment } from '@/app/_actions/post-actions';
 import { Icons } from '../Icons';
 
-const PostComments: React.FC<{ postId: string; commentsCount: number }> = ({
+const PostComments: React.FC<{ postId: number; commentsCount: number }> = ({
   postId,
   commentsCount,
 }) => {

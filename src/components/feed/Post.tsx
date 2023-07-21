@@ -37,16 +37,15 @@ const PostContent: React.FC<{
   image: string | null;
   title: string;
 }> = ({ image, title }) => (
-  <div className="aspect-square overflow-hidden rounded-xl h-[460px]">
+  <div className="aspect-square overflow-hidden rounded-xl pb-4">
     {image ? (
       <Image
-        fill
         src={image}
         alt={title}
         width={468}
         height={468}
         decoding="async"
-        className="h-full w-full object-cover transition group-hover:scale-110"
+        className="h-full w-full object-cover"
       />
     ) : (
       <div className="flex items-center justify-center p-12 border border-neutral-500 rounded-xl">
@@ -57,12 +56,12 @@ const PostContent: React.FC<{
 );
 
 const PostFooter: React.FC<{
-  id: string;
+  id: number;
   title: string;
   likesCount: number;
   description?: string;
 }> = ({ id, title, likesCount, description = '' }) => (
-  <div className="flex flex-col h-40 my-1 space-y-2">
+  <div className="flex flex-col h-40 my-1 space-y-2 pb-4">
     <PostActions />
 
     {likesCount > 0 && (
@@ -83,13 +82,13 @@ const PostFooter: React.FC<{
 );
 
 const Post: React.FC<PostProps> = ({ recipe }) => {
-  const { id, title, image, likesCount } = recipe;
+  const { id, name, imageSrc, likesCount } = recipe;
   return (
     <div className="flex flex-col justify-center items-center py-4 group col-span-1 dark:bg-neutral-950 rounded-lg max-w-[630px] w-full h-[700px] overflow-hidden shadow-lg shadow-neutral-950/50">
       <article className="flex flex-col w-[470px] pb-4">
         <PostHeader username="username" avatar={null} />
-        <PostContent image={image} title={title} />
-        <PostFooter id={id} title={title} likesCount={likesCount} />
+        <PostContent image={imageSrc} title={name} />
+        <PostFooter id={id} title={name} likesCount={likesCount} />
       </article>
     </div>
   );

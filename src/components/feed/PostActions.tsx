@@ -3,7 +3,7 @@ import { FaRegBookmark, FaRegComment, FaRegHeart } from 'react-icons/fa';
 // TODO: Add like and bookmark functionality
 // change to filled icons if liked/bookmarked
 const PostActions: React.FC = () => (
-  <div className="flex flex-row justify-between items-center pl-1">
+  <div className="flex flex-row justify-between items-center pl-1 mt-1">
     <div className="flex flex-row justify-start items-center gap-4">
       <FaRegHeart
         size={20}
