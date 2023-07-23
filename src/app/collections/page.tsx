@@ -3,7 +3,7 @@ import { getCurrentUser } from '../_actions/user-actions';
 import { getCollectionsByUserId } from '../_actions/collection-actions';
 import CollectionCard from '@/components/collections/CollectionCard';
 import { Button } from '@/components/ui/Button';
-import AddCollectionModal from '@/components/collections/AddCollectionModal';
+import AddCollectionModal from '@/components/modals/AddCollectionModal';
 
 interface CollectionsPageProps {}
 
@@ -18,18 +18,20 @@ export default async function CollectionsPage() {
 
   return (
     <div className="mt-16 flex flex-col justify-center gap-2 px-12">
-      {collections && collections.length > 0 ? (
-        collections.map((collection) => (
-          <CollectionCard key={collection.id} collection={collection} />
-        ))
-      ) : (
-        <div className="flex flex-col items-center">
-          <EmptyState title="No collections available" />
-          <div className="mt-8">
-            <AddCollectionModal />
+      <div className="flex flex-row justify-end">
+        <AddCollectionModal />
+      </div>
+      <div className="mt-1">
+        {collections && collections.length > 0 ? (
+          collections.map((collection) => (
+            <CollectionCard key={collection.id} collection={collection} />
+          ))
+        ) : (
+          <div className="flex flex-col items-center">
+            <EmptyState title="No collections available" />
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

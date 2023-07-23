@@ -102,7 +102,7 @@ model Recipe {
 
 model Ingredient {
   id                Int                 @id @default(autoincrement())
-  name              String
+  name              String              @unique
   description       String?
   RecipeIngredients RecipeIngredients[]
 }
@@ -118,7 +118,7 @@ model RecipeIngredients {
 model Collection {
   id         Int      @id @default(autoincrement())
   userId     Int      @map("user_id")
-  name       String
+  name       String   @unique
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   isPublic   Boolean  @default(false)
