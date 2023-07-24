@@ -41,6 +41,16 @@ export async function getCollectionsByUserId(userId: number) {
     where: {
       userId,
     },
+  });
+
+  return collections.map((collection) => formatSafeCollection(collection));
+}
+
+export async function getCollectionsWithRecipesByUserId(userId: number) {
+  const collections = await prisma.collection.findMany({
+    where: {
+      userId,
+    },
     include: {
       recipes: {
         take: 5,

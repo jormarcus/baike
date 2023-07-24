@@ -1,6 +1,6 @@
 import EmptyState from '@/components/ui/EmptyState';
 import { getCurrentUser } from '../_actions/user-actions';
-import { getCollectionsByUserId } from '../_actions/collection-actions';
+import { getCollectionsWithRecipesByUserId } from '../_actions/collection-actions';
 import CollectionCard from '@/components/collections/CollectionCard';
 import { Button } from '@/components/ui/Button';
 import AddCollectionModal from '@/components/modals/AddCollectionModal';
@@ -14,7 +14,7 @@ export default async function CollectionsPage() {
     return <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
 
-  const collections = await getCollectionsByUserId(currentUser.id);
+  const collections = await getCollectionsWithRecipesByUserId(currentUser.id);
 
   return (
     <div className="mt-16 flex flex-col justify-center gap-2 px-12">
