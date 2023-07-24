@@ -21,6 +21,23 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/',
   },
+  callbacks: {
+    session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.sub,
+          isAdmin: token.isAdmin,
+          vendorId: token.vendorId,
+          stripe_id: token.stripeId,
+        },
+      };
+    },
+    redirect() {
+      return '/';
+    },
+  },
   debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: 'jwt',
