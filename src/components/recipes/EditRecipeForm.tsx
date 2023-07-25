@@ -389,7 +389,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
                     aria-hidden="true"
                   />
                 )}
-                Add Recipe
+                Edit Recipe
                 <span className="sr-only">Edit Recipe</span>
               </Button>
             </div>
