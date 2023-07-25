@@ -1,7 +1,7 @@
 'use client';
 
 import toast from 'react-hot-toast';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/Button';
@@ -32,6 +32,11 @@ const AddCollectionModal: React.FC<AddCollectionModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const isOnCollectionsPage = useMemo(
+    () => !onAddCollection,
+    [onAddCollection]
+  );
+
   const {
     register,
     handleSubmit,
@@ -51,10 +56,9 @@ const AddCollectionModal: React.FC<AddCollectionModalProps> = ({
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
     try {
-      // if onAddCollection is not provided, we are on the collections page
-      // and we need to revalidate the page after adding a collection
+      // revalidate collections page after adding a collection
       // if not we are adding a new collection when adding collections to a recipe
-      const collection = await createCollection(data.name, !onAddCollection);
+      const collection = await createCollection(data.name, isOnCollectionsPage);
       onAddCollection?.(collection);
     } catch (error) {
       toast.error('Something went wrong!');
@@ -67,7 +71,11 @@ const AddCollectionModal: React.FC<AddCollectionModalProps> = ({
   return (
     <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
       <AlertDialogTrigger>
-        <Button className="flex items-center gap-1 dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-800 whitespace-nowrap pl-0">
+        <Button
+          className={`flex items-center gap-1 dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-800 whitespace-nowrap ${
+            isOnCollectionsPage ? '' : 'pl-0'
+          }`}
+        >
           <Plus />
           Add Collection
         </Button>
