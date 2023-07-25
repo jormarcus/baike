@@ -4,9 +4,9 @@ import prisma from '@/lib/prismadb';
 import { Collection } from '@prisma/client';
 import { getCurrentUser } from './user-actions';
 import { formatSafeCollection } from '@/helpers/format-dto';
+import { revalidatePath } from 'next/cache';
 
-export async function createCollection(name: string) {
-  console.log('creating collection: ', name);
+export async function createCollection(name: string, revalidatePage: boolean) {
   const user = await getCurrentUser();
 
   if (!user) {
@@ -19,6 +19,11 @@ export async function createCollection(name: string) {
       userId: user.id,
     },
   });
+
+  if (revalidatePage) {
+    revalidatePath('/collections');
+  }
+
   return formatSafeCollection(newCollection);
 }
 

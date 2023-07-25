@@ -33,7 +33,6 @@ import { SafeCollection } from '@/types';
 import AddCollectionModal from './AddCollectionModal';
 import { addCollectionsToRecipe } from '@/app/_actions/recipe-actions';
 import { Checkbox } from '../ui/Checkbox';
-import { set } from 'date-fns';
 
 const AddToCollectionSchema = z.object({
   collections: z.array(z.string()),
@@ -90,9 +89,14 @@ function AddToCollectionModal({
     getCollections();
   }, [isOpen, recipeId, userId]);
 
+  const onAddNewCollection = (collection: SafeCollection) => {
+    setCollections((prev) => [...prev, collection]);
+  };
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
     console.log('data: ', collections);
+    // TODO - not actually using form data or form for these fields
     try {
       await addCollectionsToRecipe(collections, Number(recipeId));
     } catch (error) {
@@ -102,6 +106,7 @@ function AddToCollectionModal({
       setIsOpen(false);
     }
   };
+
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
@@ -131,8 +136,7 @@ function AddToCollectionModal({
                         key={collection.id}
                         control={form.control}
                         name="collections"
-                        render={({ field }) => {
-                          console.log('field: ', field);
+                        render={() => {
                           return (
                             <FormItem
                               key={collection.id}
@@ -143,16 +147,13 @@ function AddToCollectionModal({
                                   id={collection.id.toString()}
                                   checked={collection.hasRecipe}
                                   onCheckedChange={() => {
-                                    setCollections((prev) => {
-                                      console.log('prev: ', prev);
-                                      let updated = prev.map((c) =>
+                                    setCollections((prev) =>
+                                      prev.map((c) =>
                                         c.id === collection.id
                                           ? { ...c, hasRecipe: !c.hasRecipe }
                                           : c
-                                      );
-                                      console.log('updated: ', updated);
-                                      return updated;
-                                    });
+                                      )
+                                    );
                                   }}
                                 />
                               </FormControl>
@@ -170,7 +171,7 @@ function AddToCollectionModal({
               />
             </form>
           </Form>
-          <AddCollectionModal />
+          <AddCollectionModal onAddCollection={onAddNewCollection} />
         </div>
         <hr className="mb-2" />
         <AlertDialogFooter>

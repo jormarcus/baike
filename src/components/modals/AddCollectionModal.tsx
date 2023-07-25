@@ -20,14 +20,22 @@ import { Input } from '@/components/inputs/Input';
 import { Label } from '@/components/ui/Label';
 import { createCollection } from '@/app/_actions/collection-actions';
 import { Plus } from 'lucide-react';
+import { SafeCollection } from '@/types';
 
-const AddCollectionModal = () => {
+interface AddCollectionModalProps {
+  onAddCollection?: (collection: SafeCollection) => void;
+}
+
+const AddCollectionModal: React.FC<AddCollectionModalProps> = ({
+  onAddCollection,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
@@ -35,11 +43,19 @@ const AddCollectionModal = () => {
     },
   });
 
+  const handleOpenChange = () => {
+    setIsOpen((prev) => !prev);
+    reset();
+  };
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    console.log('data: ', data);
     try {
-      await createCollection(data.name);
+      // if onAddCollection is not provided, we are on the collections page
+      // and we need to revalidate the page after adding a collection
+      // if not we are adding a new collection when adding collections to a recipe
+      const collection = await createCollection(data.name, !onAddCollection);
+      onAddCollection?.(collection);
     } catch (error) {
       toast.error('Something went wrong!');
     } finally {
@@ -49,7 +65,7 @@ const AddCollectionModal = () => {
   };
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+    <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
       <AlertDialogTrigger>
         <Button className="flex items-center gap-1 dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-800 whitespace-nowrap pl-0">
           <Plus />
