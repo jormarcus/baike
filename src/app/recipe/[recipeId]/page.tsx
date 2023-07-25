@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import EmptyState from '@/components/ui/EmptyState';
 import { SafeRecipe } from '@/types';
 import AddToCollectionModal from '@/components/modals/AddToCollectionModal';
+import AverageRating from '@/components/recipes/AverageRating';
 
 interface RecipePageProps {
   params: {
@@ -61,7 +62,7 @@ export default async function RecipePage({
           <h1 className="font-serif font-extrabold tracking-tight text-3xl lg:text-4xl">
             {recipe.name}
           </h1>
-          <div>* * * * *</div>
+          <AverageRating averageRating={recipe?.averageRating || 0} />
           <div className="flex items-center gap-1">
             <div>Tags</div>
             <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">

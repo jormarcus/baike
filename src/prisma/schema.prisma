@@ -91,10 +91,9 @@ model Recipe {
   RecipeIngredients RecipeIngredients[]
   likesCount        Int                 @default(0)
   notes             String?
+  averageRating     Float?              @default(0)
+  ratings           Rating[]
   // likes                Like[]
-  // averageRating        Float?                 @default(0)
-  // ratings              Rating[]
-  // ratingsCount         Int?                   @default(0)
   // notesCount           Int                    @default(0)
   // reviews              Review[]
   // reviewsCount         Int                    @default(0)
@@ -140,12 +139,14 @@ model Like {
 }
 
 model Rating {
-  id       Int  @id @default(autoincrement())
-  userId   Int  @map("user_id")
-  recipeId Int  @map("recipe_id")
-  rating   Int
-  user     User @relation(fields: [userId], references: [id])
-  // recipe   Recipe @relation(fields: [recipeId], references: [id])
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  recipeId  Int      @map("recipe_id")
+  rating    Int
+  user      User     @relation(fields: [userId], references: [id])
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Note {
