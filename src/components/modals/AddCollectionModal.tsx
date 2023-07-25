@@ -19,7 +19,7 @@ import {
 import { Input } from '@/components/inputs/Input';
 import { Label } from '@/components/ui/Label';
 import { createCollection } from '@/app/_actions/collection-actions';
-import { DialogClose } from '@radix-ui/react-dialog';
+import { Plus } from 'lucide-react';
 
 const AddCollectionModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,9 +50,12 @@ const AddCollectionModal = () => {
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <Button className="dark:bg-amber-500 dark:text-white dark:hover:bg-amber-400">
-        <AlertDialogTrigger>Add Collection</AlertDialogTrigger>
-      </Button>
+      <AlertDialogTrigger>
+        <Button className="flex items-center gap-1 dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-800 whitespace-nowrap pl-0">
+          <Plus />
+          Add Collection
+        </Button>
+      </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-[425px]">
         <AlertDialogHeader>
           <AlertDialogTitle>Add Collection</AlertDialogTitle>

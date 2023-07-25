@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { formatSafeRecipe } from '@/helpers/format-dto';
 import { getCurrentUser } from './user-actions';
 import { Recipe } from '@/lib/validators/recipe-validator';
-import { SafeRecipe } from '@/types';
+import { SafeCollection, SafeRecipe } from '@/types';
 
 // used this from the form's action
 // possibly delete in future
@@ -172,7 +172,7 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
     updatedAt: new Date().toISOString(),
     // averageRating: 5,
     // ratingsCount: 1,
-    // likesCount: 1,
+    likesCount: 1,
     // notesCount: 0,
     instructions: [],
     ingredients: [],
@@ -181,4 +181,54 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
     url: '',
     notes: '',
   };
+}
+
+export async function addCollectionsToRecipe(
+  collections: SafeCollection[],
+  recipeId: number
+) {
+  const recipe = await prisma.recipe.findUnique({
+    where: {
+      id: recipeId,
+    },
+    include: {
+      collections: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  if (!recipe) {
+    throw new Error('Recipe not found');
+  }
+
+  const collectionsIdsToAdd: { id: number }[] = [];
+  const collectionsIdsToRemove: { id: number }[] = [];
+
+  collections.forEach((collection) => {
+    if (collection.hasRecipe) {
+      collectionsIdsToAdd.push({ id: collection.id });
+    } else {
+      collectionsIdsToRemove.push({ id: collection.id });
+    }
+  });
+
+  const updatedRecipe = await prisma.recipe.update({
+    where: {
+      id: recipeId,
+    },
+    data: {
+      collections: {
+        connect: collectionsIdsToAdd,
+        disconnect: collectionsIdsToRemove,
+      },
+    },
+    include: {
+      collections: true,
+    },
+  });
+
+  return formatSafeRecipe(updatedRecipe);
 }

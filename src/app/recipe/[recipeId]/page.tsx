@@ -6,6 +6,7 @@ import { getRecipeById } from '@/app/_actions/recipe-actions';
 import { Button } from '@/components/ui/Button';
 import EmptyState from '@/components/ui/EmptyState';
 import { SafeRecipe } from '@/types';
+import AddToCollectionModal from '@/components/modals/AddToCollectionModal';
 
 interface RecipePageProps {
   params: {
@@ -34,9 +35,7 @@ export default async function RecipePage({
             Edit
           </Link>
         </Button>
-        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 whitespace-nowrap">
-          Add to collections
-        </Button>
+        <AddToCollectionModal recipeId={recipe.id} name={recipe.name} />
         <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
           Share
         </Button>
@@ -54,6 +53,7 @@ export default async function RecipePage({
           width={400}
           height={400}
           fetchPriority="high"
+          priority
           decoding="async"
           className="rounded-md"
         />

@@ -47,10 +47,11 @@ export type SafeCollection = Omit<
   Collection,
   'id' | 'createdAt' | 'updatedAt'
 > & {
-  id?: number;
+  id: number;
   createdAt?: string | null;
   updatedAt?: string | null;
   image: string | null;
   recipes: string[];
   recipesCount: number;
+  hasRecipe: boolean;
 };

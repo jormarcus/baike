@@ -59,7 +59,10 @@ export function formatMessageDTO(message: SafeMessage): Message {
   };
 }
 
-export function formatSafeCollection(collection: Collection): SafeCollection {
+export function formatSafeCollection(
+  collection: Collection,
+  hasRecipe = false
+): SafeCollection {
   return {
     ...collection,
     createdAt: collection.createdAt?.toISOString() ?? '',
@@ -67,5 +70,6 @@ export function formatSafeCollection(collection: Collection): SafeCollection {
     image: '',
     recipes: [],
     recipesCount: 0,
+    hasRecipe,
   };
 }

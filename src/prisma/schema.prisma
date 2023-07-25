@@ -87,17 +87,17 @@ model Recipe {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   isPublic          Boolean             @default(true)
-  // likes                Like[]
+  collections       Collection[]
+  RecipeIngredients RecipeIngredients[]
   likesCount        Int                 @default(0)
+  notes             String?
+  // likes                Like[]
   // averageRating        Float?                 @default(0)
   // ratings              Rating[]
   // ratingsCount         Int?                   @default(0)
-  notes             String?
   // notesCount           Int                    @default(0)
   // reviews              Review[]
   // reviewsCount         Int                    @default(0)
-  collections       Collection[]
-  RecipeIngredients RecipeIngredients[]
 }
 
 model Ingredient {

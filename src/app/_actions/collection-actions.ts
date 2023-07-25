@@ -65,6 +65,36 @@ export async function getCollectionsWithRecipesByUserId(userId: number) {
   return collections.map((collection) => formatSafeCollection(collection));
 }
 
+export async function getCollectionsWithRecipesByUserIdAndRecipeId(
+  userId: number,
+  recipeId: number
+) {
+  const collections = await prisma.collection.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      recipes: {
+        where: {
+          id: recipeId,
+        },
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  const collectionsWithRecipe = collections.map((collection) => ({
+    ...collection,
+    hasRecipe: collection.recipes.length > 0,
+  }));
+
+  return collectionsWithRecipe.map((collection) =>
+    formatSafeCollection(collection, collection.hasRecipe)
+  );
+}
+
 export async function updateCollection(collection: Collection) {
   if (collection.id === null) {
     throw new Error('Collection id cannot be null');
