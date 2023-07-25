@@ -51,7 +51,7 @@ export type SafeCollection = Omit<
   createdAt?: string | null;
   updatedAt?: string | null;
   image: string | null;
-  recipes: string[];
+  recipes: { name: string; imageSrc: string | null }[];
   recipesCount: number;
   hasRecipe: boolean;
 };

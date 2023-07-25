@@ -21,7 +21,7 @@ export default async function CollectionsPage() {
       <div className="flex flex-row justify-end">
         <AddCollectionModal />
       </div>
-      <div className="mt-1">
+      <div className="mt-1 flex flex-col gap-2">
         {collections && collections.length > 0 ? (
           collections.map((collection) => (
             <CollectionCard key={collection.id} collection={collection} />

@@ -67,7 +67,13 @@ export async function getCollectionsWithRecipesByUserId(userId: number) {
     },
   });
 
-  return collections.map((collection) => formatSafeCollection(collection));
+  return collections.map((collection) =>
+    formatSafeCollection(
+      collection,
+      collection.recipes.length > 0,
+      collection.recipes
+    )
+  );
 }
 
 export async function getCollectionsWithRecipesByUserIdAndRecipeId(

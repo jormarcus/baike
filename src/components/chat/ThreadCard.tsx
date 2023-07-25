@@ -24,10 +24,10 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread }) => {
           {thread.firstAnswer ?? 'No preview available.'}
         </p>
       </Link>
-      <div className="flex gap-6 text-sm font-semibold pt-2">
+      <div className="flex gap-4 text-sm font-semibold pt-2">
         <div className="flex items-center gap-1">
           <MessageSquare height={14} width={14} />
-          <div>{thread.userMessagesCount} messages</div>
+          <div>{thread.userMessagesCount}</div>
         </div>
         <div className="flex items-center gap-1">
           <Clock4 height={14} width={14} />
