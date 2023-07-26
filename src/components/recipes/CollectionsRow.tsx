@@ -6,6 +6,9 @@ interface CollectionsRowProps {
 }
 
 const CollectionsRow: React.FC<CollectionsRowProps> = ({ collections }) => {
+  if (!collections.length) {
+    return null;
+  }
   return (
     <div className="flex items-center gap-1">
       <div className="pr-2 font-light tracking-wide">Collections: </div>
