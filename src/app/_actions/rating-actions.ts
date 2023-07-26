@@ -2,6 +2,7 @@
 
 import prisma from '@/lib/prismadb';
 import { getCurrentUser } from './user-actions';
+import { revalidatePath } from 'next/cache';
 
 export async function upsertRating(
   rating: number,
@@ -36,4 +37,35 @@ export async function upsertRating(
       },
     });
   }
+
+  const {
+    _avg: { rating: averageRating },
+  } = await prisma.rating.aggregate({
+    where: {
+      recipeId,
+    },
+    _avg: {
+      rating: true,
+    },
+  });
+
+  if (!averageRating) {
+    throw new Error('Average rating not found');
+  }
+
+  // Update the recipe's average rating
+  await prisma.recipe.update({
+    where: {
+      id: recipeId,
+    },
+    data: {
+      averageRating,
+    },
+  });
+
+  console.log(
+    `Updated averageRating for recipe with id ${recipeId}: ${averageRating}`
+  );
+
+  revalidatePath(`/recipe/${recipeId}`);
 }

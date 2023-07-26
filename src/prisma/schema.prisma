@@ -91,7 +91,7 @@ model Recipe {
   RecipeIngredients RecipeIngredients[]
   likesCount        Int                 @default(0)
   notes             String?
-  averageRating     Float?              @default(0)
+  averageRating     Float               @default(0)
   ratings           Rating[]
   // likes                Like[]
   // notesCount           Int                    @default(0)
