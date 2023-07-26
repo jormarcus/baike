@@ -31,7 +31,7 @@ const InputList: React.FC<InputListProps> = ({
 
   const handleInputBlur = (index: number) => {
     console.log('handleInputBlur: ', index);
-    if (inputValues[index] === '') {
+    if (inputValues[index] === '' && index !== 0) {
       const updatedInputList = inputValues.filter(
         (_inputValue, idx) => index !== idx
       );
