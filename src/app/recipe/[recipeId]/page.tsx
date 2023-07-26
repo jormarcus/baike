@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Edit, Share, Trash } from 'lucide-react';
+import { Edit, Heart, Share, Trash } from 'lucide-react';
 
 import { getRecipeById } from '@/app/_actions/recipe-actions';
 import { Button } from '@/components/ui/Button';
@@ -10,6 +10,7 @@ import AverageRating from '@/components/recipes/AverageRating';
 import Rating from '@/components/recipes/Rating';
 import CollectionsRow from '@/components/recipes/CollectionsRow';
 import RecipeImage from '@/components/recipes/RecipeImage';
+import RecipeActionButtonRow from '@/components/recipes/RecipeActionButtonRow';
 
 interface RecipePageProps {
   params: {
@@ -28,27 +29,7 @@ export default async function RecipePage({
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col space-y-8 mt-16 px-12">
-      <div className="flex justify-between gap-2 sm:gap-4">
-        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
-          <Link
-            href={`/recipe/${recipeId}/edit`}
-            className="flex flex-nowrap items-center"
-          >
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Link>
-        </Button>
-        <AddToCollectionModal recipeId={recipe.id} name={recipe.name} />
-        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
-          Share
-        </Button>
-        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
-          Favorite
-        </Button>
-        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
-          Delete
-        </Button>
-      </div>
+      <RecipeActionButtonRow recipe={recipe} />
       <div className="flex gap-6">
         <div className="flex flex-col gap-4 items-center">
           <RecipeImage

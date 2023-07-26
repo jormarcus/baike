@@ -28,11 +28,19 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/Form';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/Tooltip';
+
 import { getCollectionsWithRecipesByUserIdAndRecipeId } from '@/app/_actions/collection-actions';
 import { SafeCollection } from '@/types';
 import AddCollectionModal from './AddCollectionModal';
 import { addCollectionsToRecipe } from '@/app/_actions/recipe-actions';
 import { Checkbox } from '../ui/Checkbox';
+import { AiOutlineAppstoreAdd } from 'react-icons/ai';
 
 const AddToCollectionSchema = z.object({
   collections: z.array(z.string()),
@@ -110,9 +118,19 @@ function AddToCollectionModal({
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 whitespace-nowrap">
-          Add to collection
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 whitespace-nowrap">
+                <AiOutlineAppstoreAdd className="mr-0 md:mr-2 h-4 w-4" />
+                <span className="hidden md:block">Add to collection</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Add to collection</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-[425px]">
         <AlertDialogHeader>
