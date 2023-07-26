@@ -77,7 +77,7 @@ export default async function RecipePage({
           <AverageRating averageRating={recipe?.averageRating || 0} />
           <CollectionsRow collections={recipe.collections} />
           <p className="leading-7 font-light tracking-wide">
-            {/* {recipe.description} */}
+            {recipe.description}
           </p>
           <div className="flex items-center justify-start gap-6">
             <span>Prep Time: {recipe.prepMinutes}</span>

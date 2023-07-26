@@ -7,6 +7,7 @@ export const RecipeSchema = z.object({
   }),
   imageSrc: z.string(),
   url: z.string(),
+  description: z.string().optional(),
   servings: z.number(),
   isPublic: z.boolean(),
   prepHours: z.number(),

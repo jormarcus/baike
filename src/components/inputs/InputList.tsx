@@ -6,7 +6,7 @@ import { InputListValues } from '@/types';
 
 interface InputListProps {
   fieldName: keyof InputListValues;
-  inputValues: any[];
+  inputValues: string[];
   firstPlaceholder: string;
   followingPlaceholder: string;
   handleInputListChange: (

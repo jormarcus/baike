@@ -62,8 +62,7 @@ export async function createRecipe(recipe: Recipe) {
       authorId: user.id,
     },
   });
-  revalidatePath(`/recipe/${newRecipe.id}`);
-  // return formatSafeRecipe(newRecipe);
+  return formatSafeRecipe(newRecipe);
 }
 
 export async function getRecipeById(id: number) {
@@ -204,7 +203,7 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
     // notesCount: 0,
     instructions: [],
     ingredients: [],
-    // description: '',
+    description: '',
     // reviewsCount: 1,
     authorId: 1,
     url: '',

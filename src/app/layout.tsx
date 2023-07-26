@@ -6,6 +6,7 @@ import RegisterModal from '../components/modals/RegisterModal';
 import Providers from '../providers/Providers';
 import Sidebar from '../components/sidebar/Sidebar';
 import { getCurrentUser } from './_actions/user-actions';
+import ToastProvider from '@/providers/ToastProvider';
 
 export const metadata = {
   title: 'Baike',
@@ -32,6 +33,7 @@ export default async function RootLayout({
             <div className="overflow-hidden w-[100vw] min-h-[100vh] flex">
               <LoginModal />
               <RegisterModal />
+              <ToastProvider />
               <Sidebar currentUser={currentUser} />
               <div className="flex w-full h-full overflow-hidden flex-col">
                 {children}
