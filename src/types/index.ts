@@ -1,4 +1,11 @@
-import { Chat, Collection, Message, Recipe, User } from '@prisma/client';
+import {
+  Chat,
+  Collection,
+  Message,
+  Rating,
+  Recipe,
+  User,
+} from '@prisma/client';
 
 export type SafeUser = Omit<
   User,
@@ -17,6 +24,7 @@ export type SafeRecipe = Omit<
   createdAt?: string | null;
   updatedAt?: string | null;
   authorId: number;
+  ratings: Rating[] | null;
 };
 
 export type SafeMessage = Omit<Message, 'createdAt' | 'updatedAt'> & {
@@ -43,11 +51,7 @@ export type InputListValues = {
   ingredients: string;
 };
 
-export type SafeCollection = Omit<
-  Collection,
-  'id' | 'createdAt' | 'updatedAt'
-> & {
-  id: number;
+export type SafeCollection = Omit<Collection, 'createdAt' | 'updatedAt'> & {
   createdAt?: string | null;
   updatedAt?: string | null;
   image: string | null;

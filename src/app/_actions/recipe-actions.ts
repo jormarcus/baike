@@ -67,9 +67,30 @@ export async function createRecipe(recipe: Recipe) {
 }
 
 export async function getRecipeById(id: number) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
   const recipe = await prisma.recipe.findUnique({
     where: {
       id,
+    },
+    // include the current users rating for the recipe
+    include: {
+      ratings: {
+        where: {
+          AND: [
+            {
+              recipeId: id,
+            },
+            {
+              userId: user.id,
+            },
+          ],
+        },
+      },
     },
   });
 
@@ -179,6 +200,7 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
     authorId: 1,
     url: '',
     notes: '',
+    ratings: [],
   };
 }
 

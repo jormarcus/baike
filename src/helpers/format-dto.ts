@@ -8,11 +8,12 @@ import {
 } from '@/types';
 import { Chat, Collection, Message, Recipe } from '@prisma/client';
 
-export function formatSafeRecipe(recipe: Recipe): SafeRecipe {
+export function formatSafeRecipe(recipe: any): SafeRecipe {
   return {
     ...recipe,
     createdAt: recipe.createdAt?.toISOString() ?? '',
     updatedAt: recipe.updatedAt?.toISOString() ?? '',
+    rating: recipe?.rating || null,
   };
 }
 

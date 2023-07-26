@@ -8,6 +8,7 @@ import EmptyState from '@/components/ui/EmptyState';
 import { SafeRecipe } from '@/types';
 import AddToCollectionModal from '@/components/modals/AddToCollectionModal';
 import AverageRating from '@/components/recipes/AverageRating';
+import Rating from '@/components/recipes/Rating';
 
 interface RecipePageProps {
   params: {
@@ -48,16 +49,26 @@ export default async function RecipePage({
         </Button>
       </div>
       <div className="flex gap-6">
-        <Image
-          src={recipe?.imageSrc || '/images/placeholder'}
-          alt={recipe.name}
-          width={400}
-          height={400}
-          fetchPriority="high"
-          priority
-          decoding="async"
-          className="rounded-md"
-        />
+        <div className="flex flex-col gap-4 items-center">
+          <Image
+            src={recipe?.imageSrc || '/images/placeholder'}
+            alt={recipe.name}
+            width={400}
+            height={400}
+            fetchPriority="high"
+            priority
+            decoding="async"
+            className="rounded-md h-full"
+          />
+          <Rating
+            userRating={
+              recipe.ratings && recipe.ratings.length > 0
+                ? recipe.ratings[0]
+                : null
+            }
+            recipeId={Number(recipeId)}
+          />
+        </div>
         <div className="flex flex-col space-y-2 items-start">
           <h1 className="font-serif font-extrabold tracking-tight text-3xl lg:text-4xl">
             {recipe.name}
