@@ -25,6 +25,7 @@ export type SafeRecipe = Omit<
   updatedAt?: string | null;
   authorId: number;
   ratings: Rating[] | null;
+  collections: Collection[];
 };
 
 export type SafeMessage = Omit<Message, 'createdAt' | 'updatedAt'> & {

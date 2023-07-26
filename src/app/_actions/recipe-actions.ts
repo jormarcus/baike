@@ -91,6 +91,14 @@ export async function getRecipeById(id: number) {
           ],
         },
       },
+      // getting collections from the user, not accounting for public collections
+      collections: {
+        take: 5,
+        select: {
+          id: true,
+          name: true,
+        },
+      },
     },
   });
 
@@ -196,11 +204,13 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
     // notesCount: 0,
     instructions: [],
     ingredients: [],
+    // description: '',
     // reviewsCount: 1,
     authorId: 1,
     url: '',
     notes: '',
     ratings: [],
+    collections: [],
   };
 }
 
@@ -250,6 +260,8 @@ export async function addCollectionsToRecipe(
       collections: true,
     },
   });
+
+  revalidatePath(`/recipe/${recipeId}`);
 
   return formatSafeRecipe(updatedRecipe);
 }

@@ -9,6 +9,7 @@ import { SafeRecipe } from '@/types';
 import AddToCollectionModal from '@/components/modals/AddToCollectionModal';
 import AverageRating from '@/components/recipes/AverageRating';
 import Rating from '@/components/recipes/Rating';
+import CollectionsRow from '@/components/recipes/CollectionsRow';
 
 interface RecipePageProps {
   params: {
@@ -74,16 +75,9 @@ export default async function RecipePage({
             {recipe.name}
           </h1>
           <AverageRating averageRating={recipe?.averageRating || 0} />
-          <div className="flex items-center gap-1">
-            <div>Tags</div>
-            <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
-              Source
-            </Button>
-          </div>
-          <p className="leading-7">
-            All you need are a few simple ingredients to make this Chicken
-            Noodle Soup. Filling, healthy, and delicious, this soup comes
-            together quickly.
+          <CollectionsRow collections={recipe.collections} />
+          <p className="leading-7 font-light tracking-wide">
+            {/* {recipe.description} */}
           </p>
           <div className="flex items-center justify-start gap-6">
             <span>Prep Time: {recipe.prepMinutes}</span>
