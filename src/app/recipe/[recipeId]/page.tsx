@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Edit, Share, Trash } from 'lucide-react';
 
@@ -10,6 +9,7 @@ import AddToCollectionModal from '@/components/modals/AddToCollectionModal';
 import AverageRating from '@/components/recipes/AverageRating';
 import Rating from '@/components/recipes/Rating';
 import CollectionsRow from '@/components/recipes/CollectionsRow';
+import RecipeImage from '@/components/recipes/RecipeImage';
 
 interface RecipePageProps {
   params: {
@@ -51,15 +51,11 @@ export default async function RecipePage({
       </div>
       <div className="flex gap-6">
         <div className="flex flex-col gap-4 items-center">
-          <Image
-            src={recipe?.imageSrc || '/images/placeholder'}
+          <RecipeImage
+            image={recipe.imageSrc}
             alt={recipe.name}
             width={400}
             height={400}
-            fetchPriority="high"
-            priority
-            decoding="async"
-            className="rounded-md h-full"
           />
           <Rating
             userRating={

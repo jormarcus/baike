@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { MdOutlineBakeryDining } from 'react-icons/md';
+import { Croissant } from 'lucide-react';
 
 import { SafeRecipe } from '@/types';
 import { Avatar, AvatarImage } from '@/components/ui/Avatar';
@@ -49,7 +49,7 @@ const PostContent: React.FC<{
       />
     ) : (
       <div className="flex items-center justify-center p-12 border border-neutral-500 rounded-xl">
-        <MdOutlineBakeryDining size={350} />
+        <Croissant size={350} />
       </div>
     )}
   </div>
