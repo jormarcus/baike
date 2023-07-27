@@ -1,16 +1,12 @@
-import Link from 'next/link';
-import { Edit, Heart, Share, Trash } from 'lucide-react';
-
 import { getRecipeById } from '@/app/_actions/recipe-actions';
-import { Button } from '@/components/ui/Button';
 import EmptyState from '@/components/ui/EmptyState';
 import { SafeRecipe } from '@/types';
-import AddToCollectionModal from '@/components/modals/AddToCollectionModal';
 import AverageRating from '@/components/recipes/AverageRating';
 import Rating from '@/components/recipes/Rating';
 import CollectionsRow from '@/components/recipes/CollectionsRow';
 import RecipeImage from '@/components/recipes/RecipeImage';
 import RecipeActionButtonRow from '@/components/recipes/RecipeActionButtonRow';
+import RecipeCookTime from '@/components/recipes/RecipeCookTime';
 
 interface RecipePageProps {
   params: {
@@ -47,18 +43,28 @@ export default async function RecipePage({
             recipeId={Number(recipeId)}
           />
         </div>
-        <div className="flex flex-col space-y-2 items-start">
+        <div className="flex flex-col space-y-2">
           <h1 className="font-serif font-extrabold tracking-tight text-3xl lg:text-4xl">
             {recipe.name}
           </h1>
           <AverageRating averageRating={recipe?.averageRating || 0} />
           <CollectionsRow collections={recipe.collections} />
-          <p className="leading-7 font-light tracking-wide">
-            {recipe.description}
-          </p>
-          <div className="flex items-center justify-start gap-6">
-            <span>Prep Time: {recipe.prepMinutes}</span>
-            <span>Cook Time: {recipe.cookMinutes}</span>
+          {recipe.description && (
+            <p className="leading-7 font-light tracking-wide">
+              {recipe.description}
+            </p>
+          )}
+          <div className="flex gap-6">
+            <RecipeCookTime
+              label="Prep"
+              hours={recipe.prepHours}
+              minutes={recipe.prepMinutes}
+            />
+            <RecipeCookTime
+              label="Cook"
+              hours={recipe.cookHours}
+              minutes={recipe.cookMinutes}
+            />
           </div>
         </div>
       </div>

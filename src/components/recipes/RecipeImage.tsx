@@ -26,7 +26,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
           className="h-full w-full object-cover transition group-hover:scale-110"
         />
       ) : (
-        <div className="p-2 flex items-center justify-center h-full w-full border border-neutral-500 rounded-xl">
+        <div className="dark:bg-neutral-950 p-2 flex items-center justify-center h-full w-full border border-neutral-500 rounded-xl">
           <Croissant height={50} width={50} />
         </div>
       )}

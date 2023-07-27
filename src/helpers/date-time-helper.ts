@@ -28,6 +28,20 @@ export function formatDuration(milliseconds: number) {
   return duration.trim();
 }
 
+export function formatCookingDuration(hours: number, minutes: number) {
+  let duration = '';
+
+  if (hours > 0) {
+    duration += hours + ' hour' + (hours > 1 ? 's' : '') + ' ';
+  }
+
+  if (minutes > 0) {
+    duration += minutes + ' minute' + (minutes > 1 ? 's' : '') + ' ';
+  }
+
+  return duration.trim();
+}
+
 export function getTimeInMinutes(milliseconds: number) {
   let seconds = Math.floor(milliseconds / 1000);
   let minutes = Math.floor(seconds / 60);
