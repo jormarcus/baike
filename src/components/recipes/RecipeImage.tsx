@@ -15,7 +15,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
   width,
 }) => {
   return (
-    <div className="relative aspect-square w-full overflow-hidden rounded-xl">
+    <div className="relative col-span-1 max-w-[330px] max-h-[330px] overflow-hidden rounded-xl">
       {image ? (
         <Image
           height={height}
@@ -23,11 +23,11 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
           src={image}
           alt={alt}
           decoding="async"
-          className="h-full w-full object-cover transition group-hover:scale-110"
+          className="object-cover transition group-hover:scale-110 aspect-square"
         />
       ) : (
-        <div className="dark:bg-neutral-950 p-2 flex items-center justify-center h-full w-full border border-neutral-500 rounded-xl">
-          <Croissant height={50} width={50} />
+        <div className="dark:bg-neutral-950 flex items-center justify-center h-full w-full rounded-xl aspect-square">
+          <Croissant className="text-white" height={80} width={80} />
         </div>
       )}
     </div>

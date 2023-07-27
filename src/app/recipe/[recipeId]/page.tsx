@@ -7,6 +7,7 @@ import CollectionsRow from '@/components/recipes/CollectionsRow';
 import RecipeImage from '@/components/recipes/RecipeImage';
 import RecipeActionButtonRow from '@/components/recipes/RecipeActionButtonRow';
 import RecipeCookTime from '@/components/recipes/RecipeCookTime';
+import ServingsModifier from '@/components/recipes/ServingsModifier';
 
 interface RecipePageProps {
   params: {
@@ -26,24 +27,14 @@ export default async function RecipePage({
   return (
     <div className="mx-auto flex max-w-4xl flex-col space-y-8 mt-16 px-12">
       <RecipeActionButtonRow recipe={recipe} />
-      <div className="flex gap-6">
-        <div className="flex flex-col gap-4 items-center">
-          <RecipeImage
-            image={recipe.imageSrc}
-            alt={recipe.name}
-            width={400}
-            height={400}
-          />
-          <Rating
-            userRating={
-              recipe.ratings && recipe.ratings.length > 0
-                ? recipe.ratings[0]
-                : null
-            }
-            recipeId={Number(recipeId)}
-          />
-        </div>
-        <div className="flex flex-col space-y-2">
+      <div className="grid grid-cols-2 gap-8">
+        <RecipeImage
+          image={recipe.imageSrc}
+          alt={recipe.name}
+          width={400}
+          height={400}
+        />
+        <div className="col-span-1 flex flex-col space-y-2">
           <h1 className="font-serif font-extrabold tracking-tight text-3xl lg:text-4xl">
             {recipe.name}
           </h1>
@@ -54,7 +45,7 @@ export default async function RecipePage({
               {recipe.description}
             </p>
           )}
-          <div className="flex gap-6">
+          <div className="flex min-[700px]:gap-6 flex-wrap">
             <RecipeCookTime
               label="Prep"
               hours={recipe.prepHours}
@@ -67,12 +58,18 @@ export default async function RecipePage({
             />
           </div>
         </div>
-      </div>
-      <div className="text-sm font-medium leading-none inline-block whitespace-nowrap">
-        Servings Modifier
-      </div>
-      <div className="grid grid-cols-1 gap-3 print:grid-cols-5 sm:grid-cols-5 sm:gap-10">
-        <div className="col-span-1 print:col-span-2 sm:col-span-2">
+        <div className="col-span-2 flex md:items-center md:flex-row flex-col items-start justify-start gap-6">
+          <Rating
+            userRating={
+              recipe.ratings && recipe.ratings.length > 0
+                ? recipe.ratings[0]
+                : null
+            }
+            recipeId={Number(recipeId)}
+          />
+          <ServingsModifier servings={recipe.servings} />
+        </div>
+        <div className="col-span-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between text-ellipsis">
               Ingredients
@@ -82,14 +79,11 @@ export default async function RecipePage({
             {recipe.ingredients.map((ingredient, index) => (
               <div key={index}>
                 <div>{ingredient}</div>
-                {/* <div>{ingredient.quantity}</div>
-              <div>{ingredient.unit}</div>
-              <div>{ingredient.name}</div> */}
               </div>
             ))}
           </div>
         </div>
-        <div className="col-span-1 print:col-span-2 sm:col-span-2">
+        <div className="col-span-1">
           {recipe.instructions.map((instruction, index) => (
             <div key={index}>
               <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between">

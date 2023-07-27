@@ -17,7 +17,9 @@ const RecipeCookTime: React.FC<RecipeCookTimeProps> = ({
   return (
     <div className="flex items-center gap-2">
       <Clock4 height={16} width={16} /> {label}:
-      <span>{formatCookingDuration(hours || 0, minutes || 0)}</span>
+      <span className="whitespace-nowrap">
+        {formatCookingDuration(hours || 0, minutes || 0)}
+      </span>
     </div>
   );
 };

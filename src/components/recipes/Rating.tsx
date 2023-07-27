@@ -20,7 +20,7 @@ const Rating: React.FC<RatingProps> = ({ userRating, recipeId }) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex col-span-1">
       {[...Array(5)].map((star, index) => {
         index += 1;
         return (
