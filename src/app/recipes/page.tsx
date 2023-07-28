@@ -29,10 +29,12 @@ const RecipesPage = async ({}) => {
           </div>
         </div>
       ) : (
-        <EmptyState
-          title="No recipes available"
-          subtitle="Add or import a recipe"
-        />
+        <div className="mt-32">
+          <EmptyState
+            title="No recipes available"
+            subtitle="Add or import a recipe"
+          />
+        </div>
       )}
     </div>
   );
