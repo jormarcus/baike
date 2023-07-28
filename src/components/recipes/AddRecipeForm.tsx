@@ -63,6 +63,13 @@ const AddRecipeForm: React.FC = () => {
   });
 
   function onSubmit(data: Recipe) {
+    if (data.ingredients[data.ingredients.length - 1] === '') {
+      data.ingredients.pop();
+    }
+    if (data.instructions[data.instructions.length - 1] === '') {
+      data.instructions.pop();
+    }
+
     // @ts-ignore
     startTransition(async () => {
       try {

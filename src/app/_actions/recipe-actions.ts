@@ -2,11 +2,28 @@
 
 import prisma from '@/lib/prismadb';
 import { revalidatePath } from 'next/cache';
+import { parseIngredient } from 'parse-ingredient';
 
 import { formatSafeRecipe } from '@/helpers/format-dto';
 import { getCurrentUser } from './user-actions';
 import { Recipe } from '@/lib/validators/recipe-validator';
+import { Ingredient } from '@/lib/validators/ingredient-validator';
 import { SafeCollection, SafeRecipe } from '@/types';
+import { capitalizeFirstLetter, omit } from '@/lib/utils';
+
+function parseIngredients(ingredients: string[]) {
+  return ingredients.map((ingredient) => {
+    const parsedIngredient = parseIngredient(ingredient)[0];
+    return {
+      name: capitalizeFirstLetter(parsedIngredient.description),
+      quantity: parsedIngredient.quantity,
+      quantity2: parsedIngredient.quantity2,
+      unitOfMeasure: parsedIngredient.unitOfMeasure,
+      unitOfMeasureID: parsedIngredient.unitOfMeasureID,
+      isGroupHeader: parsedIngredient.isGroupHeader,
+    };
+  });
+}
 
 export async function createRecipe(recipe: Recipe) {
   console.log('creating recipe: ', recipe);
@@ -16,10 +33,21 @@ export async function createRecipe(recipe: Recipe) {
     throw new Error('User not found');
   }
 
+  const ingredients: Ingredient[] = parseIngredients(recipe.ingredients);
+
+  // remove ingredients property from recipe object
+  const formattedRecipe = omit('ingredients', recipe);
+
   const newRecipe = await prisma.recipe.create({
     data: {
-      ...recipe,
+      ...formattedRecipe,
       authorId: user.id,
+      ingredients: {
+        create: ingredients,
+      },
+    },
+    include: {
+      ingredients: true,
     },
   });
   return formatSafeRecipe(newRecipe);
@@ -50,7 +78,6 @@ export async function getRecipeById(id: number) {
           ],
         },
       },
-      // getting collections from the user, not accounting for public collections
       collections: {
         take: 5,
         select: {
@@ -58,12 +85,15 @@ export async function getRecipeById(id: number) {
           name: true,
         },
       },
+      ingredients: {},
     },
   });
 
   if (!recipe) {
     return null;
   }
+
+  console.log('recipe: ', recipe);
 
   return formatSafeRecipe(recipe);
 }
@@ -84,16 +114,33 @@ export async function getRecipesByUserId(
   return recipes.map((recipe) => formatSafeRecipe(recipe));
 }
 
-export async function updateRecipe(recipeId: number, recipe: Recipe) {
+export async function updateRecipe(
+  recipeId: number,
+  recipe: Recipe,
+  udpatedIngredients: Ingredient[]
+) {
   if (recipe.id === null) {
     throw new Error('Recipe id cannot be null');
   }
+
+  const ingredients: Ingredient[] = parseIngredients(recipe.ingredients);
+
+  // remove ingredients property from recipe object
+  const formattedRecipe = omit('ingredients', recipe);
 
   const updatedRecipe = await prisma.recipe.update({
     where: {
       id: recipeId,
     },
-    data: recipe,
+    data: {
+      ...recipe,
+      ingredients: {
+        // update: udpatedIngredients,
+      },
+    },
+    include: {
+      ingredients: true,
+    },
   });
 
   return formatSafeRecipe(updatedRecipe);

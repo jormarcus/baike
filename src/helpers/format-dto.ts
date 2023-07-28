@@ -6,7 +6,7 @@ import {
   SafeMessage,
   SafeRecipe,
 } from '@/types';
-import { Chat, Collection, Message, Recipe } from '@prisma/client';
+import { Chat, Collection, Ingredient, Message, Recipe } from '@prisma/client';
 
 export function formatSafeRecipe(recipe: any): SafeRecipe {
   return {
@@ -14,6 +14,7 @@ export function formatSafeRecipe(recipe: any): SafeRecipe {
     createdAt: recipe.createdAt?.toISOString() ?? '',
     updatedAt: recipe.updatedAt?.toISOString() ?? '',
     rating: recipe?.rating || null,
+    ingredients: recipe.ingredients,
   };
 }
 
@@ -73,5 +74,14 @@ export function formatSafeCollection(
     recipes,
     recipesCount: 0,
     hasRecipe,
+  };
+}
+
+export function formatSafeIngredient(ingredient: Ingredient) {
+  return {
+    ...ingredient,
+    createdAt: ingredient.createdAt?.toISOString() ?? '',
+    updatedAt: ingredient.updatedAt?.toISOString() ?? '',
+    isChecked: false,
   };
 }

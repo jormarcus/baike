@@ -72,47 +72,40 @@ model VerificationToken {
 }
 
 model Recipe {
-  id                Int                 @id @default(autoincrement())
-  name              String
-  imageSrc          String?
-  authorId          Int                 @map("user_id")
-  url               String?
-  description       String?
-  ingredients       String[]
-  instructions      String[]
-  prepHours         Int?
-  prepMinutes       Int?
-  cookHours         Int?
-  cookMinutes       Int?
-  servings          Int?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  isPublic          Boolean             @default(true)
-  collections       Collection[]
-  RecipeIngredients RecipeIngredients[]
-  likesCount        Int                 @default(0)
-  notes             String?
-  averageRating     Float               @default(0)
-  ratings           Rating[]
-  // likes                Like[]
-  // notesCount           Int                    @default(0)
-  // reviews              Review[]
-  // reviewsCount         Int                    @default(0)
+  id            Int          @id @default(autoincrement())
+  name          String
+  imageSrc      String?
+  authorId      Int          @map("user_id")
+  url           String?
+  description   String?
+  collections   Collection[]
+  servings      Int?
+  instructions  String[]
+  prepHours     Int?
+  prepMinutes   Int?
+  cookHours     Int?
+  cookMinutes   Int?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  isPublic      Boolean      @default(true)
+  likesCount    Int          @default(0)
+  notes         String?
+  averageRating Float        @default(0)
+  ratings       Rating[]
+  ingredients   Ingredient[]
 }
 
 model Ingredient {
-  id                Int                 @id @default(autoincrement())
-  name              String              @unique
-  description       String?
-  RecipeIngredients RecipeIngredients[]
-}
-
-model RecipeIngredients {
-  id           Int        @id @default(autoincrement())
-  recipe       Recipe     @relation(fields: [recipeId], references: [id])
-  recipeId     Int        @map("recipe_id")
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
-  ingredientId Int        @map("ingredient_id")
+  id              Int      @id @default(autoincrement())
+  name            String
+  quantity        Float?
+  quantity2       Float?
+  unitOfMeasure   String?
+  unitOfMeasureID String?
+  isGroupHeader   Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  recipes         Recipe[]
 }
 
 model Collection {

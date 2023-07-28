@@ -1,6 +1,7 @@
 import {
   Chat,
   Collection,
+  Ingredient,
   Message,
   Rating,
   Recipe,
@@ -26,6 +27,7 @@ export type SafeRecipe = Omit<
   authorId: number;
   ratings: Rating[] | null;
   collections: Collection[];
+  ingredients: SafeIngredient[];
 };
 
 export type SafeMessage = Omit<Message, 'createdAt' | 'updatedAt'> & {
@@ -59,4 +61,10 @@ export type SafeCollection = Omit<Collection, 'createdAt' | 'updatedAt'> & {
   recipes: { name: string; imageSrc: string | null }[];
   recipesCount: number;
   hasRecipe: boolean;
+};
+
+export type SafeIngredient = Omit<Ingredient, 'createdAt' | 'updatedAt'> & {
+  createdAt?: string | null;
+  updatedAt?: string | null;
+  isChecked?: boolean;
 };

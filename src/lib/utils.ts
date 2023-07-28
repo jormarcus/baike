@@ -14,3 +14,12 @@ export function isNullOrUndefined<T>(
 ): value is null | undefined {
   return value === null || value === undefined;
 }
+
+export function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function omit(key: string, obj: any) {
+  const { [key]: omitted, ...rest } = obj;
+  return rest;
+}
