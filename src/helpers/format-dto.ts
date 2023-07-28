@@ -14,7 +14,6 @@ export function formatSafeRecipe(recipe: any): SafeRecipe {
     createdAt: recipe.createdAt?.toISOString() ?? '',
     updatedAt: recipe.updatedAt?.toISOString() ?? '',
     rating: recipe?.rating || null,
-    ingredients: recipe.ingredients,
   };
 }
 

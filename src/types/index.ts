@@ -1,7 +1,7 @@
+import { Ingredient } from '@/lib/validators/ingredient-validator';
 import {
   Chat,
   Collection,
-  Ingredient,
   Message,
   Rating,
   Recipe,
@@ -27,7 +27,7 @@ export type SafeRecipe = Omit<
   authorId: number;
   ratings: Rating[] | null;
   collections: Collection[];
-  ingredients: SafeIngredient[];
+  ingredients: Ingredient[];
 };
 
 export type SafeMessage = Omit<Message, 'createdAt' | 'updatedAt'> & {

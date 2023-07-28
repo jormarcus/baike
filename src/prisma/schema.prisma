@@ -103,6 +103,7 @@ model Ingredient {
   unitOfMeasure   String?
   unitOfMeasureID String?
   isGroupHeader   Boolean  @default(false)
+  input           String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   recipes         Recipe[]
