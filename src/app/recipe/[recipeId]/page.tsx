@@ -8,6 +8,7 @@ import RecipeImage from '@/components/recipes/RecipeImage';
 import RecipeActionButtonRow from '@/components/recipes/RecipeActionButtonRow';
 import RecipeCookTime from '@/components/recipes/RecipeCookTime';
 import ServingsModifier from '@/components/recipes/ServingsModifier';
+import IngredientsList from '@/components/recipes/IngredientsList';
 
 interface RecipePageProps {
   params: {
@@ -27,7 +28,7 @@ export default async function RecipePage({
   return (
     <div className="mx-auto flex max-w-4xl flex-col space-y-8 mt-16 px-12">
       <RecipeActionButtonRow recipe={recipe} />
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-2 gap-x-8 gap-y-4 sm:gap-y-8">
         <RecipeImage
           image={recipe.imageSrc}
           alt={recipe.name}
@@ -58,7 +59,7 @@ export default async function RecipePage({
             />
           </div>
         </div>
-        <div className="col-span-2 flex md:items-center md:flex-row flex-col items-start justify-start gap-6">
+        <div className="col-span-2 w-1/2 flex flex-wrap gap-4 items-center justify-center">
           <Rating
             userRating={
               recipe.ratings && recipe.ratings.length > 0
@@ -69,21 +70,10 @@ export default async function RecipePage({
           />
           <ServingsModifier servings={recipe.servings} />
         </div>
-        <div className="col-span-1">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between text-ellipsis">
-              Ingredients
-            </h4>
-          </div>
-          <div>
-            {recipe.ingredients.map((ingredient, index) => (
-              <div key={index}>
-                <div>{ingredient}</div>
-              </div>
-            ))}
-          </div>
+        <div className="sm:col-span-1 col-span-2">
+          <IngredientsList ingredients={recipe.ingredients} />
         </div>
-        <div className="col-span-1">
+        <div className="sm:col-span-1 col-span-2">
           {recipe.instructions.map((instruction, index) => (
             <div key={index}>
               <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between">
