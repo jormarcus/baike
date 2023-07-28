@@ -18,7 +18,7 @@ const RecipeActionButtonRow: React.FC<RecipeActionButtonRowProps> = ({
   recipe,
 }) => {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-6 sm:gap-4">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>

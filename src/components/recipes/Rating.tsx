@@ -1,9 +1,10 @@
 'use client';
 
-import { upsertRating } from '@/app/_actions/rating-actions';
 import { Rating } from '@prisma/client';
 import { Star } from 'lucide-react';
 import { useState } from 'react';
+
+import { upsertRating } from '@/app/_actions/rating-actions';
 
 interface RatingProps {
   userRating: Rating | null;
@@ -20,7 +21,7 @@ const Rating: React.FC<RatingProps> = ({ userRating, recipeId }) => {
   };
 
   return (
-    <div className="flex col-span-1">
+    <div className="flex items-center sm:items-start justify-center sm:justify-start">
       {[...Array(5)].map((star, index) => {
         index += 1;
         return (
