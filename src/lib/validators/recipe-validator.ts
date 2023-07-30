@@ -1,4 +1,9 @@
 import { z } from 'zod';
+import { IngredientSchema } from './ingredient-validator';
+
+// export const Instruction = z.object({
+//   content: z.string(),
+// });
 
 export const RecipeSchema = z.object({
   id: z.number().optional(),
@@ -15,7 +20,7 @@ export const RecipeSchema = z.object({
   cookHours: z.number(),
   cookMinutes: z.number(),
   instructions: z.array(z.string()),
-  ingredients: z.array(z.string()),
+  ingredients: z.array(IngredientSchema),
   notes: z.string(),
 
   authorId: z.number().optional(),

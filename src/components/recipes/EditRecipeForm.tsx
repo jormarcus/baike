@@ -71,8 +71,8 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
     // @ts-ignore
     startTransition(async () => {
       try {
-        const newRecipe = await updateRecipe(recipe.id, data);
-        router.push(`/recipe/${newRecipe.id}`);
+        // const newRecipe = await updateRecipe(recipe.id, data);
+        // router.push(`/recipe/${newRecipe.id}`);
       } catch (error) {
         error instanceof Error
           ? toast.error(error.message)
@@ -98,7 +98,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
       newInputs.push('');
     }
 
-    form.setValue(field, newInputs);
+    // form.setValue(field, newInputs);
   };
 
   const handleInputListBlur = (

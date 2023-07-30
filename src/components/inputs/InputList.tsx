@@ -3,10 +3,11 @@
 import { cn } from '@/lib/utils';
 import { Input } from './Input';
 import { InputListValues } from '@/types';
+import { Ingredient } from '@/lib/validators/ingredient-validator';
 
 interface InputListProps {
   fieldName: keyof InputListValues;
-  inputValues: string[];
+  inputValues: any[];
   firstPlaceholder: string;
   followingPlaceholder: string;
   handleInputListChange: (
@@ -31,7 +32,7 @@ const InputList: React.FC<InputListProps> = ({
 
   const handleInputBlur = (index: number) => {
     console.log('handleInputBlur: ', index);
-    if (inputValues[index] === '' && index !== 0) {
+    if (inputValues[index]['input'] === '' && index !== 0) {
       const updatedInputList = inputValues.filter(
         (_inputValue, idx) => index !== idx
       );
@@ -51,7 +52,7 @@ const InputList: React.FC<InputListProps> = ({
         <Input
           key={index}
           id={`input-${index}`}
-          value={inputValue}
+          value={inputValue.input}
           placeholder={index === 0 ? firstPlaceholder : followingPlaceholder}
           onChange={(e) =>
             handleInputListChange(fieldName, e.target.value, index)

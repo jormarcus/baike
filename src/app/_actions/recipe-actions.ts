@@ -21,6 +21,7 @@ function parseIngredients(ingredients: string[]) {
       unitOfMeasure: parsedIngredient.unitOfMeasure,
       unitOfMeasureID: parsedIngredient.unitOfMeasureID,
       isGroupHeader: parsedIngredient.isGroupHeader,
+      input: ingredient,
     };
   });
 }
@@ -33,7 +34,9 @@ export async function createRecipe(recipe: Recipe) {
     throw new Error('User not found');
   }
 
-  const ingredients: Ingredient[] = parseIngredients(recipe.ingredients);
+  const ingredients: Ingredient[] = parseIngredients(
+    recipe.ingredients.map((i) => i.input)
+  );
 
   // remove ingredients property from recipe object
   const formattedRecipe = omit('ingredients', recipe);
@@ -51,6 +54,41 @@ export async function createRecipe(recipe: Recipe) {
     },
   });
   return formatSafeRecipe(newRecipe);
+}
+
+export async function updateRecipe(
+  recipeId: number,
+  recipe: Recipe,
+  udpatedIngredients: Ingredient[],
+  newIngredients: Ingredient[]
+) {
+  if (recipe.id === null) {
+    throw new Error('Recipe id cannot be null');
+  }
+
+  const ingredients: Ingredient[] = parseIngredients(
+    newIngredients.map((i) => i.input)
+  );
+
+  // remove ingredients property from recipe object
+  const formattedRecipe = omit('ingredients', recipe);
+
+  const updatedRecipe = await prisma.recipe.update({
+    where: {
+      id: recipeId,
+    },
+    data: {
+      ...formattedRecipe,
+      ingredients: {
+        create: ingredients,
+      },
+    },
+    include: {
+      ingredients: true,
+    },
+  });
+
+  return formatSafeRecipe(updatedRecipe);
 }
 
 export async function getRecipeById(id: number) {
@@ -85,7 +123,7 @@ export async function getRecipeById(id: number) {
           name: true,
         },
       },
-      ingredients: {},
+      ingredients: true,
     },
   });
 
@@ -112,38 +150,6 @@ export async function getRecipesByUserId(
   });
 
   return recipes.map((recipe) => formatSafeRecipe(recipe));
-}
-
-export async function updateRecipe(
-  recipeId: number,
-  recipe: Recipe,
-  udpatedIngredients: Ingredient[]
-) {
-  if (recipe.id === null) {
-    throw new Error('Recipe id cannot be null');
-  }
-
-  const ingredients: Ingredient[] = parseIngredients(recipe.ingredients);
-
-  // remove ingredients property from recipe object
-  const formattedRecipe = omit('ingredients', recipe);
-
-  const updatedRecipe = await prisma.recipe.update({
-    where: {
-      id: recipeId,
-    },
-    data: {
-      ...recipe,
-      ingredients: {
-        // update: udpatedIngredients,
-      },
-    },
-    include: {
-      ingredients: true,
-    },
-  });
-
-  return formatSafeRecipe(updatedRecipe);
 }
 
 export async function deleteRecipe(id: number) {

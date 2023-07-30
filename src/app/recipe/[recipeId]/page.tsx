@@ -9,6 +9,7 @@ import RecipeActionButtonRow from '@/components/recipes/RecipeActionButtonRow';
 import RecipeCookTime from '@/components/recipes/RecipeCookTime';
 import ServingsModifier from '@/components/recipes/ServingsModifier';
 import IngredientsList from '@/components/recipes/IngredientsList';
+import { Label } from '@/components/ui/Label';
 
 interface RecipePageProps {
   params: {
@@ -74,6 +75,7 @@ export default async function RecipePage({
           <IngredientsList ingredients={recipe.ingredients} />
         </div>
         <div className="sm:col-span-1 col-span-2">
+          <Label className="text-xl mb-2">Instructions</Label>
           {recipe.instructions.map((instruction, index) => (
             <div key={index}>
               <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between">
