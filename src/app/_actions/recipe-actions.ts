@@ -11,9 +11,9 @@ import { Ingredient } from '@/lib/validators/ingredient-validator';
 import { SafeCollection, SafeRecipe } from '@/types';
 import { capitalizeFirstLetter, omit } from '@/lib/utils';
 
-function parseIngredients(ingredients: string[]) {
+function parseIngredients(ingredients: { input: string; id?: number }[]) {
   return ingredients.map((ingredient) => {
-    const parsedIngredient = parseIngredient(ingredient)[0];
+    const parsedIngredient = parseIngredient(ingredient.input)[0];
     return {
       name: capitalizeFirstLetter(parsedIngredient.description),
       quantity: parsedIngredient.quantity,
@@ -21,7 +21,8 @@ function parseIngredients(ingredients: string[]) {
       unitOfMeasure: parsedIngredient.unitOfMeasure,
       unitOfMeasureID: parsedIngredient.unitOfMeasureID,
       isGroupHeader: parsedIngredient.isGroupHeader,
-      input: ingredient,
+      input: ingredient.input,
+      id: ingredient.id,
     };
   });
 }
@@ -35,7 +36,7 @@ export async function createRecipe(recipe: Recipe) {
   }
 
   const ingredients: Ingredient[] = parseIngredients(
-    recipe.ingredients.map((i) => i.input)
+    recipe.ingredients.map((i) => ({ input: i.input }))
   );
 
   // remove ingredients property from recipe object
@@ -59,18 +60,27 @@ export async function createRecipe(recipe: Recipe) {
 export async function updateRecipe(
   recipeId: number,
   recipe: Recipe,
-  udpatedIngredients: Ingredient[],
-  newIngredients: Ingredient[]
+  deleteIngredients: number[] = []
 ) {
   if (recipe.id === null) {
     throw new Error('Recipe id cannot be null');
   }
 
-  const ingredients: Ingredient[] = parseIngredients(
-    newIngredients.map((i) => i.input)
+  console.log('updating recipe: ', recipe);
+
+  const newIngredients: Ingredient[] = parseIngredients(
+    recipe.ingredients.filter((i) => !i.id).map((i) => ({ input: i.input }))
+  );
+  const updatedIngredients: Ingredient[] = parseIngredients(
+    recipe.ingredients
+      .filter((i) => i.isUpdated)
+      .map((i) => ({ input: i.input, id: i.id }))
   );
 
-  // remove ingredients property from recipe object
+  console.log('newIngredients: ', newIngredients);
+  console.log('updatedIngredients: ', updatedIngredients);
+
+  // remove ingredients property fr pinom recipe object
   const formattedRecipe = omit('ingredients', recipe);
 
   const updatedRecipe = await prisma.recipe.update({
@@ -80,7 +90,9 @@ export async function updateRecipe(
     data: {
       ...formattedRecipe,
       ingredients: {
-        create: ingredients,
+        create: newIngredients,
+        update: updatedIngredients,
+        delete: deleteIngredients.map((id) => ({ id })),
       },
     },
     include: {
@@ -130,8 +142,6 @@ export async function getRecipeById(id: number) {
   if (!recipe) {
     return null;
   }
-
-  console.log('recipe: ', recipe);
 
   return formatSafeRecipe(recipe);
 }

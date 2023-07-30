@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
@@ -27,15 +27,13 @@ import { Recipe, RecipeSchema } from '@/lib/validators/recipe-validator';
 import { Icons } from '@/components/Icons';
 import { useRange } from '@/hooks/useGenerateRange';
 import Textarea from '@/components/inputs/Textarea';
-import { updateRecipe } from '@/app/_actions/recipe-actions';
 import { Switch } from '@/components/ui/Switch';
 import { Button } from '@/components/ui/Button';
 import ImageUploader from '@/components/ImageUploader';
-import InputList from '@/components/inputs/InputList';
-import { Label } from '@radix-ui/react-label';
-import { revalidatePath } from 'next/cache';
-import { InputListValues, SafeRecipe } from '@/types';
+import { SafeRecipe } from '@/types';
 import { useRouter } from 'next/navigation';
+import { Label } from '../ui/Label';
+import { updateRecipe } from '@/app/_actions/recipe-actions';
 
 interface EditRecipeFormProps {
   recipe: SafeRecipe;
@@ -47,6 +45,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
   const minutesRange = useRange(1, 59);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const [deletedIngredients, setDeletedIngredients] = useState<number[]>([]);
 
   const form = useForm<Recipe>({
     resolver: zodResolver(RecipeSchema),
@@ -60,19 +59,55 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
       prepMinutes: recipe?.prepMinutes || 0,
       cookHours: recipe?.cookHours || 0,
       cookMinutes: recipe?.cookMinutes || 0,
-      ingredients: recipe?.ingredients || [''],
-      instructions: recipe?.instructions || [''],
+      ingredients: [
+        ...recipe?.ingredients,
+        {
+          name: '',
+          quantity: null,
+          quantity2: null,
+          unitOfMeasure: '',
+          unitOfMeasureID: '',
+          isGroupHeader: false,
+          input: '',
+        },
+      ] || [
+        {
+          name: '',
+          quantity: null,
+          quantity2: null,
+          unitOfMeasure: '',
+          unitOfMeasureID: '',
+          isGroupHeader: false,
+          input: '',
+        },
+      ],
+      instructions: [...recipe?.instructions, ''] || [''],
       imageSrc: recipe?.imageSrc || '',
       notes: recipe?.notes || '',
     },
   });
 
+  const imageSrc = form.watch('imageSrc');
+  const ingredients = form.watch('ingredients');
+  const instructions = form.watch('instructions');
+
   function onSubmit(data: Recipe) {
+    if (data.ingredients[data.ingredients.length - 1]['input'] === '') {
+      data.ingredients.pop();
+    }
+    if (data.instructions[data.instructions.length - 1] === '') {
+      data.instructions.pop();
+    }
+
     // @ts-ignore
     startTransition(async () => {
       try {
-        // const newRecipe = await updateRecipe(recipe.id, data);
-        // router.push(`/recipe/${newRecipe.id}`);
+        const newRecipe = await updateRecipe(
+          recipe.id,
+          data,
+          deletedIngredients
+        );
+        router.push(`/recipe/${newRecipe.id}`);
       } catch (error) {
         error instanceof Error
           ? toast.error(error.message)
@@ -81,14 +116,44 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
     });
   }
 
-  const imageSrc = form.watch('imageSrc');
+  const handleIngredientChange = (value: string, index: number) => {
+    const fieldData = form.getValues('ingredients');
+    const newInputs = [...fieldData];
 
-  const handleInputListChange = (
-    field: keyof InputListValues,
-    value: string,
-    index: number
-  ) => {
-    const fieldData = form.getValues(field);
+    newInputs[index]['input'] = value;
+
+    // add a new input, if typing into the last input
+    if (index === fieldData.length - 1 && value !== '') {
+      newInputs.push({
+        name: '',
+        quantity: null,
+        quantity2: null,
+        unitOfMeasure: '',
+        unitOfMeasureID: '',
+        isGroupHeader: false,
+        input: '',
+      });
+    }
+
+    form.setValue('ingredients', newInputs);
+  };
+
+  const handleIngredientBlur = (value: string, index: number) => {
+    const fieldData = form.getValues('ingredients');
+    const newInputs = [...fieldData];
+    if (index !== 0 && value === '') {
+      const deletedIngredient = newInputs.splice(index, 1)[0];
+      if (deletedIngredient.id) {
+        setDeletedIngredients([...deletedIngredients, deletedIngredient.id]);
+      }
+    } else if (newInputs[index]['id']) {
+      newInputs[index]['isUpdated'] = true;
+    }
+    form.setValue('ingredients', newInputs);
+  };
+
+  const handleInstructionChange = (value: string, index: number) => {
+    const fieldData = form.getValues('instructions');
     const newInputs = [...fieldData];
 
     newInputs[index] = value;
@@ -98,14 +163,16 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
       newInputs.push('');
     }
 
-    // form.setValue(field, newInputs);
+    form.setValue('instructions', newInputs);
   };
 
-  const handleInputListBlur = (
-    field: keyof InputListValues,
-    updatedInputList: string[]
-  ) => {
-    form.setValue(field, updatedInputList);
+  const handleInstructionBlur = (value: string, index: number) => {
+    if (index !== 0 && value === '') {
+      const fieldData = form.getValues('instructions');
+      const newInputs = [...fieldData];
+      newInputs.splice(index, 1);
+      form.setValue('instructions', newInputs);
+    }
   };
 
   return (
@@ -338,30 +405,52 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
               </div>
             </div>
             <hr className="text-neutral-500 w-full my-6" />
-            <div className="flex flex-row items-baseline gap-24 w-full pr-12">
-              <div className="flex flex-col flex-1 w-full">
-                <Label className="mb-2">Ingredients</Label>
-                <InputList
-                  className="flex-1 w-full"
-                  fieldName="ingredients"
-                  inputValues={form.watch('ingredients')}
-                  firstPlaceholder="First ingredient"
-                  followingPlaceholder="Add an ingredient..."
-                  handleInputListChange={handleInputListChange}
-                  handleInputListBlur={handleInputListBlur}
-                />
+            <div className="flex flex-row items-baseline gap-16 w-full">
+              <div className="flex flex-col flex-1 w-full basis-2/5">
+                <Label className="mb-2 text-lg">Ingredients</Label>
+                <div className="flex flex-col items-center justify-center gap-2">
+                  {ingredients.map((ingredient, index) => (
+                    <Input
+                      key={index}
+                      id={`input-${index}`}
+                      value={ingredient.input}
+                      placeholder={
+                        index === 0
+                          ? 'First ingredient...'
+                          : 'Add an ingredient...'
+                      }
+                      onChange={(e) =>
+                        handleIngredientChange(e.target.value, index)
+                      }
+                      onBlur={(e) =>
+                        handleIngredientBlur(e.target.value, index)
+                      }
+                      className="w-full"
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-col flex-1 w-full">
-                <Label className="mb-2">Instructions</Label>
-                <InputList
-                  className="flex-1 w-full"
-                  fieldName="instructions"
-                  inputValues={form.watch('instructions')}
-                  firstPlaceholder="First step"
-                  followingPlaceholder="Next step..."
-                  handleInputListChange={handleInputListChange}
-                  handleInputListBlur={handleInputListBlur}
-                />
+              <div className="flex flex-col flex-1 w-full basis-3/5">
+                <Label className="mb-2 text-lg">Instructions</Label>
+                <div className="flex flex-col items-center justify-center gap-2">
+                  {instructions.map((instruction, index) => (
+                    <Textarea
+                      key={index}
+                      id={`input-${index}`}
+                      value={instruction}
+                      placeholder={
+                        index === 0 ? 'First step...' : 'Next step...'
+                      }
+                      onChange={(e) =>
+                        handleInstructionChange(e.target.value, index)
+                      }
+                      onBlur={(e) =>
+                        handleInstructionBlur(e.target.value, index)
+                      }
+                      className="w-full"
+                    />
+                  ))}
+                </div>
               </div>
             </div>
             <hr className="text-neutral-500 w-full my-6" />

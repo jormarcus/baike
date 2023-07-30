@@ -49,11 +49,6 @@ export type ChatGPTMessage = {
   content: string;
 };
 
-export type InputListValues = {
-  instructions: string;
-  ingredients: string;
-};
-
 export type SafeCollection = Omit<Collection, 'createdAt' | 'updatedAt'> & {
   createdAt?: string | null;
   updatedAt?: string | null;
