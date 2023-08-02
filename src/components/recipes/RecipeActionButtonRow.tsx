@@ -10,6 +10,9 @@ import {
   TooltipTrigger,
 } from '@/components/ui/Tooltip';
 
+import { revalidatePath } from 'next/cache';
+import DeleteRecipeModal from '../modals/DeleteRecipeModal';
+
 interface RecipeActionButtonRowProps {
   recipe: SafeRecipe;
 }
@@ -64,19 +67,10 @@ const RecipeActionButtonRow: React.FC<RecipeActionButtonRowProps> = ({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
-              <Trash className="mr-0 md:mr-2 h-4 w-4" />
-              <span className="hidden md:block">Delete</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Delete</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+
+      <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
+        <DeleteRecipeModal recipe={recipe} />
+      </Button>
     </div>
   );
 };

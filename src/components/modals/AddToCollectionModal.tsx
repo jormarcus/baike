@@ -123,7 +123,7 @@ function AddToCollectionModal({
             <TooltipTrigger>
               <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 whitespace-nowrap">
                 <AiOutlineAppstoreAdd className="mr-0 md:mr-2 h-4 w-4" />
-                <span className="hidden md:block">Add to collection</span>
+                <span className="hidden lg:block">Add to collection</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
