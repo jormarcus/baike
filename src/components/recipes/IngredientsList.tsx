@@ -26,11 +26,9 @@ const IngredientsList: React.FC<IngredientsListProps> = ({ ingredients }) => {
   }, [ingredients]);
 
   return (
-    <div className="flex flex-col items-start gap-2">
-      <h4 className="text-xl font-semibold tracking-tight mt-0 flex flex-1 shrink items-center justify-between text-ellipsis">
-        Ingredients
-      </h4>
-      <ul className="mt-2 list-none">
+    <div className="flex flex-col items-start w-full">
+      <h4 className="text-xl font-semibold tracking-tight mb-2">Ingredients</h4>
+      <ul className="list-none">
         {ingredientsList.map((ingredient, index) => (
           <li
             key={index}
@@ -42,7 +40,13 @@ const IngredientsList: React.FC<IngredientsListProps> = ({ ingredients }) => {
               }
               className="rounded-full text-amber-500 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 data-[state=checked]:text-white"
             />
-            <Label className={ingredient.isChecked ? 'line-through' : ''}>
+            <Label
+              className={
+                ingredient.isChecked
+                  ? 'line-through  whitespace-nowrap'
+                  : ' whitespace-nowrap'
+              }
+            >
               {ingredient.input}
             </Label>
           </li>
