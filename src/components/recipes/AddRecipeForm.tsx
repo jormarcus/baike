@@ -169,10 +169,9 @@ const AddRecipeForm: React.FC = () => {
                   />
                 </FormControl>
               </FormItem>
-
               <div className="w-full">
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel className="text-lg">Name</FormLabel>
                   <FormControl>
                     <Input
                       aria-invalid={!!form.formState.errors.name}
@@ -185,7 +184,7 @@ const AddRecipeForm: React.FC = () => {
                   />
                 </FormItem>
                 <FormItem className="mt-1">
-                  <FormLabel>URL</FormLabel>
+                  <FormLabel className="text-lg">URL</FormLabel>
                   <FormControl>
                     <Input
                       aria-invalid={!!form.formState.errors.url}
@@ -205,7 +204,7 @@ const AddRecipeForm: React.FC = () => {
                 name="servings"
                 render={({ field }) => (
                   <FormItem className="min-w-[150px]">
-                    <FormLabel>Servings</FormLabel>
+                    <FormLabel className="text-lg">Servings</FormLabel>
                     <FormControl>
                       <Select
                         value={field.value.toString()}
@@ -234,7 +233,7 @@ const AddRecipeForm: React.FC = () => {
               />
               <div className="w-full">
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className="text-lg">Description</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Add a description..."
@@ -245,138 +244,144 @@ const AddRecipeForm: React.FC = () => {
               </div>
             </div>
             <hr className="text-neutral-500 w-full my-6" />
-            <div className="flex gap-12">
-              <div className="flex flex-col gap-4 justify-start items-center w-full whitespace-nowrap">
-                <FormField
-                  control={form.control}
-                  name="prepHours"
-                  render={({ field }) => (
-                    <FormItem className="w-36">
-                      <FormLabel>Prep hours</FormLabel>
-                      <FormControl>
-                        <Select
-                          value={field.value.toString()}
-                          onValueChange={(value: string) =>
-                            field.onChange(Number(value))
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder={field.value} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {hoursRange.map((option) => (
-                              <SelectItem
-                                key={option}
-                                value={option === '--' ? '0' : option}
-                              >
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="prepMinutes"
-                  render={({ field }) => (
-                    <FormItem className="w-36">
-                      <FormLabel>Prep Minutes</FormLabel>
-                      <FormControl>
-                        <Select
-                          value={field.value.toString()}
-                          onValueChange={(value: string) =>
-                            field.onChange(Number(value))
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder={field.value} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {minutesRange.map((option) => (
-                              <SelectItem
-                                key={option}
-                                value={option === '--' ? '0' : option}
-                              >
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <div className="flex gap-16 w-full">
+              <div className="flex flex-col basis-2/5">
+                <Label className="mb-2 text-lg">Prep</Label>
+                <div className="flex gap-2 sm:gap-8 w-full">
+                  <FormField
+                    control={form.control}
+                    name="prepHours"
+                    render={({ field }) => (
+                      <FormItem className="w-24">
+                        <FormLabel>Hours</FormLabel>
+                        <FormControl>
+                          <Select
+                            value={field.value.toString()}
+                            onValueChange={(value: string) =>
+                              field.onChange(Number(value))
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder={field.value} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {hoursRange.map((option) => (
+                                <SelectItem
+                                  key={option}
+                                  value={option === '--' ? '0' : option}
+                                >
+                                  {option}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="prepMinutes"
+                    render={({ field }) => (
+                      <FormItem className="w-24">
+                        <FormLabel>Minutes</FormLabel>
+                        <FormControl>
+                          <Select
+                            value={field.value.toString()}
+                            onValueChange={(value: string) =>
+                              field.onChange(Number(value))
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder={field.value} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {minutesRange.map((option) => (
+                                <SelectItem
+                                  key={option}
+                                  value={option === '--' ? '0' : option}
+                                >
+                                  {option}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
-              <div className="flex flex-col gap-4 justify-start items-center w-full whitespace-nowrap">
-                <FormField
-                  control={form.control}
-                  name="cookHours"
-                  render={({ field }) => (
-                    <FormItem className="w-36">
-                      <FormLabel>Cook hours</FormLabel>
-                      <FormControl>
-                        <Select
-                          value={field.value.toString()}
-                          onValueChange={(value: string) =>
-                            field.onChange(Number(value))
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder={field.value} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {hoursRange.map((option) => (
-                              <SelectItem
-                                key={option}
-                                value={option === '--' ? '0' : option}
-                              >
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="cookMinutes"
-                  render={({ field }) => (
-                    <FormItem className="w-36">
-                      <FormLabel>Cook Minutes</FormLabel>
-                      <FormControl>
-                        <Select
-                          value={field.value.toString()}
-                          onValueChange={(value: string) =>
-                            field.onChange(Number(value))
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder={field.value} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {minutesRange.map((option) => (
-                              <SelectItem
-                                key={option}
-                                value={option === '--' ? '0' : option}
-                              >
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div className="flex flex-col basis-3/5">
+                <Label className="mb-2 text-lg">Cook</Label>
+                <div className="flex gap-2 sm:gap-8 w-full">
+                  <FormField
+                    control={form.control}
+                    name="cookHours"
+                    render={({ field }) => (
+                      <FormItem className="w-24">
+                        <FormLabel>Hours</FormLabel>
+                        <FormControl>
+                          <Select
+                            value={field.value.toString()}
+                            onValueChange={(value: string) =>
+                              field.onChange(Number(value))
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder={field.value} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {hoursRange.map((option) => (
+                                <SelectItem
+                                  key={option}
+                                  value={option === '--' ? '0' : option}
+                                >
+                                  {option}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="cookMinutes"
+                    render={({ field }) => (
+                      <FormItem className="w-24">
+                        <FormLabel>Minutes</FormLabel>
+                        <FormControl>
+                          <Select
+                            value={field.value.toString()}
+                            onValueChange={(value: string) =>
+                              field.onChange(Number(value))
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder={field.value} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {minutesRange.map((option) => (
+                                <SelectItem
+                                  key={option}
+                                  value={option === '--' ? '0' : option}
+                                >
+                                  {option}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
             </div>
             <hr className="text-neutral-500 w-full my-6" />
@@ -436,7 +441,7 @@ const AddRecipeForm: React.FC = () => {
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                     <div className="space-y-0.5">
-                      <FormLabel className="text-base">Public</FormLabel>
+                      <FormLabel className="text-lg">Public</FormLabel>
                       <FormDescription>
                         Allow other users to see your recipe.
                       </FormDescription>
@@ -456,7 +461,7 @@ const AddRecipeForm: React.FC = () => {
             <hr className="text-neutral-500 w-full my-6" />
             <div className="flex items-center justify-center w-full">
               <FormItem className="flex-1">
-                <FormLabel>Notes</FormLabel>
+                <FormLabel className="text-lg">Notes</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Add a note..."
