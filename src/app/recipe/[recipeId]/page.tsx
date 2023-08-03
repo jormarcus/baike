@@ -30,9 +30,9 @@ export default async function RecipePage({
     <div className="mx-auto flex max-w-4xl flex-col space-y-8 mt-16 px-12">
       <RecipeActionButtonRow recipe={recipe} />
 
-      <div className="flex flex-col gap-16">
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-16">
-          <div className="flex flex-col gap-4 items-center">
+      <div className="flex flex-col gap-8 sm:gap-16">
+        <div className="flex flex-col sm:flex-row gap-12 sm:gap-12">
+          <div className="flex flex-col gap-4 basis-1/3">
             <h1 className="sm:hidden font-serif font-extrabold tracking-tight text-3xl lg:text-4xl whitespace-nowrap">
               {recipe.name}
             </h1>
@@ -42,17 +42,21 @@ export default async function RecipePage({
               width={400}
               height={400}
             />
-            <Rating
-              userRating={
-                recipe.ratings && recipe.ratings.length > 0
-                  ? recipe.ratings[0]
-                  : null
-              }
-              recipeId={Number(recipeId)}
-            />
-            <ServingsModifier servings={recipe.servings} />
+            <div className="flex justify-center">
+              <Rating
+                userRating={
+                  recipe.ratings && recipe.ratings.length > 0
+                    ? recipe.ratings[0]
+                    : null
+                }
+                recipeId={Number(recipeId)}
+              />
+            </div>
+            <div className="flex justify-center">
+              <ServingsModifier servings={recipe.servings} />
+            </div>
           </div>
-          <div className="flex flex-col space-y-2 items-center sm:items-start">
+          <div className="flex flex-col space-y-2 items-center sm:items-start basis-2/3">
             <h1 className="hidden sm:block font-serif font-extrabold tracking-tight text-3xl lg:text-4xl">
               {recipe.name}
             </h1>
@@ -63,7 +67,7 @@ export default async function RecipePage({
                 {recipe.description}
               </p>
             )}
-            <div className="flex flex-col self-start gap-2 pt-2">
+            <div className="flex flex-col items-center md:self-start gap-2 pt-2">
               <RecipeCookTime
                 label="Prep"
                 hours={recipe.prepHours}
@@ -77,10 +81,12 @@ export default async function RecipePage({
             </div>
           </div>
         </div>
+        <hr className="block sm:hidden border-neutral-500 border-1" />
 
         <div className="flex flex-col md:flex-row gap-8 md:gap-16">
           <IngredientsList ingredients={recipe.ingredients} />
-          <div>
+          <hr className="block sm:hidden border-neutral-500 border-1" />
+          <div className="basis-2/3 flex flex-col items-center sm:items-start">
             <Label className="text-xl font-semibold tracking-tight">
               Instructions
             </Label>

@@ -15,7 +15,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
   width,
 }) => {
   return (
-    <div className="relative col-span-1 max-w-[330px] max-h-[330px] overflow-hidden rounded-xl">
+    <div className="relative col-span-1 w-full overflow-hidden rounded-xl">
       {image ? (
         <Image
           height={height}

@@ -26,7 +26,7 @@ const IngredientsList: React.FC<IngredientsListProps> = ({ ingredients }) => {
   }, [ingredients]);
 
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-center sm:items-start basis-1/3">
       <h4 className="text-xl font-semibold tracking-tight mb-2">Ingredients</h4>
       <ul className="list-none">
         {ingredientsList.map((ingredient, index) => (
