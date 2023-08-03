@@ -27,12 +27,12 @@ export default async function RecipePage({
   }
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col space-y-8 mt-16 px-12">
+    <div className="mx-auto flex max-w-4xl flex-col items-center sm:items-start space-y-8 mt-16 px-12">
       <RecipeActionButtonRow recipe={recipe} />
 
       <div className="flex flex-col gap-8 sm:gap-16">
-        <div className="flex flex-col sm:flex-row gap-12 sm:gap-12">
-          <div className="flex flex-col gap-4 basis-1/3">
+        <div className="flex flex-col sm:flex-row gap-12 sm:gap-16">
+          <div className="flex flex-col gap-4 basis-1/3 items-center">
             <h1 className="sm:hidden font-serif font-extrabold tracking-tight text-3xl lg:text-4xl whitespace-nowrap">
               {recipe.name}
             </h1>
@@ -63,7 +63,7 @@ export default async function RecipePage({
             <AverageRating averageRating={recipe?.averageRating || 0} />
             <CollectionsRow collections={recipe.collections} />
             {recipe.description && (
-              <p className="leading-7 font-light tracking-wide">
+              <p className="leading-7 font-light tracking-wide text-center sm:text-justify">
                 {recipe.description}
               </p>
             )}
