@@ -63,14 +63,15 @@ export function formatMessageDTO(message: SafeMessage): Message {
 export function formatSafeCollection(
   collection: Collection,
   hasRecipe = false,
-  recipes: { name: string; imageSrc: string | null }[] = []
+  recipes: Recipe[] = []
 ): SafeCollection {
+  const safeRecipes = recipes.map((recipe) => formatSafeRecipe(recipe));
   return {
     ...collection,
     createdAt: collection.createdAt?.toISOString() ?? '',
     updatedAt: collection.updatedAt?.toISOString() ?? '',
     image: '',
-    recipes,
+    recipes: safeRecipes,
     recipesCount: 0,
     hasRecipe,
   };

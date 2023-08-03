@@ -53,7 +53,7 @@ export type SafeCollection = Omit<Collection, 'createdAt' | 'updatedAt'> & {
   createdAt?: string | null;
   updatedAt?: string | null;
   image: string | null;
-  recipes: { name: string; imageSrc: string | null }[];
+  recipes: SafeRecipe[];
   recipesCount: number;
   hasRecipe: boolean;
 };

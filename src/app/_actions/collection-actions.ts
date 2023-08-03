@@ -5,6 +5,7 @@ import { Collection } from '@prisma/client';
 import { getCurrentUser } from './user-actions';
 import { formatSafeCollection } from '@/helpers/format-dto';
 import { revalidatePath } from 'next/cache';
+import { SafeRecipe } from '@/types';
 
 export async function createCollection(name: string, revalidatePage: boolean) {
   const user = await getCurrentUser();
@@ -32,13 +33,20 @@ export async function getCollectionById(id: number) {
     where: {
       id,
     },
+    include: {
+      recipes: true,
+    },
   });
 
   if (!collection) {
     return null;
   }
 
-  return formatSafeCollection(collection);
+  return formatSafeCollection(
+    collection,
+    collection.recipes.length > 0,
+    collection.recipes
+  );
 }
 
 export async function getCollectionsByUserId(userId: number) {
@@ -59,13 +67,11 @@ export async function getCollectionsWithRecipesByUserId(userId: number) {
     include: {
       recipes: {
         take: 5,
-        select: {
-          name: true,
-          imageSrc: true,
-        },
       },
     },
   });
+
+  console.log('collections', collections);
 
   return collections.map((collection) =>
     formatSafeCollection(
@@ -129,4 +135,26 @@ export async function deleteCollection(id: number) {
   });
 
   return formatSafeCollection(deletedCollection);
+}
+
+export async function addRecipesToCollection(
+  recipeIds: number[],
+  collectionId: number
+) {
+  const newCollectionRecipes = recipeIds.map((id) => ({
+    id,
+  }));
+
+  const collectionRecipes = await prisma.collection.update({
+    where: {
+      id: collectionId,
+    },
+    data: {
+      recipes: {
+        connect: newCollectionRecipes,
+      },
+    },
+  });
+
+  return collectionRecipes;
 }

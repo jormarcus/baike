@@ -1,6 +1,6 @@
 import { SafeCollection } from '@/types';
-import { Utensils } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface CollectionCardProps {
   collection: SafeCollection;
@@ -16,7 +16,10 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
   };
 
   return (
-    <div className="flex flex-col space-y-2 w-full border p-1 border-neutral-600 rounded-md cursor-pointer hover:border-500">
+    <Link
+      href={`/collection/${collection.id}`}
+      className="flex flex-col space-y-2 w-full border p-1 border-neutral-600 rounded-md cursor-pointer hover:border-500"
+    >
       <div className="flex justify-start gap-4">
         <div className="bg-white rounded-md">
           <Image
@@ -44,7 +47,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
