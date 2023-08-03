@@ -18,19 +18,14 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
   return (
     <div className="flex flex-col space-y-2 w-full border p-1 border-neutral-600 rounded-md cursor-pointer hover:border-500">
       <div className="flex justify-start gap-4">
-        {collection?.image ? (
+        <div className="bg-white rounded-md">
           <Image
-            src={collection.image}
+            src={collection.image || '/images/basket.png'}
             alt={collection.name}
             width={70}
             height={70}
           />
-        ) : (
-          <div className="border border-neutral-500 p-8 rounded-md">
-            <Utensils height={30} width={30} />
-          </div>
-        )}
-
+        </div>
         <div className="w-full pr-4">
           <div className="flex justify-between items-center">
             <h3 className="text-2xl font-bold">{collection.name}</h3>
