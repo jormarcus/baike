@@ -28,9 +28,6 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.sub,
-          isAdmin: token.isAdmin,
-          vendorId: token.vendorId,
-          stripe_id: token.stripeId,
         },
       };
     },
