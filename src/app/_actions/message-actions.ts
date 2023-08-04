@@ -15,7 +15,7 @@ export async function getMessages(chatId: number, startIndex: number) {
     take: 10,
   });
 
-  return messages.map((message) => formatSafeMessage(message));
+  return messages.map((message: Message) => formatSafeMessage(message));
 }
 
 export async function createMessage(message: ValidationMessage) {

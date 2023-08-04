@@ -10,6 +10,7 @@ import { Recipe } from '@/lib/validators/recipe-validator';
 import { Ingredient } from '@/lib/validators/ingredient-validator';
 import { SafeCollection, SafeRecipe } from '@/types';
 import { capitalizeFirstLetter, omit } from '@/lib/utils';
+import { Recipe as PrismaRecipe } from '@prisma/client';
 
 function parseIngredients(ingredients: { input: string; id?: number }[]) {
   return ingredients.map((ingredient) => {
@@ -156,7 +157,7 @@ export async function getRecipesByUserId(
     },
   });
 
-  return recipes.map((recipe) => formatSafeRecipe(recipe));
+  return recipes.map((recipe: PrismaRecipe) => formatSafeRecipe(recipe));
 }
 
 export async function getRecipesWithCollectionsByUserId(
@@ -183,7 +184,7 @@ export async function getRecipesWithCollectionsByUserId(
     },
   });
 
-  return recipes.map((recipe) => formatSafeRecipe(recipe));
+  return recipes.map((recipe: PrismaRecipe) => formatSafeRecipe(recipe));
 }
 
 export async function deleteRecipe(id: number) {
@@ -207,7 +208,7 @@ export async function getNewFeedRecipes() {
     take: 10,
   });
 
-  return recipes.map((recipe) => formatSafeRecipe(recipe));
+  return recipes.map((recipe: PrismaRecipe) => formatSafeRecipe(recipe));
 }
 
 export async function getPopularFeedRecipes() {
@@ -227,7 +228,7 @@ export async function getPopularFeedRecipes() {
     take: 10,
   });
 
-  return recipes.map((recipe) => formatSafeRecipe(recipe));
+  return recipes.map((recipe: PrismaRecipe) => formatSafeRecipe(recipe));
 }
 
 export async function importRecipe(url: string): Promise<SafeRecipe> {
@@ -340,9 +341,9 @@ export async function searchRecipes(query: string, param = '') {
     orderBy: {
       name: 'asc',
     },
-    take: 15,
+    take: 10,
     include: includeObj,
   });
 
-  return recipes.map((recipe) => formatSafeRecipe(recipe));
+  return recipes.map((recipe: PrismaRecipe) => formatSafeRecipe(recipe));
 }

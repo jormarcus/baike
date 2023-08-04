@@ -55,7 +55,9 @@ export async function getCollectionsByUserId(userId: number) {
     },
   });
 
-  return collections.map((collection) => formatSafeCollection(collection));
+  return collections.map((collection: Collection) =>
+    formatSafeCollection(collection)
+  );
 }
 
 export async function getCollectionsWithRecipesByUserId(userId: number) {
@@ -70,7 +72,7 @@ export async function getCollectionsWithRecipesByUserId(userId: number) {
     },
   });
 
-  return collections.map((collection) =>
+  return collections.map((collection: Collection) =>
     formatSafeCollection(
       collection,
       collection.recipes.length > 0,
@@ -99,12 +101,12 @@ export async function getCollectionsWithRecipesByUserIdAndRecipeId(
     },
   });
 
-  const collectionsWithRecipe = collections.map((collection) => ({
+  const collectionsWithRecipe = collections.map((collection: Collection) => ({
     ...collection,
     hasRecipe: collection.recipes.length > 0,
   }));
 
-  return collectionsWithRecipe.map((collection) =>
+  return collectionsWithRecipe.map((collection: Collection) =>
     formatSafeCollection(collection, collection.hasRecipe)
   );
 }
