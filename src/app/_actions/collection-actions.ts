@@ -5,7 +5,6 @@ import { Collection } from '@prisma/client';
 import { getCurrentUser } from './user-actions';
 import { formatSafeCollection } from '@/helpers/format-dto';
 import { revalidatePath } from 'next/cache';
-import { SafeRecipe } from '@/types';
 
 export async function createCollection(name: string, revalidatePage: boolean) {
   const user = await getCurrentUser();
@@ -70,8 +69,6 @@ export async function getCollectionsWithRecipesByUserId(userId: number) {
       },
     },
   });
-
-  console.log('collections', collections);
 
   return collections.map((collection) =>
     formatSafeCollection(
@@ -138,10 +135,14 @@ export async function deleteCollection(id: number) {
 }
 
 export async function addRecipesToCollection(
-  recipeIds: number[],
+  newRecipeIds: number[],
+  removedRecipeIds: number[],
   collectionId: number
 ) {
-  const newCollectionRecipes = recipeIds.map((id) => ({
+  const newCollectionRecipes = newRecipeIds.map((id) => ({
+    id,
+  }));
+  const removedCollectionRecipes = removedRecipeIds.map((id) => ({
     id,
   }));
 
@@ -151,10 +152,15 @@ export async function addRecipesToCollection(
     },
     data: {
       recipes: {
-        connect: newCollectionRecipes,
+        connect:
+          newCollectionRecipes.length > 0 ? newCollectionRecipes : undefined,
+        disconnect:
+          removedCollectionRecipes.length > 0
+            ? removedCollectionRecipes
+            : undefined,
       },
     },
   });
 
-  return collectionRecipes;
+  revalidatePath(`/collection/${collectionId}`);
 }

@@ -28,6 +28,7 @@ export type SafeRecipe = Omit<
   ratings: Rating[] | null;
   collections: Collection[];
   ingredients: Ingredient[];
+  belongsToCollection?: boolean;
 };
 
 export type SafeMessage = Omit<Message, 'createdAt' | 'updatedAt'> & {

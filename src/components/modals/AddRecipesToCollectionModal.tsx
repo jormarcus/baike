@@ -26,7 +26,7 @@ import { CheckedState } from '@radix-ui/react-checkbox';
 import { z } from 'zod';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
-import { getRecipesByUserId } from '@/app/_actions/recipe-actions';
+import { getRecipesWithCollectionsByUserId } from '@/app/_actions/recipe-actions';
 import toast from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addRecipesToCollection } from '@/app/_actions/collection-actions';
@@ -48,7 +48,10 @@ const AddRecipesToCollectionModal: React.FC<
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [recipes, setRecipes] = useState<SafeRecipe[]>([]);
-  const [selectedRecipeIds, setSelectedRecipeIds] = useState<number[]>([]);
+  const [newlySelectedRecipeIds, setNewlySelectedRecipeIds] = useState<
+    number[]
+  >([]);
+  const [unSelectedRecipeIds, setUnSelectedRecipeIds] = useState<number[]>([]);
 
   const { data: session } = useSession();
   const userId = session?.user?.id;
@@ -74,10 +77,21 @@ const AddRecipesToCollectionModal: React.FC<
     async function getRecipes() {
       try {
         if (!userId) return;
-        const recipes = await getRecipesByUserId(parseInt(userId), 1, 15);
-        console.log('setting recipes: ', recipes);
+        const recipes = await getRecipesWithCollectionsByUserId(
+          parseInt(userId),
+          1,
+          15
+        );
+
+        recipes.forEach((recipe) => {
+          if (recipe.collections?.find((c) => c.id === collectionId)) {
+            recipe.belongsToCollection = true;
+          }
+        });
+
         setRecipes(recipes);
       } catch (error) {
+        console.log('error: ', error);
         toast.error('Something went wrong!');
       } finally {
         setIsLoading(false);
@@ -85,30 +99,58 @@ const AddRecipesToCollectionModal: React.FC<
     }
 
     getRecipes();
-  }, [isOpen, userId]);
+  }, [collectionId, isOpen, userId]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    console.log('data: ', selectedRecipeIds);
     // TODO - not actually using form data or form for these fields
     try {
-      await addRecipesToCollection(selectedRecipeIds, Number(collectionId));
-      revalidatePath(`/collections/${collectionId}`);
+      await addRecipesToCollection(
+        newlySelectedRecipeIds,
+        unSelectedRecipeIds,
+        Number(collectionId)
+      );
+      setIsOpen(false);
     } catch (error) {
+      console.log('error: ', error);
       toast.error('Something went wrong!');
     } finally {
       setIsLoading(false);
-      setIsOpen(false);
     }
   };
 
-  const handleSelectRecipe = (checked: CheckedState, recipeId: number) => {
+  const handleSelectRecipe = (checked: CheckedState, recipe: SafeRecipe) => {
     if (checked) {
-      setSelectedRecipeIds([...selectedRecipeIds, recipeId]);
+      // if reselecting a recipe that already belongs to the collection, remove it from the unselected list
+      if (recipe.hasOwnProperty('belongsToCollection')) {
+        recipe.belongsToCollection = true;
+        setRecipes((prevRecipes) =>
+          prevRecipes.map((prevRecipe) =>
+            prevRecipe.id === recipe.id ? recipe : prevRecipe
+          )
+        );
+        setUnSelectedRecipeIds(
+          unSelectedRecipeIds.filter((id: number) => id !== recipe.id)
+        );
+      } else {
+        // add to selected
+        setNewlySelectedRecipeIds([...newlySelectedRecipeIds, recipe.id]);
+      }
     } else {
-      setSelectedRecipeIds(
-        selectedRecipeIds.filter((id: number) => id !== recipeId)
-      );
+      // if unselecting a recipe that already belongs to the collection, add it to the unselected list
+      if (recipe.belongsToCollection) {
+        recipe.belongsToCollection = false;
+        setRecipes((prevRecipes) =>
+          prevRecipes.map((prevRecipe) =>
+            prevRecipe.id === recipe.id ? recipe : prevRecipe
+          )
+        );
+        setUnSelectedRecipeIds([...unSelectedRecipeIds, recipe.id]);
+      } else {
+        setNewlySelectedRecipeIds(
+          newlySelectedRecipeIds.filter((id: number) => id !== recipe.id)
+        );
+      }
     }
   };
 
@@ -152,9 +194,9 @@ const AddRecipesToCollectionModal: React.FC<
                               <FormControl>
                                 <Checkbox
                                   id={recipe.id.toString()}
-                                  // checked={recipe.}
+                                  checked={recipe.belongsToCollection}
                                   onCheckedChange={(checked: CheckedState) =>
-                                    handleSelectRecipe(checked, recipe.id)
+                                    handleSelectRecipe(checked, recipe)
                                   }
                                 />
                               </FormControl>

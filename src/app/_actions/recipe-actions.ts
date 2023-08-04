@@ -162,6 +162,30 @@ export async function getRecipesByUserId(
   return recipes.map((recipe) => formatSafeRecipe(recipe));
 }
 
+export async function getRecipesWithCollectionsByUserId(
+  userId: number,
+  pageNumber: number,
+  pageSize: number
+) {
+  const recipes = await prisma.recipe.findMany({
+    where: {
+      authorId: userId,
+    },
+    skip: (pageNumber - 1) * pageSize,
+    take: pageSize,
+    include: {
+      collections: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
+
+  return recipes.map((recipe) => formatSafeRecipe(recipe));
+}
+
 export async function deleteRecipe(id: number) {
   const deletedRecipe = await prisma.recipe.delete({
     where: {
