@@ -1,7 +1,8 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
 import { SafeUser } from '../../types';
 import SidebarItem from './SidebarItem';
@@ -58,22 +59,32 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
       {
         label: 'Discover',
         href: '/',
+        icon: 'compass' as keyof typeof dynamicIconImports,
       },
       {
         label: 'Recipes',
         href: '/recipes',
+        icon: 'croissant' as keyof typeof dynamicIconImports,
       },
       {
         label: 'Threads',
         href: '/threads',
+        icon: 'message-square' as keyof typeof dynamicIconImports,
       },
       {
         label: 'Collections',
         href: '/collections',
+        icon: 'folder-plus' as keyof typeof dynamicIconImports,
       },
       {
         label: 'Profile',
         href: '/profile',
+        icon: 'user-circle' as keyof typeof dynamicIconImports,
+      },
+      {
+        label: 'Add recipe',
+        href: '/recipes/add',
+        icon: 'plus-circle' as keyof typeof dynamicIconImports,
       },
     ];
   }, []);
@@ -101,6 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
                 <SidebarItem
                   label={item.label}
                   href={item.href}
+                  name={item.icon}
                   isActive={activeItem === item.label}
                 />
               </div>

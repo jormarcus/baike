@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import ImportRecipeModal from '../modals/ImportRecipeModal';
 import { Button } from '../ui/Button';
+import { PlusCircle } from 'lucide-react';
 
 interface RecipePageHeaderProps {}
 
@@ -17,10 +18,11 @@ const RecipePageHeader: React.FC<RecipePageHeaderProps> = () => {
 
         <Link href="/recipes/add">
           <Button
-            className="bg-amber-500 text-white hover:bg-amber-400"
+            className="bg-amber-500 text-white hover:bg-amber-400 flex gap-2"
             variant="default"
             onClick={() => console.log('Add recipe')}
           >
+            <PlusCircle />
             Add recipe
           </Button>
         </Link>

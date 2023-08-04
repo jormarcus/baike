@@ -17,6 +17,7 @@ import {
 import { Input } from '@/components/inputs/Input';
 import { Label } from '@/components/ui/Label';
 import { importRecipe } from '@/app/_actions/recipe-actions';
+import { Import } from 'lucide-react';
 
 interface ImportRecipeModalProps {}
 
@@ -48,7 +49,8 @@ const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900">
+        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 flex gap-2">
+          <Import />
           Import recipe
         </Button>
       </DialogTrigger>
