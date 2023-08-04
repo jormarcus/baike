@@ -9,20 +9,11 @@ interface SidebarItemProps {
 
 const SidebarItem: React.FC<SidebarItemProps> = ({ label, href, isActive }) => {
   return (
-    <Link href={href}>
+    <Link href={href} prefetch={false}>
       <li
-        className={`list-none
-    flex
-    m-px
-    px-3
-    py-2
-    items-center
-    gap-3
-    relative
-    rounded-md
-    hover:bg-neutral-700
-    ${isActive ? 'bg-neutral-700' : ''}
-    `}
+        className={`list-none flex m-px px-3 py-2 items-center gap-3 relative rounded-md hover:bg-neutral-700 ${
+          isActive ? 'bg-neutral-700' : ''
+        }`}
       >
         {label}
       </li>
