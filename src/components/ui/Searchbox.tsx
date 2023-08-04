@@ -1,17 +1,48 @@
-import { useState } from 'react';
-import { Input } from '../inputs/Input';
+'use client';
+
+import qs from 'query-string';
 import { Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+import { Input } from '../inputs/Input';
+import { useDebounce } from '@/hooks/useDebounce';
 
 interface SearchboxProps {
-  handleSearch: (query: string) => void;
+  handleSearch?: (query: string) => void;
 }
 
 const Searchbox: React.FC<SearchboxProps> = ({ handleSearch }) => {
   const [query, setQuery] = useState<string>('');
+  const router = useRouter();
+
+  const debouncedQuery = useDebounce<string>(query, 500);
+
+  useEffect(() => {
+    // call actions to search
+    if (handleSearch) {
+      handleSearch(debouncedQuery);
+      return;
+    }
+
+    // set query params to search by route
+    const query = {
+      name: debouncedQuery,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: window.location.href,
+        query,
+      },
+      { skipNull: true, skipEmptyString: true }
+    );
+
+    router.push(url);
+  }, [debouncedQuery, handleSearch, router]);
 
   const onSearch = (query: string) => {
     setQuery(query);
-    handleSearch(query);
   };
 
   return (

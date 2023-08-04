@@ -313,6 +313,11 @@ export async function addCollectionsToRecipe(
 }
 
 export async function searchRecipes(query: string, param = '') {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error('User not found');
+  }
+
   let includeObj = undefined;
   if (param === 'collections') {
     includeObj = {
@@ -326,6 +331,7 @@ export async function searchRecipes(query: string, param = '') {
   }
   const recipes = await prisma.recipe.findMany({
     where: {
+      authorId: user.id,
       name: {
         contains: query,
         mode: 'insensitive',
