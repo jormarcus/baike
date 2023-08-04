@@ -20,7 +20,7 @@ const RecipesPage = async ({}) => {
     <div className="mt-16 flex flex-col justify-center px-12">
       <RecipePageHeader />
       {recipes && recipes.length > 0 ? (
-        <div>
+        <div className="pt-8">
           <RecipeSearch />
           <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 grid-auto-rows-auto">
             {recipes.map((recipe) => (

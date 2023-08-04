@@ -28,7 +28,6 @@ function parseIngredients(ingredients: { input: string; id?: number }[]) {
 }
 
 export async function createRecipe(recipe: Recipe) {
-  console.log('creating recipe: ', recipe);
   const user = await getCurrentUser();
 
   if (!user) {
@@ -66,8 +65,6 @@ export async function updateRecipe(
     throw new Error('Recipe id cannot be null');
   }
 
-  console.log('updating recipe: ', recipe);
-
   const newIngredients: Ingredient[] = parseIngredients(
     recipe.ingredients.filter((i) => !i.id).map((i) => ({ input: i.input }))
   );
@@ -76,9 +73,6 @@ export async function updateRecipe(
       .filter((i) => i.isUpdated)
       .map((i) => ({ input: i.input, id: i.id }))
   );
-
-  console.log('newIngredients: ', newIngredients);
-  console.log('updatedIngredients: ', updatedIngredients);
 
   // remove ingredients property fr pinom recipe object
   const formattedRecipe = omit('ingredients', recipe);
@@ -180,6 +174,9 @@ export async function getRecipesWithCollectionsByUserId(
           name: true,
         },
       },
+    },
+    orderBy: {
+      name: 'asc',
     },
   });
 
@@ -310,4 +307,33 @@ export async function addCollectionsToRecipe(
   revalidatePath(`/recipe/${recipeId}`);
 
   return formatSafeRecipe(updatedRecipe);
+}
+
+export async function searchRecipes(query: string, param: string) {
+  let includeObj = undefined;
+  if (param === 'collections') {
+    includeObj = {
+      collections: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    };
+  }
+  const recipes = await prisma.recipe.findMany({
+    where: {
+      name: {
+        contains: query,
+        mode: 'insensitive',
+      },
+    },
+    orderBy: {
+      name: 'asc',
+    },
+    take: 15,
+    include: includeObj,
+  });
+
+  return recipes.map((recipe) => formatSafeRecipe(recipe));
 }

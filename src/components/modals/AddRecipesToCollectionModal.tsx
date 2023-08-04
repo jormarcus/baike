@@ -26,12 +26,15 @@ import { CheckedState } from '@radix-ui/react-checkbox';
 import { z } from 'zod';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
-import { getRecipesWithCollectionsByUserId } from '@/app/_actions/recipe-actions';
+import {
+  getRecipesWithCollectionsByUserId,
+  searchRecipes,
+} from '@/app/_actions/recipe-actions';
 import toast from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addRecipesToCollection } from '@/app/_actions/collection-actions';
 import { Button } from '../ui/Button';
-import { revalidatePath } from 'next/cache';
+import Searchbox from '../ui/Searchbox';
 
 const AddRecipesToCollectionSchema = z.object({
   recipes: z.array(z.string()),
@@ -53,6 +56,9 @@ const AddRecipesToCollectionModal: React.FC<
   >([]);
   const [unSelectedRecipeIds, setUnSelectedRecipeIds] = useState<number[]>([]);
 
+  console.log('newlySelectedRecipeIds in component', newlySelectedRecipeIds);
+  console.log('unSelectedRecipeIds in component', unSelectedRecipeIds);
+
   const { data: session } = useSession();
   const userId = session?.user?.id;
 
@@ -72,8 +78,12 @@ const AddRecipesToCollectionModal: React.FC<
 
   useEffect(() => {
     if (!isOpen) return;
-
     setIsLoading(true);
+
+    // modal is always rendered, need to reset state when it's opened
+    setNewlySelectedRecipeIds([]);
+    setUnSelectedRecipeIds([]);
+
     async function getRecipes() {
       try {
         if (!userId) return;
@@ -129,6 +139,7 @@ const AddRecipesToCollectionModal: React.FC<
             prevRecipe.id === recipe.id ? recipe : prevRecipe
           )
         );
+
         setUnSelectedRecipeIds(
           unSelectedRecipeIds.filter((id: number) => id !== recipe.id)
         );
@@ -145,6 +156,7 @@ const AddRecipesToCollectionModal: React.FC<
             prevRecipe.id === recipe.id ? recipe : prevRecipe
           )
         );
+
         setUnSelectedRecipeIds([...unSelectedRecipeIds, recipe.id]);
       } else {
         setNewlySelectedRecipeIds(
@@ -154,26 +166,40 @@ const AddRecipesToCollectionModal: React.FC<
     }
   };
 
+  const handleSearch = async (query: string) => {
+    const recipes = await searchRecipes(query, 'collections');
+    recipes.forEach((recipe) => {
+      if (recipe.collections?.find((c) => c.id === collectionId)) {
+        recipe.belongsToCollection = true;
+      }
+    });
+    setRecipes(recipes);
+  };
+
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
         <Button className="dark:bg-amber-500 dark:text-white dark:hover:bg-amber-400">
-          Add recipes to collection
+          Manage recipes
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-[425px]">
         <AlertDialogHeader>
-          <AlertDialogTitle>Add recipes to collection</AlertDialogTitle>
+          <AlertDialogTitle>{`${name}`} collection</AlertDialogTitle>
           <AlertDialogDescription>
             Select recipes to add to {`${name}`}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <hr />
+
+        <div>
+          <Searchbox handleSearch={handleSearch} />
+        </div>
         <div className="grid gap-4 pt-4">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="grid grid-cols-3 items-center gap-4 space-y-8"
+              className="grid grid-cols-3 items-center gap-4 space-y-8 overflow-y-scroll max-h-[160px]"
             >
               <FormField
                 control={form.control}

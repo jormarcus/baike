@@ -17,8 +17,6 @@ export default async function CollectionPage({
     Number(collectionId)
   );
 
-  console.log('collection: ', collection);
-
   if (!collection) {
     return <EmptyState title="Recipe not found" />;
   }
