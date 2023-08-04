@@ -151,6 +151,9 @@ export async function getRecipesByUserId(
     },
     skip: (pageNumber - 1) * pageSize,
     take: pageSize,
+    orderBy: {
+      name: 'asc',
+    },
   });
 
   return recipes.map((recipe) => formatSafeRecipe(recipe));
@@ -309,7 +312,7 @@ export async function addCollectionsToRecipe(
   return formatSafeRecipe(updatedRecipe);
 }
 
-export async function searchRecipes(query: string, param: string) {
+export async function searchRecipes(query: string, param = '') {
   let includeObj = undefined;
   if (param === 'collections') {
     includeObj = {

@@ -33,8 +33,6 @@ const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
     },
   });
 
-  console.log('errors: ', errors);
-
   const onImport: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
     console.log('data: ', data);
