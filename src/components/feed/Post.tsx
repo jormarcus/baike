@@ -4,14 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Croissant } from 'lucide-react';
 
-import { SafeRecipe } from '@/types';
+import { SafePost } from '@/types';
 import { Avatar, AvatarImage } from '@/components/ui/Avatar';
 import PostDescription from './PostDescription';
 import PostActions from './PostActions';
 import PostComments from './PostComments';
 
 interface PostProps {
-  recipe: SafeRecipe;
+  post: SafePost;
 }
 
 const PostHeader: React.FC<{
@@ -81,14 +81,14 @@ const PostFooter: React.FC<{
   </div>
 );
 
-const Post: React.FC<PostProps> = ({ recipe }) => {
-  const { id, name, imageSrc, likesCount } = recipe;
+const Post: React.FC<PostProps> = ({ post }) => {
+  const { id, title, image, likesCount } = post;
   return (
     <div className="flex flex-col justify-center items-center py-4 group col-span-1 dark:bg-neutral-950 rounded-lg max-w-[630px] w-full h-[700px] overflow-hidden shadow-lg shadow-neutral-950/50">
       <article className="flex flex-col w-[470px] pb-4">
         <PostHeader username="username" avatar={null} />
-        <PostContent image={imageSrc} title={name} />
-        <PostFooter id={id} title={name} likesCount={likesCount} />
+        <PostContent image={image} title={title} />
+        <PostFooter id={id} title={title} likesCount={likesCount} />
       </article>
     </div>
   );

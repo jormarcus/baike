@@ -58,6 +58,8 @@ model User {
   ReviewLike     ReviewLike[]
   NoteLike       NoteLike[]
   Chat           Chat[]
+  Post           Post[]
+  Comment        Comment[]
 
   @@map("users")
 }
@@ -93,6 +95,7 @@ model Recipe {
   averageRating Float        @default(0)
   ratings       Rating[]
   ingredients   Ingredient[]
+  Post          Post[]
 }
 
 model Ingredient {
@@ -131,6 +134,10 @@ model Like {
   // recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   review       Review     @relation(fields: [reviewId], references: [id], onDelete: Cascade)
   collection   Collection @relation(fields: [collectionId], references: [id])
+  postId       Int        @map("post_id")
+  post         Post       @relation(fields: [postId], references: [id])
+  commentId    Int        @map("comment_id")
+  comment      Comment    @relation(fields: [commentId], references: [id])
 }
 
 model Rating {
@@ -201,4 +208,37 @@ model Message {
   updatedAt     DateTime @updatedAt
   chatId        Int      @map("chat_id")
   chat          Chat     @relation(fields: [chatId], references: [id])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int      @map("user_id")
+
+  likes      Like[]
+  likesCount Int    @default(0)
+
+  comments Comment[]
+  Recipe   Recipe?   @relation(fields: [recipeId], references: [id])
+  recipeId Int?
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  createdAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int      @map("user_id")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int
+
+  replyToId Int?
+  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies   Comment[] @relation("ReplyTo")
+
+  Like Like[]
 }

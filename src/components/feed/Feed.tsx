@@ -1,17 +1,24 @@
 'use client';
 
-import { SafeRecipe } from '@/types';
+import { SafePost, SafeRecipe } from '@/types';
 import Post from './Post';
+import { useEffect, useState } from 'react';
 
 interface FeedProps {
-  recipes: SafeRecipe[];
+  initialPosts: SafePost[];
 }
 
-const Feed: React.FC<FeedProps> = ({ recipes }) => {
+const Feed: React.FC<FeedProps> = ({ initialPosts }) => {
+  const [posts, setPosts] = useState<SafePost[]>([]);
+
+  useEffect(() => {
+    console.log('Feed.tsx: useEffect()');
+    setPosts(initialPosts);
+  }, [initialPosts]);
   return (
     <div className="flex flex-col items-center gap-4 w-full h-full">
-      {recipes.map((recipe) => (
-        <Post key={recipe.id} recipe={recipe} />
+      {posts.map((post) => (
+        <Post key={post.id} post={post} />
       ))}
     </div>
   );
