@@ -1,5 +1,6 @@
 'use client';
 
+import Message from '@/components/chat/Message';
 import { Input } from '@/components/inputs/Input';
 import { ChatContext } from '@/context/ChatContext';
 import { formatChatGPTMessage } from '@/helpers/format-dto';
@@ -33,6 +34,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
       setMessages(safeMessages);
     }
 
+    // if navigating from threads page, get chat history
     if (searchParams.get('prev') === 'threads') {
       getChatHistory();
     }
@@ -42,13 +44,10 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
+    <div className="flex flex-col w-full justify-center items-center gap-4 pb-28 pt-12 stretch px-4">
       {messages.length > 0
-        ? messages.map((m) => (
-            <div key={m.id} className="whitespace-pre-wrap">
-              {m.role === 'user' ? 'User: ' : 'AI: '}
-              {m.content}
-            </div>
+        ? messages.map((message) => (
+            <Message key={message.id} message={message} />
           ))
         : null}
 
@@ -56,11 +55,12 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
         onSubmit={(e: FormEvent<HTMLFormElement>) =>
           handleSubmit(e, { options: { body: { chatId } } })
         }
+        className="fixed bottom-0 w-full max-w-md"
       >
         <Input
+          className="p-4 mb-8 dark:bg-neutral-950
+        dark:text-neutral-400 rounded-3xl shadow-xl h-[64px]"
           id="chat-input"
-          className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-neutral-600 dark:bg-neutral-950
-          dark:text-neutral-400 rounded shadow-xl focus:border-amber-500"
           value={input}
           placeholder="Ask follow-up..."
           onChange={handleInputChange}
