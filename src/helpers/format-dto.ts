@@ -1,12 +1,21 @@
 import {
   ChatGPTMessage,
+  CollectionWithRecipes,
   Role,
   SafeChat,
   SafeCollection,
   SafeMessage,
+  SafePost,
   SafeRecipe,
 } from '@/types';
-import { Chat, Collection, Ingredient, Message, Recipe } from '@prisma/client';
+import {
+  Chat,
+  Collection,
+  Ingredient,
+  Message,
+  Post,
+  Recipe,
+} from '@prisma/client';
 
 export function formatSafeRecipe(recipe: any): SafeRecipe {
   return {
@@ -60,20 +69,29 @@ export function formatMessageDTO(message: SafeMessage): Message {
   };
 }
 
-export function formatSafeCollection(
-  collection: Collection,
-  hasRecipe = false,
-  recipes: Recipe[] = []
+export function formatSafeCollection(collection: Collection): SafeCollection {
+  return {
+    ...collection,
+    createdAt: collection.createdAt?.toISOString() ?? '',
+    updatedAt: collection.updatedAt?.toISOString() ?? '',
+    image: '',
+  };
+}
+
+export function formatSafeCollectionWithRecipes(
+  collection: CollectionWithRecipes
 ): SafeCollection {
-  const safeRecipes = recipes.map((recipe) => formatSafeRecipe(recipe));
+  const safeRecipes = collection.recipes.map((recipe) =>
+    formatSafeRecipe(recipe)
+  );
   return {
     ...collection,
     createdAt: collection.createdAt?.toISOString() ?? '',
     updatedAt: collection.updatedAt?.toISOString() ?? '',
     image: '',
     recipes: safeRecipes,
-    recipesCount: 0,
-    hasRecipe,
+    recipesCount: safeRecipes.length,
+    hasRecipe: safeRecipes.length > 0,
   };
 }
 
@@ -83,5 +101,13 @@ export function formatSafeIngredient(ingredient: Ingredient) {
     createdAt: ingredient.createdAt?.toISOString() ?? '',
     updatedAt: ingredient.updatedAt?.toISOString() ?? '',
     isChecked: false,
+  };
+}
+
+export function formatSafePost(post: Post): SafePost {
+  return {
+    ...post,
+    createdAt: post.createdAt?.toISOString() ?? '',
+    updatedAt: post.updatedAt?.toISOString() ?? '',
   };
 }

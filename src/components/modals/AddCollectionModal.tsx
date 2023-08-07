@@ -20,10 +20,10 @@ import { Input } from '@/components/inputs/Input';
 import { Label } from '@/components/ui/Label';
 import { createCollection } from '@/app/_actions/collection-actions';
 import { Plus } from 'lucide-react';
-import { SafeCollection } from '@/types';
+import { CollectionWithRecipeNames } from '@/types';
 
 interface AddCollectionModalProps {
-  onAddCollection?: (collection: SafeCollection) => void;
+  onAddCollection?: (collection: CollectionWithRecipeNames) => void;
 }
 
 const AddCollectionModal: React.FC<AddCollectionModalProps> = ({
@@ -70,10 +70,10 @@ const AddCollectionModal: React.FC<AddCollectionModalProps> = ({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
-      <AlertDialogTrigger>
+      <AlertDialogTrigger asChild>
         <Button
-          className={`flex items-center gap-1 dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-800 whitespace-nowrap ${
-            isOnCollectionsPage ? '' : 'pl-0'
+          className={`flex max-w-[150px] justify-start gap-1 dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-800 whitespace-nowrap ${
+            isOnCollectionsPage ? '' : 'pl-1'
           }`}
         >
           <Plus />

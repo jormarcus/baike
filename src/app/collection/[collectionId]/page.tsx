@@ -1,4 +1,4 @@
-import { getCollectionById } from '@/app/_actions/collection-actions';
+import { getCollectionWithRecipesById } from '@/app/_actions/collection-actions';
 import AddRecipesToCollectionModal from '@/components/modals/AddRecipesToCollectionModal';
 import RecipeCard from '@/components/recipes/RecipeCard';
 import EmptyState from '@/components/ui/EmptyState';
@@ -13,7 +13,7 @@ interface CollectionPageProps {
 export default async function CollectionPage({
   params: { collectionId },
 }: CollectionPageProps) {
-  const collection: SafeCollection | null = await getCollectionById(
+  const collection: SafeCollection | null = await getCollectionWithRecipesById(
     Number(collectionId)
   );
 
@@ -34,9 +34,10 @@ export default async function CollectionPage({
         <EmptyState title="This collection is empty." />
       ) : (
         <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 grid-auto-rows-auto">
-          {collection.recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
+          {collection.recipes &&
+            collection.recipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
         </div>
       )}
     </div>

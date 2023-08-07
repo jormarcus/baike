@@ -3,8 +3,16 @@
 import prisma from '@/lib/prismadb';
 import { Collection } from '@prisma/client';
 import { getCurrentUser } from './user-actions';
-import { formatSafeCollection } from '@/helpers/format-dto';
+import {
+  formatSafeCollection,
+  formatSafeCollectionWithRecipes,
+} from '@/helpers/format-dto';
 import { revalidatePath } from 'next/cache';
+import {
+  CollectionWithRecipeNames,
+  CollectionWithRecipeNamesAndImage,
+  CollectionWithRecipes,
+} from '@/types';
 
 export async function createCollection(name: string, revalidatePage: boolean) {
   const user = await getCurrentUser();
@@ -18,16 +26,24 @@ export async function createCollection(name: string, revalidatePage: boolean) {
       name,
       userId: user.id,
     },
+    include: {
+      recipes: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
   });
 
   if (revalidatePage) {
     revalidatePath('/collections');
   }
 
-  return formatSafeCollection(newCollection);
+  return newCollection;
 }
 
-export async function getCollectionById(id: number) {
+export async function getCollectionWithRecipesById(id: number) {
   const collection = await prisma.collection.findUnique({
     where: {
       id,
@@ -41,11 +57,7 @@ export async function getCollectionById(id: number) {
     return null;
   }
 
-  return formatSafeCollection(
-    collection,
-    collection.recipes.length > 0,
-    collection.recipes
-  );
+  return formatSafeCollectionWithRecipes(collection);
 }
 
 export async function getCollectionsByUserId(userId: number) {
@@ -72,19 +84,16 @@ export async function getCollectionsWithRecipesByUserId(userId: number) {
     },
   });
 
-  return collections.map((collection: Collection) =>
-    formatSafeCollection(
-      collection,
-      collection.recipes.length > 0,
-      collection.recipes
-    )
+  return collections.map((collection: CollectionWithRecipes) =>
+    formatSafeCollection(collection)
   );
 }
 
-export async function getCollectionsWithRecipesByUserIdAndRecipeId(
+// used when adding collections to a recipe and to see which collections a recipe is already in
+export async function getCollectionsWithRecipeNameByUserIdAndRecipeId(
   userId: number,
   recipeId: number
-) {
+): Promise<CollectionWithRecipeNames[]> {
   const collections = await prisma.collection.findMany({
     where: {
       userId,
@@ -96,19 +105,33 @@ export async function getCollectionsWithRecipesByUserIdAndRecipeId(
         },
         select: {
           id: true,
+          name: true,
         },
       },
     },
   });
 
-  const collectionsWithRecipe = collections.map((collection: Collection) => ({
-    ...collection,
-    hasRecipe: collection.recipes.length > 0,
-  }));
+  return collections;
+}
+export async function getCollectionsWithRecipeNamesAndImageByUserId(
+  userId: number
+): Promise<CollectionWithRecipeNamesAndImage[]> {
+  const collections = await prisma.collection.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      recipes: {
+        select: {
+          id: true,
+          name: true,
+          imageSrc: true,
+        },
+      },
+    },
+  });
 
-  return collectionsWithRecipe.map((collection: Collection) =>
-    formatSafeCollection(collection, collection.hasRecipe)
-  );
+  return collections;
 }
 
 export async function updateCollection(collection: Collection) {

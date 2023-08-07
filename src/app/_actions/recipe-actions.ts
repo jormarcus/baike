@@ -8,7 +8,7 @@ import { formatSafeRecipe } from '@/helpers/format-dto';
 import { getCurrentUser } from './user-actions';
 import { Recipe } from '@/lib/validators/recipe-validator';
 import { Ingredient } from '@/lib/validators/ingredient-validator';
-import { SafeCollection, SafeRecipe } from '@/types';
+import { CollectionWithRecipeNames, SafeRecipe } from '@/types';
 import { capitalizeFirstLetter, omit } from '@/lib/utils';
 import { Recipe as PrismaRecipe } from '@prisma/client';
 
@@ -262,7 +262,7 @@ export async function importRecipe(url: string): Promise<SafeRecipe> {
 }
 
 export async function addCollectionsToRecipe(
-  collections: SafeCollection[],
+  collections: CollectionWithRecipeNames[],
   recipeId: number
 ) {
   const recipe = await prisma.recipe.findUnique({
@@ -286,7 +286,7 @@ export async function addCollectionsToRecipe(
   const collectionsIdsToRemove: { id: number }[] = [];
 
   collections.forEach((collection) => {
-    if (collection.hasRecipe) {
+    if (collection.recipes.length > 0) {
       collectionsIdsToAdd.push({ id: collection.id });
     } else {
       collectionsIdsToRemove.push({ id: collection.id });

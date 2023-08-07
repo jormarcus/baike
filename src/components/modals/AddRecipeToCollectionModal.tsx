@@ -6,6 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AiOutlineAppstoreAdd } from 'react-icons/ai';
 
 import { Button } from '@/components/ui/Button';
 import {
@@ -27,25 +28,17 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/Form';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/Tooltip';
-
-import { getCollectionsWithRecipesByUserIdAndRecipeId } from '@/app/_actions/collection-actions';
-import { SafeCollection } from '@/types';
+import { CollectionWithRecipeNames } from '@/types';
 import AddCollectionModal from './AddCollectionModal';
 import { addCollectionsToRecipe } from '@/app/_actions/recipe-actions';
 import { Checkbox } from '../ui/Checkbox';
-import { AiOutlineAppstoreAdd } from 'react-icons/ai';
+import { getCollectionsWithRecipeNameByUserIdAndRecipeId } from '@/app/_actions/collection-actions';
 
-const AddToCollectionSchema = z.object({
+const AddRecipeToCollectionSchema = z.object({
   collections: z.array(z.string()),
 });
 
-function AddToCollectionModal({
+function AddRecipeToCollectionModal({
   recipeId,
   name,
 }: {
@@ -54,14 +47,21 @@ function AddToCollectionModal({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [collections, setCollections] = useState<SafeCollection[]>([]);
+  const [collections, setCollections] = useState<CollectionWithRecipeNames[]>(
+    []
+  );
 
   const { data: session } = useSession();
   const userId = session?.user?.id;
 
-  const form = useForm<z.infer<typeof AddToCollectionSchema>>({
-    resolver: zodResolver(AddToCollectionSchema),
+  const form = useForm<z.infer<typeof AddRecipeToCollectionSchema>>({
+    resolver: zodResolver(AddRecipeToCollectionSchema),
   });
+
+  const handleOpenChange = () => {
+    setIsOpen((prev) => !prev);
+    form.reset();
+  };
 
   const {
     register,
@@ -80,10 +80,11 @@ function AddToCollectionModal({
     async function getCollections() {
       try {
         if (!userId) return;
-        const collections = await getCollectionsWithRecipesByUserIdAndRecipeId(
-          parseInt(userId),
-          recipeId
-        );
+        const collections =
+          await getCollectionsWithRecipeNameByUserIdAndRecipeId(
+            parseInt(userId),
+            recipeId
+          );
         console.log('setting collections: ', collections);
         setCollections(collections);
       } catch (error) {
@@ -96,7 +97,7 @@ function AddToCollectionModal({
     getCollections();
   }, [isOpen, recipeId, userId]);
 
-  const onAddNewCollection = (collection: SafeCollection) => {
+  const onAddNewCollection = (collection: CollectionWithRecipeNames) => {
     setCollections((prev) => [...prev, collection]);
   };
 
@@ -115,21 +116,12 @@ function AddToCollectionModal({
   };
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+    <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
       <AlertDialogTrigger asChild>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 whitespace-nowrap">
-                <AiOutlineAppstoreAdd className="mr-0 md:mr-2 h-4 w-4" />
-                <span className="hidden lg:block">Add to collection</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Add to collection</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 flex flex-nowrap items-center">
+          <AiOutlineAppstoreAdd className="mr-0 md:mr-2 h-4 w-4" />
+          <span className="hidden lg:block">Add to collection</span>
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-[425px]">
         <AlertDialogHeader>
@@ -162,12 +154,14 @@ function AddToCollectionModal({
                               <FormControl>
                                 <Checkbox
                                   id={collection.id.toString()}
-                                  checked={collection.hasRecipe}
+                                  checked={collection.recipes.length > 0}
                                   onCheckedChange={() => {
                                     setCollections((prev) =>
                                       prev.map((c) =>
                                         c.id === collection.id
-                                          ? { ...c, hasRecipe: !c.hasRecipe }
+                                          ? {
+                                              ...c,
+                                            }
                                           : c
                                       )
                                     );
@@ -206,4 +200,4 @@ function AddToCollectionModal({
   );
 }
 
-export default AddToCollectionModal;
+export default AddRecipeToCollectionModal;
