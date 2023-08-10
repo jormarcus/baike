@@ -1,5 +1,6 @@
 'use client';
 
+import ChatHeader from '@/components/chat/ChatHeader';
 import Message from '@/components/chat/Message';
 import { Input } from '@/components/inputs/Input';
 import { ChatContext } from '@/context/ChatContext';
@@ -44,29 +45,33 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full justify-center items-center gap-4 pb-28 pt-12 stretch px-4">
-      {messages.length > 0
-        ? messages.map((message) => (
-            <Message key={message.id} message={message} />
-          ))
-        : null}
-
-      <form
-        onSubmit={(e: FormEvent<HTMLFormElement>) =>
-          handleSubmit(e, { options: { body: { chatId } } })
-        }
-        className="fixed bottom-0 w-full max-w-md"
-      >
-        <Input
-          className="p-4 mb-8 dark:bg-neutral-950
-        dark:text-neutral-400 rounded-3xl shadow-xl h-[64px]"
-          id="chat-input"
-          value={input}
-          placeholder="Ask follow-up..."
-          onChange={handleInputChange}
-          disabled={isLoading}
-        />
-      </form>
+    <div className="flex flex-col w-full justify-center items-center gap-4 pb-28 stretch">
+      {/* <ChatHeader chatId={parseInt(chatId)} /> */}
+      <div className="flex flex-col w-full justify-center items-center  stretch px-8">
+        <div className="pt-4 flex flex-col gap-6">
+          {messages.length > 0
+            ? messages.map((message) => (
+                <Message key={message.id} message={message} />
+              ))
+            : null}
+        </div>
+        <form
+          onSubmit={(e: FormEvent<HTMLFormElement>) =>
+            handleSubmit(e, { options: { body: { chatId } } })
+          }
+          className="fixed bottom-0 w-full max-w-md sm:max-w-lg lg:max-w-xl px-4"
+        >
+          <Input
+            className="p-4 mb-8 dark:bg-neutral-950
+        dark:text-neutral-400 rounded-3xl shadow-xl h-[64px] text-center"
+            id="chat-input"
+            value={input}
+            placeholder="Ask follow-up..."
+            onChange={handleInputChange}
+            disabled={isLoading}
+          />
+        </form>
+      </div>
     </div>
   );
 };
