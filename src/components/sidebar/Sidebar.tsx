@@ -9,7 +9,6 @@ import SidebarItem from './SidebarItem';
 import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
 import AuthContent from './AuthContent';
-import useWindowWidth from '@/hooks/useWindowWidth';
 
 interface SidebarProps {
   currentUser?: SafeUser | null;
@@ -47,12 +46,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   const toggleOpen = () => {
     setIsOpen((prevState) => !prevState);
   };
-
-  const width = useWindowWidth();
-  useEffect(() => {
-    if (width < 768 && isOpen) setIsOpen(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width]);
 
   const sideBarItems = useMemo(() => {
     return [
