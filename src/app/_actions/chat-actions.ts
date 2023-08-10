@@ -3,7 +3,7 @@
 import { formatSafeChat } from '@/helpers/format-dto';
 import prisma from '@/lib/prismadb';
 import { getCurrentUser } from './user-actions';
-import { Chat } from '@prisma/client';
+import { ChatWithMessages } from '@/types';
 
 export async function createChat() {
   const user = await getCurrentUser();
@@ -54,7 +54,7 @@ export async function getChatsByUserId(userId: number) {
     take: 10,
   });
 
-  return chats.map((chat: Chat) =>
+  return chats.map((chat: ChatWithMessages) =>
     formatSafeChat(
       chat,
       chat.messages && chat.messages.length > 0 ? chat.messages[0]['text'] : ''
@@ -83,6 +83,19 @@ export async function deleteChat(id: number) {
   const chat = await prisma.chat.delete({
     where: {
       id,
+    },
+  });
+
+  return formatSafeChat(chat);
+}
+
+export async function updateChatTitle(id: number, title: string) {
+  const chat = await prisma.chat.update({
+    where: {
+      id,
+    },
+    data: {
+      title,
     },
   });
 

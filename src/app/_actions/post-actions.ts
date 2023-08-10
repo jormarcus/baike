@@ -20,7 +20,5 @@ export async function getFeedPosts() {
     },
   });
 
-  console.log('posts', posts);
-
   return posts.map(formatSafePost);
 }

@@ -1,8 +1,44 @@
+'use client';
+
 import { ChangeEvent, FormEvent, createContext } from 'react';
 import { Message, useChat } from 'ai/react';
 
 import { throwContextNotInitializedError } from '@/lib/utils';
-import { ChatRequestOptions } from 'ai';
+import {
+  ChatRequest,
+  ChatRequestOptions,
+  FunctionCallHandler,
+  nanoid,
+} from 'ai';
+
+const functionCallHandler: FunctionCallHandler = async (
+  chatMessages,
+  functionCall
+) => {
+  if (functionCall.name === 'createRecipe') {
+    if (functionCall.arguments) {
+      const parsedFunctionCallArguments = JSON.parse(functionCall.arguments);
+      // You now have access to the parsed arguments here (assuming the JSON was valid)
+      // If JSON is invalid, return an appropriate message to the model so that it may retry?
+      console.log(parsedFunctionCallArguments);
+    }
+
+    // Generate a fake temperature
+
+    const functionResponse: ChatRequest = {
+      messages: [
+        ...chatMessages,
+        {
+          id: nanoid(),
+          name: 'createRecipe',
+          role: 'function' as const,
+          content: functionCall.arguments || '',
+        },
+      ],
+    };
+    return functionResponse;
+  }
+};
 
 interface ChatContextStore {
   messages: Message[];
@@ -42,7 +78,9 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({
     handleSubmit,
     setMessages,
     reload,
-  } = useChat();
+  } = useChat({
+    experimental_onFunctionCall: functionCallHandler,
+  });
 
   return (
     <ChatContext.Provider

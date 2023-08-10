@@ -1,10 +1,10 @@
+import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { Configuration, OpenAIApi } from 'openai-edge';
+
 import { createMessage } from '@/app/_actions/message-actions';
 import { recipePrompt } from '@/helpers/prompts/recipePrompt';
 import { ChatGPTMessage } from '@/types';
-import { Message, MessagePayload } from '@prisma/client';
-import { OpenAIStream, StreamingTextResponse } from 'ai';
-import { nanoid } from 'nanoid';
-import { Configuration, OpenAIApi } from 'openai-edge';
+import { functions } from './functions';
 
 // Create an OpenAI API client (that's edge friendly!)
 const config = new Configuration({
@@ -29,14 +29,16 @@ export async function POST(req: Request) {
   });
 
   // Ask OpenAI for a streaming chat completion given the prompt
-  const response = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
+  const intialResponse = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo-0613',
     stream: true,
     messages,
+    functions,
+    function_call: 'auto',
   });
 
   // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(response, {
+  const stream = OpenAIStream(/* finalResponse || */ intialResponse, {
     onStart: async () => {
       // This callback is called when the stream starts
       // You can use this to save the prompt to your database
