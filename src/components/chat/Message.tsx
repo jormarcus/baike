@@ -8,27 +8,12 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ message }) => {
-  let recipe;
-  if (message.function_call && typeof message.function_call !== 'string') {
-    recipe = message.function_call.arguments;
-    console.log('recipeData: ', recipe);
-  }
-
-  // console.log('functionCallString: ', functionCallString);
-
-  if (message.role === 'assistant' && message.function_call) {
-    console.log('assistant message: ', message);
-  }
-  if (message.role === 'function') {
-    console.log('function message: ', message);
-  }
-
-  if (message.content === undefined) return null;
+  if (!message.content) return null;
 
   return (
-    <div>
-      {recipe ? (
-        <RecipeTrayCard recipe={JSON.parse(recipe)} />
+    <>
+      {message.role === 'function' && message.name === 'createRecipe' ? (
+        <RecipeTrayCard recipe={JSON.parse(message.content)} />
       ) : (
         <div
           className={`flex items-center justify-between w-auto px-4 py-2 dark:text-neutral-200 max-w-xl rounded-3xl
@@ -44,7 +29,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

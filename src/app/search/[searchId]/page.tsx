@@ -47,7 +47,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
   return (
     <div className="flex flex-col w-full justify-center items-center gap-4 pb-28 stretch">
       {/* <ChatHeader chatId={parseInt(chatId)} /> */}
-      <div className="flex flex-col w-full justify-center items-center  stretch px-8">
+      <div className="flex flex-col w-full stretch px-8">
         <div className="pt-4 flex flex-col gap-6">
           {messages.length > 0
             ? messages.map((message) => (
@@ -59,7 +59,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
           onSubmit={(e: FormEvent<HTMLFormElement>) =>
             handleSubmit(e, { options: { body: { chatId } } })
           }
-          className="fixed bottom-0 w-full max-w-md sm:max-w-lg lg:max-w-xl px-4"
+          className="fixed bottom-0 max-w-md sm:max-w-lg lg:max-w-xl px-4 self-center"
         >
           <Input
             className="p-4 mb-8 dark:bg-neutral-950

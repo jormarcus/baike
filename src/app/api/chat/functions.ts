@@ -11,10 +11,6 @@ export const functions: ChatCompletionFunctions[] = [
           type: 'string',
           description: 'Name of the recipe',
         },
-        authorId: {
-          type: 'number',
-          description: 'Author ID of the recipe',
-        },
         imageSrc: {
           type: 'string',
           description: 'Image source of the recipe',
@@ -37,19 +33,23 @@ export const functions: ChatCompletionFunctions[] = [
         },
         prepHours: {
           type: 'number',
-          description: 'Total amount of hours of prep of the recipe',
+          description:
+            'Total amount of hours of prep to the recipe. The time before cooking. For example, if you need to marinate something for 2 hours, this would be 2 hours plus any additional prep time.',
         },
         prepMinutes: {
           type: 'number',
-          description: 'Total amount of minutes of prep of the recipe',
+          description:
+            'Total amount of minutes of prep of the recipe. The time before cooking. For example, if you need to cut something for 10 minutes, this would be 10 minutes plus any additional prep time.',
         },
         cookHours: {
           type: 'number',
-          description: 'Total amount of hours of cooking of the recipe',
+          description:
+            'Total amount of hours it takes to cook the recipe. The time after prep. For example, if you need to bake something for 2 hours, this would be 2 hours plus any additional cook time.',
         },
         cookMinutes: {
           type: 'number',
-          description: 'Total amount of minutes of cooking of the recipe',
+          description:
+            'Total amount of hours it takes to cook the recipe. The time after prep. For example, if you need to cook something for 20 minutes, this would be 20 minutes plus any additional cook time.',
         },
         ingredients: {
           type: 'array',
@@ -82,7 +82,7 @@ export const functions: ChatCompletionFunctions[] = [
               input: {
                 type: 'string',
                 description:
-                  'Input of the ingredient, with the quantity, unit of measure, and name e.g. "1 cup of flour"',
+                  'Input of the ingredient, with the quantity, unit of measure, and name e.g. "1 cup of flour".',
               },
               isGroupHeader: {
                 type: 'boolean',
