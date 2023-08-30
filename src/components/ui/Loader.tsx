@@ -13,7 +13,7 @@ const Loader = () => {
       justify-center 
     "
     >
-      <PuffLoader size={100} color="red" />
+      <PuffLoader size={100} color="rgb(245 158 11)" />
     </div>
   );
 };
