@@ -9,6 +9,7 @@ import SidebarItem from './SidebarItem';
 import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
 import AuthContent from './AuthContent';
+import { usePathname } from 'next/navigation';
 
 interface SidebarProps {
   currentUser?: SafeUser | null;
@@ -40,7 +41,9 @@ const SidebarToggle: React.FC<{
 );
 
 const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
-  const [activeItem, setActiveItem] = useState('Discover');
+  const pathname = usePathname();
+
+  const [activeItem, setActiveItem] = useState(pathname || '/discover');
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleOpen = () => {
@@ -106,7 +109,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
                   label={item.label}
                   href={item.href}
                   name={item.icon}
-                  isActive={activeItem === item.label}
+                  isActive={activeItem === item.href}
                 />
               </div>
             ))}
