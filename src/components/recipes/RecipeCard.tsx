@@ -71,7 +71,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   }, [width]);
 
   return (
-    <div className="flex flex-col gap-2 group col-span-1 dark:bg-neutral-950 rounded-lg p-3 shadow-lg shadow-neutral-950/50">
+    <div className="flex flex-col gap-2 group col-span-1 p-3 group w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90">
       <Link href={`/recipe/${id}`}>
         <CardContent image={imageSrc} name={name} size={iconSize} />
         <CardFooter name={name} averageRating={5} />
