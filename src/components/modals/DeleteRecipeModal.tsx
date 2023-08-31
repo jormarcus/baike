@@ -31,7 +31,6 @@ interface DeleteRecipeModalProps {
 const DeleteRecipeModal: React.FC<DeleteRecipeModalProps> = ({ recipe }) => {
   const router = useRouter();
   const handleDeleteRecipe = async (recipeId: number) => {
-    console.log('delete recipe');
     await deleteRecipe(recipeId);
     router.push('/recipes');
   };

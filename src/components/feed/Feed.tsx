@@ -12,7 +12,6 @@ const Feed: React.FC<FeedProps> = ({ initialPosts }) => {
   const [posts, setPosts] = useState<SafePost[]>([]);
 
   useEffect(() => {
-    console.log('Feed.tsx: useEffect()');
     setPosts(initialPosts);
   }, [initialPosts]);
   return (

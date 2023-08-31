@@ -96,7 +96,6 @@ const AddRecipeForm: React.FC = () => {
   }
 
   const handleIngredientChange = (value: string, index: number) => {
-    console.log('handleInputListChange: ', value, index);
     const fieldData = form.getValues('ingredients');
     const newInputs = [...fieldData];
 
@@ -128,7 +127,6 @@ const AddRecipeForm: React.FC = () => {
   };
 
   const handleInstructionChange = (value: string, index: number) => {
-    console.log('instrction change: ', value, index);
     const fieldData = form.getValues('instructions');
     const newInputs = [...fieldData];
 

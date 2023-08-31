@@ -36,7 +36,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ chatId, chatTitle = '' }) => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (data.title === title) return;
 
-    console.log('data: ', data);
     try {
       await updateChatTitle(chatId, data.title);
     } catch (error) {

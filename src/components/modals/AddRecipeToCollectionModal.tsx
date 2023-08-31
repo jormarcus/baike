@@ -85,7 +85,6 @@ function AddRecipeToCollectionModal({
             parseInt(userId),
             recipeId
           );
-        console.log('setting collections: ', collections);
         setCollections(collections);
       } catch (error) {
         toast.error('Something went wrong!');
@@ -103,7 +102,6 @@ function AddRecipeToCollectionModal({
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    console.log('data: ', collections);
     // TODO - not actually using form data or form for these fields
     try {
       await addCollectionsToRecipe(collections, Number(recipeId));

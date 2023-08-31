@@ -56,9 +56,6 @@ const AddRecipesToCollectionModal: React.FC<
   >([]);
   const [unSelectedRecipeIds, setUnSelectedRecipeIds] = useState<number[]>([]);
 
-  console.log('newlySelectedRecipeIds in component', newlySelectedRecipeIds);
-  console.log('unSelectedRecipeIds in component', unSelectedRecipeIds);
-
   const { data: session } = useSession();
   const userId = session?.user?.id;
 
