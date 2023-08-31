@@ -36,7 +36,7 @@ export async function getChatById(id: number) {
   return formatSafeChat(chat);
 }
 
-export async function getChatsByUserId(userId: number) {
+export async function getChatsByUserId(userId: number, skip = 0, take = 10) {
   const chats = await prisma.chat.findMany({
     where: {
       userId,
@@ -51,7 +51,8 @@ export async function getChatsByUserId(userId: number) {
     orderBy: {
       createdAt: 'desc',
     },
-    take: 10,
+    skip,
+    take,
   });
 
   return chats.map((chat: ChatWithMessages) =>

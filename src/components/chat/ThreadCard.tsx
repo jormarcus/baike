@@ -1,14 +1,13 @@
 import { SafeChat } from '@/types';
 import { Clock4, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { timeAgo } from '@/helpers/date-time-helper';
 
 interface ThreadCardProps {
   thread: SafeChat;
 }
-
-const ThreadCard: React.FC<ThreadCardProps> = ({ thread }) => {
+const ThreadCard = forwardRef(({ thread }: { thread: SafeChat }, ref) => {
   const time = useMemo(() => {
     return timeAgo(new Date(thread.createdAt));
   }, [thread.createdAt]);
@@ -36,6 +35,8 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread }) => {
       </div>
     </div>
   );
-};
+});
+
+ThreadCard.displayName = 'ThreadCard';
 
 export default ThreadCard;
