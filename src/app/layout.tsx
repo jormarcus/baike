@@ -24,7 +24,7 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body>
         <Providers>
           <div className={`${font.className}`}>
