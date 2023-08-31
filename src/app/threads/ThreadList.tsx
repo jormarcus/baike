@@ -1,12 +1,12 @@
 'use client';
 
-import { SafeChat } from '@/types';
 import { useEffect, useRef, useState } from 'react';
+
+import { SafeChat } from '@/types';
 import { getChatsByUserId } from '../_actions/chat-actions';
 import ThreadCard from '@/components/chat/ThreadCard';
-import useIntersectionObserver from '@/hooks/useIntersectionObserver';
-
 import Loading from './loading';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 interface ThreadListProps {
   initalThreads: SafeChat[];
@@ -42,7 +42,7 @@ const ThreadList: React.FC<ThreadListProps> = ({ initalThreads, userId }) => {
         <ThreadCard key={thread.id} thread={thread} />
       ))}
       <div ref={container} className="w-full">
-        <Loading />
+        <Loading className="mt-0 px-0" />
       </div>
     </div>
   );

@@ -1,14 +1,21 @@
 import Skeleton from '@/components/ui/Skeleton';
+import { cn } from '@/lib/utils';
+import { HTMLAttributes } from 'react';
 
-interface LoadingProps {}
+interface LoadingProps extends HTMLAttributes<HTMLDivElement> {}
 
-const Loading: React.FC<LoadingProps> = ({}) => {
+const Loading: React.FC<LoadingProps> = ({ className }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div
+      className={cn(
+        'mt-16 px-12 flex flex-col gap-2 justify-center',
+        className
+      )}
+    >
       {Array.from({ length: 10 }).map((_, index) => (
         <div
           key={index}
-          className="flex items-center space-x-4 space-y-2 border p-2 border-neutral-600 rounded-md w-full"
+          className="flex items-center space-x-4 space-y-2 border p-2 border-neutral-600 rounded-md max-w-3xl"
         >
           <div className="space-y-2 w-full">
             <Skeleton className="h-8 max-w-xs" />
