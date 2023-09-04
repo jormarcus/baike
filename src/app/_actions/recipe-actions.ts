@@ -313,7 +313,12 @@ export async function addCollectionsToRecipe(
   return formatSafeRecipe(updatedRecipe);
 }
 
-export async function searchRecipes(query: string, param = '') {
+export async function searchRecipes(
+  query: string,
+  param = '',
+  skip = 0,
+  take = 10
+) {
   const user = await getCurrentUser();
   if (!user) {
     throw new Error('User not found');
@@ -341,7 +346,8 @@ export async function searchRecipes(query: string, param = '') {
     orderBy: {
       name: 'asc',
     },
-    take: 10,
+    skip,
+    take,
     include: includeObj,
   });
 

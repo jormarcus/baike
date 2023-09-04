@@ -7,7 +7,7 @@ import Searchbox from '@/components/ui/Searchbox';
 
 interface RecipesPageProps {
   searchParams: {
-    name: string;
+    search: string;
   };
 }
 
@@ -18,7 +18,7 @@ const RecipesPage = async ({ searchParams }: RecipesPageProps) => {
     return <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
 
-  const recipes = await searchRecipes(searchParams.name);
+  const recipes = await searchRecipes(searchParams.search);
 
   return (
     <div className="mt-16 flex flex-col justify-center px-12">
@@ -26,7 +26,7 @@ const RecipesPage = async ({ searchParams }: RecipesPageProps) => {
       <div className="pt-8">
         <Searchbox />
       </div>
-      <RecipesList recipes={recipes} />
+      <RecipesList initialRecipes={recipes} />
     </div>
   );
 };
