@@ -1,10 +1,12 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
-import { stagger, useAnimate } from 'framer-motion';
+import { Reorder, stagger, useAnimate } from 'framer-motion';
 
 import { SafeIngredient } from '@/types';
 import { Label } from '../ui/Label';
+import { updateIngredientsOrder } from '@/app/_actions/recipe-actions';
+import { formatIngredient } from '@/helpers/format-dto';
 
 interface IngredientsListProps {
   ingredients: SafeIngredient[];
@@ -49,13 +51,30 @@ const IngredientsList: React.FC<IngredientsListProps> = ({ ingredients }) => {
     }
   };
 
+  const handleReorder = async (newList: SafeIngredient[]) => {
+    setIngredientsList(
+      newList.map((ingredient, index) => ({ ...ingredient, order: index }))
+    );
+    try {
+      await updateIngredientsOrder(newList.map(formatIngredient));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center sm:items-start basis-1/3">
       <h4 className="text-xl font-semibold tracking-tight mb-2">Ingredients</h4>
-      <ul ref={ref} className="list-none">
+      <Reorder.Group
+        ref={ref}
+        axis="y"
+        values={ingredientsList}
+        onReorder={(args) => handleReorder(args)}
+      >
         {ingredientsList.map((ingredient, index) => (
-          <li
-            key={index}
+          <Reorder.Item
+            key={ingredient.id}
+            value={ingredient}
             className="flex items-center space-x-2 mt-2 leading-7"
           >
             <input
@@ -72,9 +91,9 @@ const IngredientsList: React.FC<IngredientsListProps> = ({ ingredients }) => {
             >
               {ingredient.input}
             </Label>
-          </li>
+          </Reorder.Item>
         ))}
-      </ul>
+      </Reorder.Group>
     </div>
   );
 };

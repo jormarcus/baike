@@ -11,9 +11,10 @@ import { Ingredient } from '@/lib/validators/ingredient-validator';
 import { CollectionWithRecipeNames, SafeRecipe } from '@/types';
 import { capitalizeFirstLetter, omit } from '@/lib/utils';
 import { Recipe as PrismaRecipe } from '@prisma/client';
+import { Ingredient as PrismaIngredient } from '@prisma/client';
 
 function parseIngredients(ingredients: { input: string; id?: number }[]) {
-  return ingredients.map((ingredient) => {
+  return ingredients.map((ingredient, index) => {
     const parsedIngredient = parseIngredient(ingredient.input)[0];
     return {
       name: capitalizeFirstLetter(parsedIngredient.description),
@@ -24,6 +25,7 @@ function parseIngredients(ingredients: { input: string; id?: number }[]) {
       isGroupHeader: parsedIngredient.isGroupHeader,
       input: ingredient.input,
       id: ingredient.id,
+      order: index,
     };
   });
 }
@@ -130,7 +132,11 @@ export async function getRecipeById(id: number) {
           name: true,
         },
       },
-      ingredients: true,
+      ingredients: {
+        orderBy: {
+          order: 'asc',
+        },
+      },
     },
   });
 
@@ -352,4 +358,15 @@ export async function searchRecipes(
   });
 
   return recipes.map((recipe: PrismaRecipe) => formatSafeRecipe(recipe));
+}
+
+export async function updateIngredientsOrder(ingredients: PrismaIngredient[]) {
+  await prisma.$transaction(async (transaction) => {
+    for (const ingredient of ingredients) {
+      await transaction.ingredient.update({
+        where: { id: ingredient.id },
+        data: { order: ingredient.order },
+      });
+    }
+  });
 }

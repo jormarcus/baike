@@ -22,6 +22,8 @@ export default async function RecipePage({
 }: RecipePageProps) {
   const recipe: SafeRecipe | null = await getRecipeById(Number(recipeId));
 
+  console.log(recipe);
+
   if (!recipe) {
     return <EmptyState title="Recipe not found" />;
   }

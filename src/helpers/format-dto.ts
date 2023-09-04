@@ -4,6 +4,7 @@ import {
   Role,
   SafeChat,
   SafeCollection,
+  SafeIngredient,
   SafeMessage,
   SafePost,
   SafeRecipe,
@@ -109,5 +110,16 @@ export function formatSafePost(post: Post): SafePost {
     ...post,
     createdAt: post.createdAt?.toISOString() ?? '',
     updatedAt: post.updatedAt?.toISOString() ?? '',
+  };
+}
+
+export function formatIngredient(ingredient: SafeIngredient): Ingredient {
+  const { createdAt, updatedAt } = ingredient;
+  return {
+    ...ingredient,
+    id: ingredient?.id || 0,
+    createdAt: createdAt ? new Date(createdAt) : new Date(),
+    updatedAt: updatedAt ? new Date(updatedAt) : new Date(),
+    isGroupHeader: ingredient?.isGroupHeader || false,
   };
 }

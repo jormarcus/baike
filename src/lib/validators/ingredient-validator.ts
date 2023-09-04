@@ -10,6 +10,7 @@ export const IngredientSchema = z.object({
   isGroupHeader: z.boolean().nullable(),
   input: z.string(),
   isUpdated: z.boolean().optional(),
+  order: z.number(),
 });
 
 export type Ingredient = z.infer<typeof IngredientSchema>;
