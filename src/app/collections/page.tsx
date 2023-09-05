@@ -1,13 +1,9 @@
 import EmptyState from '@/components/ui/EmptyState';
 import { getCurrentUser } from '../_actions/user-actions';
-import {
-  getCollectionsWithRecipeNamesAndImageByUserId,
-  getCollectionsWithRecipesByUserId,
-} from '../_actions/collection-actions';
-import CollectionCard from '@/components/collections/CollectionCard';
-import { Button } from '@/components/ui/Button';
+import { getCollections } from '../_actions/collection-actions';
 import AddCollectionModal from '@/components/modals/AddCollectionModal';
 import { CollectionWithRecipeNamesAndImage } from '@/types';
+import CollectionsList from '@/components/collections/CollectionsList';
 
 interface CollectionsPageProps {}
 
@@ -18,25 +14,23 @@ export default async function CollectionsPage() {
     return <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
 
-  const collections: CollectionWithRecipeNamesAndImage[] =
-    await getCollectionsWithRecipeNamesAndImageByUserId(currentUser.id);
+  const {
+    collections,
+    totalCount,
+  }: {
+    collections: CollectionWithRecipeNamesAndImage[];
+    totalCount: number;
+  } = await getCollections();
 
   return (
     <div className="mt-16 flex flex-col justify-center gap-2 px-12">
       <div className="flex flex-row justify-end">
         <AddCollectionModal />
       </div>
-      <div className="mt-1 flex flex-col gap-2">
-        {collections && collections.length > 0 ? (
-          collections.map((collection) => (
-            <CollectionCard key={collection.id} collection={collection} />
-          ))
-        ) : (
-          <div className="flex flex-col items-center">
-            <EmptyState title="No collections available" />
-          </div>
-        )}
-      </div>
+      <CollectionsList
+        initialCollections={collections}
+        totalCount={totalCount}
+      />
     </div>
   );
 }

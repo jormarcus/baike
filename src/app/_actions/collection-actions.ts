@@ -43,6 +43,19 @@ export async function createCollection(name: string, revalidatePage: boolean) {
   return newCollection;
 }
 
+export async function getCollectionTotalCount(): Promise<number> {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  return await prisma.collection.count({
+    where: {
+      userId: user.id,
+    },
+  });
+}
+
 export async function getCollectionWithRecipesById(id: number) {
   const collection = await prisma.collection.findUnique({
     where: {
@@ -113,12 +126,17 @@ export async function getCollectionsWithRecipeNameByUserIdAndRecipeId(
 
   return collections;
 }
-export async function getCollectionsWithRecipeNamesAndImageByUserId(
-  userId: number
-): Promise<CollectionWithRecipeNamesAndImage[]> {
+export async function getCollectionsWithRecipeNamesAndImage(): Promise<
+  CollectionWithRecipeNamesAndImage[]
+> {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error('User not found');
+  }
+
   const collections = await prisma.collection.findMany({
     where: {
-      userId,
+      userId: user.id,
     },
     include: {
       recipes: {
@@ -132,6 +150,17 @@ export async function getCollectionsWithRecipeNamesAndImageByUserId(
   });
 
   return collections;
+}
+
+// for collections page initial load
+export async function getCollections(): Promise<{
+  collections: CollectionWithRecipeNamesAndImage[];
+  totalCount: number;
+}> {
+  const collections = await getCollectionsWithRecipeNamesAndImage();
+  const totalCount = await getCollectionTotalCount();
+
+  return { collections, totalCount };
 }
 
 export async function updateCollection(collection: Collection) {
@@ -171,7 +200,7 @@ export async function addRecipesToCollection(
     id,
   }));
 
-  const collectionRecipes = await prisma.collection.update({
+  await prisma.collection.update({
     where: {
       id: collectionId,
     },
@@ -188,4 +217,42 @@ export async function addRecipesToCollection(
   });
 
   revalidatePath(`/collection/${collectionId}`);
+}
+
+// collections page search/infscroll
+export async function getPaginatedCollections(
+  query: string,
+  skip = 0,
+  take = 10
+) {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  const collections = await prisma.collection.findMany({
+    where: {
+      userId: user.id,
+      name: {
+        contains: query,
+        mode: 'insensitive',
+      },
+    },
+    include: {
+      recipes: {
+        select: {
+          id: true,
+          name: true,
+          imageSrc: true,
+        },
+      },
+    },
+    orderBy: {
+      name: 'asc',
+    },
+    skip,
+    take,
+  });
+
+  return collections;
 }

@@ -22,7 +22,7 @@ export default async function CollectionPage({
   }
 
   return (
-    <div className="mt-16 flex flex-col items-center px-12">
+    <div className="my-16 flex flex-col items-center px-12">
       <h1 className="text-3xl font-bold my-8">{collection.name}</h1>
       <div className="flex flex-row self-center sm:self-end">
         <AddRecipesToCollectionModal

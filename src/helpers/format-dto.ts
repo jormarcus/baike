@@ -75,7 +75,6 @@ export function formatSafeCollection(collection: Collection): SafeCollection {
     ...collection,
     createdAt: collection.createdAt?.toISOString() ?? '',
     updatedAt: collection.updatedAt?.toISOString() ?? '',
-    image: '',
   };
 }
 
@@ -89,7 +88,6 @@ export function formatSafeCollectionWithRecipes(
     ...collection,
     createdAt: collection.createdAt?.toISOString() ?? '',
     updatedAt: collection.updatedAt?.toISOString() ?? '',
-    image: '',
     recipes: safeRecipes,
     recipesCount: safeRecipes.length,
     hasRecipe: safeRecipes.length > 0,

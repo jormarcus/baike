@@ -6,7 +6,7 @@ import { Croissant, Heart } from 'lucide-react';
 import Link from 'next/link';
 
 import { SafeRecipe } from '@/types';
-import FeatureCard from './FeatureCard';
+import FeatureCard from '../FeatureCard';
 
 interface RecipeCardProps {
   recipe: SafeRecipe;

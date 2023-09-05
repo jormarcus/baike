@@ -63,7 +63,6 @@ export type ChatGPTMessage = {
 export type SafeCollection = Omit<Collection, 'createdAt' | 'updatedAt'> & {
   createdAt?: string | null;
   updatedAt?: string | null;
-  image: string | null;
   recipes?: SafeRecipe[];
   recipesCount?: number;
   hasRecipe?: boolean;
