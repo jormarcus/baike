@@ -36,10 +36,17 @@ export async function getChatById(id: number) {
   return formatSafeChat(chat);
 }
 
-export async function getChatsByUserId(userId: number, skip = 0, take = 10) {
+export async function getChats(query: string, skip = 0, take = 10) {
+  const user = await getCurrentUser();
+
   const chats = await prisma.chat.findMany({
     where: {
-      userId,
+      userId: user?.id,
+      // should i also allow search by message?
+      title: {
+        contains: query,
+        mode: 'insensitive',
+      },
     },
     include: {
       messages: {
@@ -101,4 +108,27 @@ export async function updateChatTitle(id: number, title: string) {
   });
 
   return formatSafeChat(chat);
+}
+
+export async function getChatsTotalCount(query: string) {
+  const user = await getCurrentUser();
+
+  const totalCount = await prisma.chat.count({
+    where: {
+      userId: user?.id,
+      title: {
+        contains: query,
+        mode: 'insensitive',
+      },
+    },
+  });
+
+  return totalCount;
+}
+
+export async function getChatsWithCount(query: string, skip = 0, take = 10) {
+  const chats = await getChats(query, skip, take);
+  const totalCount = await getChatsTotalCount(query);
+
+  return { chats, totalCount };
 }

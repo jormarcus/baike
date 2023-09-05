@@ -3,17 +3,20 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { SafeChat } from '@/types';
-import { getChatsByUserId } from '../_actions/chat-actions';
+import { getChats } from '../_actions/chat-actions';
 import ThreadCard from '@/components/chat/ThreadCard';
 import Loading from './loading';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 interface ThreadListProps {
   initalThreads: SafeChat[];
-  userId: number;
+  totalCount: number;
 }
 
-const ThreadList: React.FC<ThreadListProps> = ({ initalThreads, userId }) => {
+const ThreadList: React.FC<ThreadListProps> = ({
+  initalThreads,
+  totalCount,
+}) => {
   const [threads, setThreads] = useState<SafeChat[]>(initalThreads);
 
   const container = useRef<HTMLDivElement>(null);
@@ -24,7 +27,9 @@ const ThreadList: React.FC<ThreadListProps> = ({ initalThreads, userId }) => {
     const getThreads = async () => {
       try {
         const skip = threads.length;
-        const chats: SafeChat[] = await getChatsByUserId(userId, skip);
+        if (skip >= totalCount) return;
+
+        const chats: SafeChat[] = await getChats('', skip, 10);
         setThreads((prevThreads) => [...prevThreads, ...chats]);
       } catch (error) {
         console.error(error);
@@ -34,16 +39,18 @@ const ThreadList: React.FC<ThreadListProps> = ({ initalThreads, userId }) => {
     if (isVisible) {
       getThreads();
     }
-  }, [isVisible, threads.length, userId]);
+  }, [isVisible, threads.length, totalCount]);
 
   return (
     <div className="mt-16 h-full flex flex-col justify-center gap-2 max-w-3xl px-12">
       {threads.map((thread, i) => (
         <ThreadCard key={thread.id} thread={thread} />
       ))}
-      <div ref={container} className="w-full">
-        <Loading className="mt-0 px-0" />
-      </div>
+      {totalCount > threads.length && (
+        <div ref={container} className="w-full">
+          <Loading className="mt-0 px-0" />
+        </div>
+      )}
     </div>
   );
 };
