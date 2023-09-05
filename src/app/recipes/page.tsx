@@ -1,4 +1,8 @@
-import { getRecipesByUserId, searchRecipes } from '../_actions/recipe-actions';
+import {
+  getRecipesByUserId,
+  getPaginatedRecipes,
+  getRecipesWithCount,
+} from '../_actions/recipe-actions';
 import { getCurrentUser } from '../_actions/user-actions';
 import EmptyState from '../../components/ui/EmptyState';
 import RecipePageHeader from '@/components/recipes/RecipePageHeader';
@@ -18,7 +22,9 @@ const RecipesPage = async ({ searchParams }: RecipesPageProps) => {
     return <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
 
-  const recipes = await searchRecipes(searchParams.search);
+  const { recipes, totalCount } = await getRecipesWithCount(
+    searchParams.search
+  );
 
   return (
     <div className="mt-16 flex flex-col justify-center px-12">
@@ -26,7 +32,7 @@ const RecipesPage = async ({ searchParams }: RecipesPageProps) => {
       <div className="pt-8">
         <Searchbox />
       </div>
-      <RecipesList initialRecipes={recipes} />
+      <RecipesList initialRecipes={recipes} totalCount={totalCount} />
     </div>
   );
 };

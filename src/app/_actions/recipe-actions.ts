@@ -319,7 +319,7 @@ export async function addCollectionsToRecipe(
   return formatSafeRecipe(updatedRecipe);
 }
 
-export async function searchRecipes(
+export async function getPaginatedRecipes(
   query: string,
   param = '',
   skip = 0,
@@ -369,4 +369,31 @@ export async function updateIngredientsOrder(ingredients: PrismaIngredient[]) {
       });
     }
   });
+}
+
+export async function getRecipesTotalCount(query: string): Promise<number> {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  return await prisma.recipe.count({
+    where: {
+      authorId: user.id,
+      name: {
+        contains: query,
+        mode: 'insensitive',
+      },
+    },
+  });
+}
+
+export async function getRecipesWithCount(query: string) {
+  const recipes = await getPaginatedRecipes(query, '', 0, 10);
+  const totalCount = await getRecipesTotalCount(query);
+
+  return {
+    recipes,
+    totalCount,
+  };
 }

@@ -7,14 +7,18 @@ import { SafeRecipe } from '@/types';
 import RecipeCard from './RecipeCard';
 import EmptyState from '../ui/EmptyState';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
-import { searchRecipes } from '@/app/_actions/recipe-actions';
+import { getPaginatedRecipes } from '@/app/_actions/recipe-actions';
 import Loading from '@/app/recipes/loading';
 
 interface RecipesListProps {
   initialRecipes: SafeRecipe[];
+  totalCount: number;
 }
 
-const RecipesList: React.FC<RecipesListProps> = ({ initialRecipes }) => {
+const RecipesList: React.FC<RecipesListProps> = ({
+  initialRecipes,
+  totalCount,
+}) => {
   const searchParams = useSearchParams();
   const [recipes, setRecipes] = useState<SafeRecipe[]>(initialRecipes);
 
@@ -26,8 +30,9 @@ const RecipesList: React.FC<RecipesListProps> = ({ initialRecipes }) => {
     const getRecipes = async () => {
       try {
         const skip = recipes.length;
-        console.log('searchParams - search', searchParams.get('search'));
-        const fetchedRecipes: SafeRecipe[] = await searchRecipes(
+        if (skip >= totalCount) return;
+
+        const fetchedRecipes: SafeRecipe[] = await getPaginatedRecipes(
           searchParams.get('search') || '',
           '',
           skip
@@ -42,7 +47,7 @@ const RecipesList: React.FC<RecipesListProps> = ({ initialRecipes }) => {
     if (isVisible) {
       getRecipes();
     }
-  }, [isVisible, recipes.length, searchParams]);
+  }, [isVisible, recipes.length, searchParams, totalCount]);
 
   return (
     <div>
@@ -51,9 +56,11 @@ const RecipesList: React.FC<RecipesListProps> = ({ initialRecipes }) => {
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
       </div>
-      <div ref={container} className="w-full">
-        <Loading />
-      </div>
+      {totalCount > recipes.length && (
+        <div ref={container} className="w-full">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 };

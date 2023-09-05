@@ -1,6 +1,6 @@
 import EmptyState from '@/components/ui/EmptyState';
 import { getCurrentUser } from '../_actions/user-actions';
-import { getCollections } from '../_actions/collection-actions';
+import { getCollectionsWithCount } from '../_actions/collection-actions';
 import AddCollectionModal from '@/components/modals/AddCollectionModal';
 import { CollectionWithRecipeNamesAndImage } from '@/types';
 import CollectionsList from '@/components/collections/CollectionsList';
@@ -20,7 +20,7 @@ export default async function CollectionsPage() {
   }: {
     collections: CollectionWithRecipeNamesAndImage[];
     totalCount: number;
-  } = await getCollections();
+  } = await getCollectionsWithCount();
 
   return (
     <div className="mt-16 flex flex-col justify-center gap-2 px-12">

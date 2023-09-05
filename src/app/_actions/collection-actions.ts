@@ -153,7 +153,7 @@ export async function getCollectionsWithRecipeNamesAndImage(): Promise<
 }
 
 // for collections page initial load
-export async function getCollections(): Promise<{
+export async function getCollectionsWithCount(): Promise<{
   collections: CollectionWithRecipeNamesAndImage[];
   totalCount: number;
 }> {
