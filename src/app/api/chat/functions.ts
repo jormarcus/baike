@@ -13,7 +13,7 @@ export const functions: ChatCompletionFunctions[] = [
         },
         imageSrc: {
           type: 'string',
-          description: 'Image source of the recipe',
+          description: 'Leave as an empty string to use the default image',
         },
         url: {
           type: 'string',
