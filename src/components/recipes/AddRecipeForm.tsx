@@ -62,6 +62,7 @@ const AddRecipeForm: React.FC = () => {
           unitOfMeasureID: '',
           isGroupHeader: false,
           input: '',
+          order: 0,
         },
       ],
       instructions: [''],
@@ -111,6 +112,7 @@ const AddRecipeForm: React.FC = () => {
         unitOfMeasureID: '',
         isGroupHeader: false,
         input: '',
+        order: index,
       });
     }
 
@@ -163,7 +165,6 @@ const AddRecipeForm: React.FC = () => {
                   <ImageUploader
                     handleChange={(value) => form.setValue('imageSrc', value)}
                     value={imageSrc}
-                    {...form.register('imageSrc')}
                   />
                 </FormControl>
               </FormItem>
@@ -468,8 +469,7 @@ const AddRecipeForm: React.FC = () => {
                 </FormControl>
               </FormItem>
             </div>
-            <hr className="text-neutral-500 w-full my-8" />
-            <div className="flex items-center justify-end w-full">
+            <div className="flex items-center justify-end w-full mt-12">
               <Button
                 type="submit"
                 className="w-fit dark:bg-amber-500 dark:text-white font-bold"

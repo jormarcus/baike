@@ -1,16 +1,12 @@
 import { z } from 'zod';
 import { IngredientSchema } from './ingredient-validator';
 
-// export const Instruction = z.object({
-//   content: z.string(),
-// });
-
 export const RecipeSchema = z.object({
   id: z.number().optional(),
   name: z.string().min(1, {
     message: 'Must be at least 1 character',
   }),
-  imageSrc: z.string(),
+  imageSrc: z.string().optional(),
   url: z.string(),
   description: z.string().optional(),
   servings: z.number(),
@@ -22,7 +18,6 @@ export const RecipeSchema = z.object({
   instructions: z.array(z.string()),
   ingredients: z.array(IngredientSchema),
   notes: z.string(),
-
   authorId: z.number().optional(),
 });
 

@@ -4,7 +4,6 @@ import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
 import { useCallback } from 'react';
 import { TbPhotoPlus } from 'react-icons/tb';
-import { Icons } from './Icons';
 
 declare global {
   var cloudinary: any;
@@ -57,7 +56,6 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
                   style={{ objectFit: 'cover' }}
                   src={value}
                   alt="recipe image"
-                  rounded-xl
                 />
               </div>
             )}

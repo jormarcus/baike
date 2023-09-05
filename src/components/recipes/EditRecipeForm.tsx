@@ -69,6 +69,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
           unitOfMeasureID: '',
           isGroupHeader: false,
           input: '',
+          order: recipe?.ingredients.length + 1,
         },
       ] || [
         {
@@ -79,6 +80,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
           unitOfMeasureID: '',
           isGroupHeader: false,
           input: '',
+          order: 0,
         },
       ],
       instructions: [...recipe?.instructions, ''] || [''],
@@ -107,6 +109,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
           data,
           deletedIngredients
         );
+        router.refresh();
         router.push(`/recipe/${newRecipe.id}`);
       } catch (error) {
         error instanceof Error
@@ -132,6 +135,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
         unitOfMeasureID: '',
         isGroupHeader: false,
         input: '',
+        order: index + 1,
       });
     }
 
@@ -189,7 +193,6 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
                   <ImageUploader
                     handleChange={(value) => form.setValue('imageSrc', value)}
                     value={imageSrc}
-                    {...form.register('imageSrc')}
                   />
                 </FormControl>
               </FormItem>
@@ -495,8 +498,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
                 </FormControl>
               </FormItem>
             </div>
-            <hr className="text-neutral-500 w-full my-8" />
-            <div className="flex items-center justify-end w-full">
+            <div className="flex items-center justify-end w-full mt-8">
               <Button
                 type="submit"
                 className="w-fit dark:bg-amber-500 dark:text-white font-bold"
