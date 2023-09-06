@@ -153,7 +153,7 @@ const AddRecipeForm: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="mt-16 md:p-12 p-4 w-full max-w-3xl flex flex-col dark:bg-neutral-950 rounded-lg shadow-lg shadow-neutral-950/50">
+      <div className="md:p-12 p-4 w-full max-w-3xl flex flex-col dark:bg-neutral-950 rounded-lg shadow-lg shadow-neutral-950/50">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -164,7 +164,7 @@ const AddRecipeForm: React.FC = () => {
                 <FormControl>
                   <ImageUploader
                     handleChange={(value) => form.setValue('imageSrc', value)}
-                    value={imageSrc}
+                    value={imageSrc || ''}
                   />
                 </FormControl>
               </FormItem>

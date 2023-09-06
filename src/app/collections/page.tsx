@@ -23,7 +23,7 @@ export default async function CollectionsPage() {
   } = await getCollectionsWithCount();
 
   return (
-    <div className="mt-16 flex flex-col justify-center gap-2 px-12">
+    <div className="flex flex-col justify-center gap-2">
       <div className="flex flex-row justify-end">
         <AddCollectionModal />
       </div>

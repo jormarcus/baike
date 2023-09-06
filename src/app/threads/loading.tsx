@@ -6,12 +6,7 @@ interface LoadingProps extends HTMLAttributes<HTMLDivElement> {}
 
 const Loading: React.FC<LoadingProps> = ({ className }) => {
   return (
-    <div
-      className={cn(
-        'mt-16 px-12 flex flex-col gap-2 justify-center',
-        className
-      )}
-    >
+    <div className={cn('flex flex-col gap-2 justify-center', className)}>
       {Array.from({ length: 10 }).map((_, index) => (
         <div
           key={index}

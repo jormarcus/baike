@@ -25,20 +25,22 @@ export default async function RootLayout({
   const currentUser = await getCurrentUser();
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body>
-        <Providers>
-          <div className={`${font.className}`}>
-            <div className="overflow-hidden w-[100vw] min-h-[100vh] flex">
-              <LoginModal />
-              <RegisterModal />
-              <ToastProvider />
-              <Sidebar currentUser={currentUser} />
-              <div className="flex w-full h-full overflow-hidden flex-col">
-                {children}
+      <body className={`${font.className}`}>
+        <div className="flex h-full w-full">
+          <Providers>
+            <LoginModal />
+            <RegisterModal />
+            <ToastProvider />
+            <Sidebar currentUser={currentUser} />
+            <main className="w-full">
+              <div className="py-2 pr-2 w-full h-full min-h-[100vh]">
+                <div className="p-16 lg:rounded-lg shadow-sm md:dark:border h-full overflow-clip bg-clip-border border-border bg-background">
+                  {children}
+                </div>
               </div>
-            </div>
-          </div>
-        </Providers>
+            </main>
+          </Providers>
+        </div>
       </body>
     </html>
   );

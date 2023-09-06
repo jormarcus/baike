@@ -1,8 +1,4 @@
-import {
-  getRecipesByUserId,
-  getPaginatedRecipes,
-  getRecipesWithCount,
-} from '../_actions/recipe-actions';
+import { getRecipesWithCount } from '../_actions/recipe-actions';
 import { getCurrentUser } from '../_actions/user-actions';
 import EmptyState from '../../components/ui/EmptyState';
 import RecipePageHeader from '@/components/recipes/RecipePageHeader';
@@ -27,7 +23,7 @@ const RecipesPage = async ({ searchParams }: RecipesPageProps) => {
   );
 
   return (
-    <div className="mt-16 flex flex-col justify-center px-12">
+    <div className="flex flex-col justify-center">
       <RecipePageHeader />
       <div className="pt-8">
         <Searchbox />

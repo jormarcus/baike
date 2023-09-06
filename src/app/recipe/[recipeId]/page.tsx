@@ -29,7 +29,7 @@ export default async function RecipePage({
   }
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col items-center sm:items-start space-y-8 mt-16 px-12">
+    <div className="mx-auto flex max-w-4xl flex-col items-center sm:items-start space-y-8">
       <RecipeActionButtonRow recipe={recipe} />
 
       <div className="flex flex-col gap-8 sm:gap-16">

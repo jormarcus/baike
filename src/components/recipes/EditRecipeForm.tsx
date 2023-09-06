@@ -181,7 +181,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="mt-16 md:p-12 p-4 w-full max-w-3xl flex flex-col dark:bg-neutral-950 rounded-lg shadow-lg shadow-neutral-950/50">
+      <div className="md:p-12 p-4 w-full max-w-3xl flex flex-col dark:bg-neutral-950 rounded-lg shadow-lg shadow-neutral-950/50">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -192,7 +192,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
                 <FormControl>
                   <ImageUploader
                     handleChange={(value) => form.setValue('imageSrc', value)}
-                    value={imageSrc}
+                    value={imageSrc || ''}
                   />
                 </FormControl>
               </FormItem>
