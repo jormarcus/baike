@@ -11,6 +11,9 @@ import ToastProvider from '@/providers/ToastProvider';
 export const metadata = {
   title: 'Baike',
   description: 'Recipe sharing app using ChatGPT',
+  icons: {
+    icon: '/images/bake.png',
+  },
 };
 
 const font = Nunito({
@@ -26,21 +29,21 @@ export default async function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${font.className}`}>
-        <div className="flex h-full w-full">
+        <main className="h-full">
           <Providers>
             <LoginModal />
             <RegisterModal />
             <ToastProvider />
-            <Sidebar currentUser={currentUser} />
-            <main className="w-full">
-              <div className="py-2 pr-2 w-full h-full min-h-[100vh]">
-                <div className="p-16 lg:rounded-lg shadow-sm md:dark:border h-full overflow-clip bg-clip-border border-border bg-background">
+            <div className="flex h-full min-h-[100vh]">
+              <Sidebar currentUser={currentUser} />
+              <div className="lg:py-2 lg:pr-2 grow">
+                <div className="lg:rounded-lg shadow-sm md:dark:border h-full bg-clip-border border-border bg-background">
                   {children}
                 </div>
               </div>
-            </main>
+            </div>
           </Providers>
-        </div>
+        </main>
       </body>
     </html>
   );
