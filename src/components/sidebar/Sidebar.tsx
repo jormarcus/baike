@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
@@ -10,33 +10,41 @@ import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
 import AuthContent from './AuthContent';
 import { usePathname } from 'next/navigation';
+import { ArrowLeftToLine, ArrowRightFromLine } from 'lucide-react';
+import Logo from '../ui/Logo';
 
 interface SidebarProps {
   currentUser?: SafeUser | null;
 }
 
-const NewThreadButton: React.FC = () => (
+const NewThreadButton: React.FC<{ isCollapsed: boolean }> = ({
+  isCollapsed,
+}) => (
   <Link
     href="/"
-    className="p-3 flex items-center gap-3 bg-neutral-950 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition-all duration-200 h-11 flex-shrink-0 flex-grow"
+    className={cn(
+      'mx-4 flex items-center gap-3 bg-neutral-950 border-2 border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition-all duration-300 h-10 flex-shrink-0 flex-grow',
+      isCollapsed ? 'justify-center mx-2' : 'p-3'
+    )}
   >
-    <Icons.plus className="h-4 w-4" />
-    <div className="text-sm font-semibold">New thread</div>
+    <Icons.plus className="h-6 w-6 hover:scale-105 transition-all duration-300 ease-in-out" />
+    {!isCollapsed && <div className="text-sm font-semibold">New thread</div>}
   </Link>
 );
 
 const SidebarToggle: React.FC<{
-  toggleOpen: () => void;
+  isCollapsed: boolean;
+  toggleCollapsed: () => void;
   className?: string | undefined;
-}> = ({ toggleOpen, className }) => (
+}> = ({ isCollapsed, toggleCollapsed, className }) => (
   <div
-    onClick={toggleOpen}
+    onClick={toggleCollapsed}
     className={cn(
       'p-3 flex items-center justify-center bg-neutral-950 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition-all duration-200 h-11 w-11 flex-shrink-0 flex-grow-0',
       className
     )}
   >
-    <Icons.sidebar className="h-4 w-4" />
+    {isCollapsed ? <ArrowRightFromLine /> : <ArrowLeftToLine />}
   </div>
 );
 
@@ -44,10 +52,10 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   const pathname = usePathname();
 
   const [activeItem, setActiveItem] = useState(pathname || '/discover');
-  const [isOpen, setIsOpen] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const toggleOpen = () => {
-    setIsOpen((prevState) => !prevState);
+  const toggleCollapsed = () => {
+    setIsCollapsed((prevState) => !prevState);
   };
 
   const sideBarItems = useMemo(() => {
@@ -55,78 +63,78 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
       {
         label: 'Discover',
         href: '/',
-        icon: 'compass' as keyof typeof dynamicIconImports,
+        icon: <Icons.compass />,
       },
       {
         label: 'Recipes',
         href: '/recipes',
-        icon: 'croissant' as keyof typeof dynamicIconImports,
+        icon: <Icons.croissant />,
       },
       {
         label: 'Threads',
         href: '/threads',
-        icon: 'message-square' as keyof typeof dynamicIconImports,
+        icon: <Icons.messageSquare />,
       },
       {
         label: 'Collections',
         href: '/collections',
-        icon: 'folder-plus' as keyof typeof dynamicIconImports,
+        icon: <Icons.folderPlus />,
       },
       {
         label: 'Profile',
         href: '/profile',
-        icon: 'user-circle' as keyof typeof dynamicIconImports,
+        icon: <Icons.userCircle />,
       },
       {
         label: 'Add recipe',
         href: '/recipes/add',
-        icon: 'plus-circle' as keyof typeof dynamicIconImports,
+        icon: <Icons.plusCircle />,
       },
     ];
   }, []);
 
   return (
-    <div>
-      <aside
-        className={cn(
-          'px-2 w-64 flex-none border border-neutral-600 bg-transparent transition ease-in-out duration-300',
-          isOpen
-            ? '-translate-x-0 ml-0 h-full'
-            : '-translate-x-full ml-[-250px]'
-        )}
-      >
-        <div className="pt-2 sticky flex flex-col h-screen w-full">
-          <div>
-            <div className="mb-0.5 flex flex-row gap-2">
-              <NewThreadButton />
-              <SidebarToggle toggleOpen={toggleOpen} />
+    <div
+      className={cn(
+        'hidden md:block px-2 flex-none bg-transparent h-full z-20 transition-all ease-in-out duration-300',
+        isCollapsed ? 'w-24' : 'w-64'
+      )}
+    >
+      <aside className={cn('fixed px-2', isCollapsed ? 'w-24' : 'w-64')}>
+        <div className="pt-6 pb-2 px-2 sticky flex flex-col h-full">
+          <div
+            className={cn(
+              'mb-2 flex items-center justify-between',
+              isCollapsed ? 'flex-col-reverse gap-4' : ''
+            )}
+          >
+            <Logo isCollapsed={isCollapsed} />
+            <div className={cn(isCollapsed ? '' : 'self-end')}>
+              <SidebarToggle
+                isCollapsed={isCollapsed}
+                toggleCollapsed={toggleCollapsed}
+              />
             </div>
           </div>
-          <div className="my-4 flex flex-col">
+          <div className="mt-6">
+            <NewThreadButton isCollapsed={isCollapsed} />
+          </div>
+          <div className="mt-4 flex flex-col">
             {sideBarItems.map((item) => (
               <div key={item.label} onClick={() => setActiveItem(item.label)}>
                 <SidebarItem
                   label={item.label}
                   href={item.href}
-                  name={item.icon}
+                  Icon={item.icon}
                   isActive={activeItem === item.href}
+                  isCollapsed={isCollapsed}
                 />
               </div>
             ))}
           </div>
-          <AuthContent currentUser={currentUser} />
+          <AuthContent currentUser={currentUser} isCollapsed={isCollapsed} />
         </div>
       </aside>
-
-      {!isOpen && (
-        <SidebarToggle
-          toggleOpen={toggleOpen}
-          className={cn(
-            'absolute top-2 left-2 transition-opacity duration-1000',
-            isOpen ? 'opacity-0' : 'opacity-100'
-          )}
-        />
-      )}
     </div>
   );
 };

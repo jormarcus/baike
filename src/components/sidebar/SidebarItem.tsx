@@ -3,28 +3,34 @@
 import Link from 'next/link';
 import Icon from '../ui/Icon';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
+import { cn } from '@/lib/utils';
+import { Icons } from '../Icons';
 interface SidebarItemProps {
   label: string;
   href: string;
-  name: keyof typeof dynamicIconImports;
   isActive: boolean;
+  isCollapsed: boolean;
+  Icon: JSX.Element;
 }
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
   label,
   href,
-  name,
+  Icon,
   isActive,
+  isCollapsed,
 }) => {
   return (
     <Link href={href} prefetch={false}>
       <li
-        className={`list-none flex m-px px-3 py-2 items-center gap-3 relative rounded-md hover:bg-neutral-700 ${
-          isActive ? 'bg-neutral-700' : ''
-        }`}
+        className={cn(
+          'list-none flex m-px px-3 py-2 items-center gap-3 relative rounded-md hover:bg-secondary',
+          isActive ? 'bg-secondary' : '',
+          isCollapsed ? 'justify-center mx-2' : ''
+        )}
       >
-        <Icon name={name} className="h-5 w-5" />
-        {label}
+        {Icon}
+        {!isCollapsed && label}
       </li>
     </Link>
   );
