@@ -23,7 +23,7 @@ const LoginModal = () => {
   const bodyContent = (
     <div className="max-w-sm mx-auto flex flex-col gap-4">
       <Button
-        className="dark:bg-neutral-700 dark:text-white dark:hover:text-neutral-400"
+        className="dark:bg-secondary dark:text-white dark:hover:text-neutral-400"
         variant="outline"
         onClick={() => signIn('google')}
       >
@@ -31,7 +31,7 @@ const LoginModal = () => {
         Continue with Google
       </Button>
       <Button
-        className="dark:bg-neutral-700 dark:text-white dark:hover:text-neutral-400"
+        className="dark:bg-secondary dark:text-white dark:hover:text-neutral-400"
         variant="outline"
         onClick={() => signIn('github')}
       >
