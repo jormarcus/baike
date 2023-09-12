@@ -24,7 +24,7 @@ const NewThreadButton: React.FC<{ isCollapsed: boolean }> = ({
     href="/"
     className={cn(
       'mx-4 flex items-center gap-3 bg-neutral-950 border-2 border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition-all duration-300 h-10 flex-shrink-0 flex-grow',
-      isCollapsed ? 'justify-center mx-2' : 'p-3'
+      isCollapsed ? 'justify-center mx-6' : 'p-3'
     )}
   >
     <Icons.plus className="h-6 w-6 hover:scale-105 transition-all duration-300 ease-in-out" />
@@ -96,16 +96,21 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   return (
     <div
       className={cn(
-        'hidden md:block px-2 flex-none bg-transparent h-full z-20 transition-all ease-in-out duration-300',
-        isCollapsed ? 'w-24' : 'w-64'
+        'hidden md:block flex-none bg-transparent h-full z-20 transition-all ease-in-out duration-300',
+        isCollapsed ? 'w-24' : 'w-60'
       )}
     >
-      <aside className={cn('fixed px-2', isCollapsed ? 'w-24' : 'w-64')}>
-        <div className="pt-6 pb-2 px-2 sticky flex flex-col h-full">
+      <aside
+        className={cn(
+          'fixed flex flex-col',
+          isCollapsed ? 'w-24' : 'w-60 px-2'
+        )}
+      >
+        <div className="pt-6 pb-2 sticky flex flex-col h-full">
           <div
             className={cn(
               'mb-2 flex items-center justify-between',
-              isCollapsed ? 'flex-col-reverse gap-4' : ''
+              isCollapsed ? 'flex-col-reverse gap-4' : 'px-4'
             )}
           >
             <Logo isCollapsed={isCollapsed} />
@@ -119,7 +124,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
           <div className="mt-6">
             <NewThreadButton isCollapsed={isCollapsed} />
           </div>
-          <div className="mt-4 flex flex-col">
+          <div className="mt-4 relative items-center">
             {sideBarItems.map((item) => (
               <div key={item.label} onClick={() => setActiveItem(item.label)}>
                 <SidebarItem

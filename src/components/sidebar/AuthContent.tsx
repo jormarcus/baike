@@ -18,12 +18,15 @@ const AuthContent: React.FC<{
   return (
     <>
       {currentUser ? (
-        <div className="px-0.5 w-full">
+        <div
+          className={cn('flex', isCollapsed ? 'mx-0 px-6 justify-center' : '')}
+        >
           <Button
             className={cn(
-              'dark:bg-secondary dark:text-white dark:hover:bg-neutral-600 w-full flex gap-2',
-              isCollapsed ? '' : 'justify-start'
+              'dark:bg:transparent dark:text-white dark:hover:bg-secondary w-full flex flex-nowrap justify-start gap-3 m-px px-3 py-2 relative rounded-md hover:bg-secondary ml-1',
+              isCollapsed ? 'justify-center mx-6' : ''
             )}
+            variant="ghost"
             onClick={() => signOut()}
           >
             <Icons.logout className="w-5 h-5" />
@@ -33,7 +36,7 @@ const AuthContent: React.FC<{
       ) : (
         <div className="px-0.5 m-px flex flex-col gap-4">
           <Button
-            className="dark:bg-secondary dark:text-white dark:hover:bg-neutral-600"
+            className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 flex flex-nowrap items-center"
             onClick={() => loginModal.onOpen()}
           >
             Login

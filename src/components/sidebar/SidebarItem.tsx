@@ -21,12 +21,16 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   isCollapsed,
 }) => {
   return (
-    <Link href={href} prefetch={false}>
+    <Link
+      href={href}
+      prefetch={false}
+      className="transition duration-300 overflow-hidden relative rounded-md hover:bg-secondary"
+    >
       <li
         className={cn(
-          'list-none flex m-px px-3 py-2 items-center gap-3 relative rounded-md hover:bg-secondary',
+          'list-none flex m-px px-3 py-2 items-center gap-3',
           isActive ? 'bg-secondary' : '',
-          isCollapsed ? 'justify-center mx-2' : ''
+          isCollapsed ? 'justify-center mx-6' : ''
         )}
       >
         {Icon}
