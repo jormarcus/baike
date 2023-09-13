@@ -58,10 +58,12 @@ const CollectionsList: React.FC<CollectionsListProps> = ({
           <CollectionCard key={collection.id} collection={collection} />
         ))}
       </div>
-      {totalCount > collections.length && (
+      {totalCount > collections.length ? (
         <div ref={container} className="w-full mt-2">
           <Loading />
         </div>
+      ) : (
+        ''
       )}
     </div>
   );

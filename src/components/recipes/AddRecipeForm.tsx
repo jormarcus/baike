@@ -475,12 +475,12 @@ const AddRecipeForm: React.FC = () => {
                 className="w-fit dark:bg-amber-500 dark:text-white font-bold"
                 disabled={isPending}
               >
-                {isPending && (
+                {isPending ? (
                   <Icons.spinner
                     className="mr-2 h-4 w-4 animate-spin"
                     aria-hidden="true"
                   />
-                )}
+                ) : null}
                 Add Recipe
                 <span className="sr-only">Add Recipe</span>
               </Button>

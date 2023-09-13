@@ -30,7 +30,7 @@ const AuthContent: React.FC<{
             onClick={() => signOut()}
           >
             <Icons.logout className="w-5 h-5" />
-            {!isCollapsed && 'Sign out'}
+            {!isCollapsed ? 'Sign out' : null}
           </Button>
         </div>
       ) : (

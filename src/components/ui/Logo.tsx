@@ -14,7 +14,7 @@ const Logo: React.FC<LogoProps> = ({ isCollapsed, className }) => {
   return (
     <Link href="/" className="flex items-center justify-center gap-2">
       <Image src="/images/bake.png" width={40} height={40} alt="Baike logo" />
-      {!isCollapsed && (
+      {!isCollapsed ? (
         <h2
           className={cn(
             'text-2xl font-bold hover:text-amber-500 transition duration-500',
@@ -23,7 +23,7 @@ const Logo: React.FC<LogoProps> = ({ isCollapsed, className }) => {
         >
           Baike
         </h2>
-      )}
+      ) : null}
     </Link>
   );
 };

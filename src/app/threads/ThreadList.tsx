@@ -46,11 +46,11 @@ const ThreadList: React.FC<ThreadListProps> = ({
       {threads.map((thread, i) => (
         <ThreadCard key={thread.id} thread={thread} />
       ))}
-      {totalCount > threads.length && (
+      {totalCount > threads.length ? (
         <div ref={container} className="w-full">
           <Loading className="mt-0 px-0" />
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

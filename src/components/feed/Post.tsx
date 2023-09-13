@@ -64,9 +64,9 @@ const PostFooter: React.FC<{
   <div className="flex flex-col h-40 my-1 space-y-2 pb-4">
     <PostActions />
 
-    {likesCount > 0 && (
+    {likesCount > 0 ? (
       <div className="text-md font-semibold">{`${likesCount} likes`}</div>
-    )}
+    ) : null}
 
     <div>
       <Link

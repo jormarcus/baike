@@ -12,9 +12,9 @@ const RecipeNameBox = ({ recipe }: { recipe: SafeRecipe }) => (
   <div className="px-2 text-2xl text-amber-500 font-bold basis-1/3">
     <div className="flex flex-col gap-2 items-center text-center py-4">
       {recipe.name}
-      {recipe.averageRating && (
+      {recipe.averageRating ? (
         <AverageRating averageRating={recipe.averageRating} />
-      )}
+      ) : null}
       <div className="flex flex-col items-center md:self-start gap-2 pt-2">
         <RecipeCookTime
           label="Prep"

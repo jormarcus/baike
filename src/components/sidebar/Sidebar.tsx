@@ -28,7 +28,9 @@ const NewThreadButton: React.FC<{ isCollapsed: boolean }> = ({
     )}
   >
     <Icons.plus className="h-6 w-6 hover:scale-105 transition-all duration-300 ease-in-out" />
-    {!isCollapsed && <div className="text-sm font-semibold">New thread</div>}
+    {!isCollapsed ? (
+      <div className="text-sm font-semibold">New thread</div>
+    ) : null}
   </Link>
 );
 

@@ -34,7 +34,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         )}
       >
         {Icon}
-        {!isCollapsed && label}
+        {!isCollapsed ? label : null}
       </li>
     </Link>
   );

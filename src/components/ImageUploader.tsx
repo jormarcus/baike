@@ -46,7 +46,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           >
             <TbPhotoPlus size={50} />
             <div className="text-lg font-semibold">Click to upload</div>
-            {value && (
+            {value ? (
               <div
                 className="
               absolute inset-0 h-full w-full"
@@ -58,7 +58,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
                   alt="recipe image"
                 />
               </div>
-            )}
+            ) : null}
           </div>
         );
       }}

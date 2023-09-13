@@ -64,11 +64,11 @@ export default async function RecipePage({
             </h1>
             <AverageRating averageRating={recipe?.averageRating || 0} />
             <CollectionsRow collections={recipe.collections} />
-            {recipe.description && (
+            {recipe.description ? (
               <p className="leading-7 font-light tracking-wide text-center sm:text-justify">
                 {recipe.description}
               </p>
-            )}
+            ) : null}
             <div className="flex flex-col items-center md:self-start gap-2 pt-2">
               <RecipeCookTime
                 label="Prep"
