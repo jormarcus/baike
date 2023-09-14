@@ -28,7 +28,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 import {
   getRecipesWithCollectionsByUserId,
-  searchRecipes,
+  getRecipesWithCount,
 } from '@/app/_actions/recipe-actions';
 import toast from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -164,12 +164,18 @@ const AddRecipesToCollectionModal: React.FC<
   };
 
   const handleSearch = async (query: string) => {
-    const recipes = await searchRecipes(query, 'collections');
-    recipes.forEach((recipe) => {
-      if (recipe.collections?.find((c) => c.id === collectionId)) {
-        recipe.belongsToCollection = true;
-      }
-    });
+    // TODO - handle pagination
+    const { recipes, totalCount } = await getRecipesWithCount(
+      query,
+      'collections'
+    );
+
+    totalCount > 0 &&
+      recipes.forEach((recipe) => {
+        if (recipe.collections?.find((c) => c.id === collectionId)) {
+          recipe.belongsToCollection = true;
+        }
+      });
     setRecipes(recipes);
   };
 
@@ -190,7 +196,10 @@ const AddRecipesToCollectionModal: React.FC<
         <hr />
 
         <div>
-          <Searchbox handleSearch={handleSearch} />
+          <Searchbox
+            handleSearch={handleSearch}
+            placeholder="Search your recipes..."
+          />
         </div>
         <div className="grid gap-4 pt-4">
           <Form {...form}>

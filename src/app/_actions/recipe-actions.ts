@@ -388,8 +388,8 @@ export async function getRecipesTotalCount(query: string): Promise<number> {
   });
 }
 
-export async function getRecipesWithCount(query: string) {
-  const recipes = await getPaginatedRecipes(query, '', 0, 10);
+export async function getRecipesWithCount(query: string, param = '') {
+  const recipes = await getPaginatedRecipes(query, param, 0, 10);
   const totalCount = await getRecipesTotalCount(query);
 
   return {
