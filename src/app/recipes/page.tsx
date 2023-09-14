@@ -1,9 +1,7 @@
 import { getRecipesWithCount } from '../_actions/recipe-actions';
 import { getCurrentUser } from '../_actions/user-actions';
 import EmptyState from '../../components/ui/EmptyState';
-import RecipePageHeader from '@/components/recipes/RecipePageHeader';
 import RecipesList from '@/components/recipes/RecipesList';
-import Searchbox from '@/components/ui/Searchbox';
 
 interface RecipesPageProps {
   searchParams: {
@@ -23,13 +21,9 @@ const RecipesPage = async ({ searchParams }: RecipesPageProps) => {
   );
 
   return (
-    <div className="flex flex-col justify-center">
-      <RecipePageHeader />
-      <div className="pt-8">
-        <Searchbox />
-      </div>
+    <>
       <RecipesList initialRecipes={recipes} totalCount={totalCount} />
-    </div>
+    </>
   );
 };
 

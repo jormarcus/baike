@@ -37,7 +37,7 @@ export default async function RootLayout({
             <div className="flex h-full min-h-[100vh]">
               <Sidebar currentUser={currentUser} />
               <div className="lg:py-2 lg:pr-2 grow">
-                <div className="lg:rounded-lg shadow-sm md:dark:border h-full bg-clip-border border-border bg-background">
+                <div className="lg:rounded-lg shadow-sm md:dark:border h-full bg-clip-border border-border bg-background overflow-clip">
                   {children}
                 </div>
               </div>
