@@ -1,10 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import Icon from '../ui/Icon';
-import dynamicIconImports from 'lucide-react/dynamicIconImports';
+
 import { cn } from '@/lib/utils';
-import { Icons } from '../Icons';
+
 interface SidebarItemProps {
   label: string;
   href: string;
@@ -24,11 +23,11 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     <Link
       href={href}
       prefetch={false}
-      className="transition duration-300 overflow-hidden relative rounded-md hover:bg-secondary"
+      className="transition duration-300 overflow-hidden relative rounded-md"
     >
       <li
         className={cn(
-          'list-none flex m-px px-3 py-2 items-center gap-3',
+          'list-none flex m-px px-3 py-2 items-center gap-3 hover:bg-secondary dark:hover:bg-secondary',
           isActive ? 'bg-secondary' : '',
           isCollapsed ? 'justify-center mx-6' : ''
         )}

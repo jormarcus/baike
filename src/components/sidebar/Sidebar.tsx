@@ -53,7 +53,6 @@ const SidebarToggle: React.FC<{
 const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   const pathname = usePathname();
 
-  const [activeItem, setActiveItem] = useState(pathname || '/discover');
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
@@ -127,17 +126,20 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
             <NewThreadButton isCollapsed={isCollapsed} />
           </div>
           <div className="mt-4 relative items-center">
-            {sideBarItems.map((item) => (
-              <div key={item.label} onClick={() => setActiveItem(item.label)}>
-                <SidebarItem
-                  label={item.label}
-                  href={item.href}
-                  Icon={item.icon}
-                  isActive={activeItem === item.href}
-                  isCollapsed={isCollapsed}
-                />
-              </div>
-            ))}
+            {sideBarItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <div key={item.label}>
+                  <SidebarItem
+                    label={item.label}
+                    href={item.href}
+                    Icon={item.icon}
+                    isActive={isActive}
+                    isCollapsed={isCollapsed}
+                  />
+                </div>
+              );
+            })}
           </div>
           <AuthContent currentUser={currentUser} isCollapsed={isCollapsed} />
         </div>
