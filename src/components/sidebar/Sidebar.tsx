@@ -72,14 +72,14 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
         icon: <Icons.croissant />,
       },
       {
-        label: 'Threads',
-        href: '/threads',
-        icon: <Icons.messageSquare />,
-      },
-      {
         label: 'Collections',
         href: '/collections',
         icon: <Icons.folderPlus />,
+      },
+      {
+        label: 'Threads',
+        href: '/threads',
+        icon: <Icons.messageSquare />,
       },
       {
         label: 'Profile',
