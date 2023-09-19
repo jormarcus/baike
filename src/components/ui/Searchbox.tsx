@@ -1,13 +1,12 @@
 'use client';
 
 import qs from 'query-string';
-import { Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Loader2, Search } from 'lucide-react';
+import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Input } from '../inputs/Input';
 import { useDebounce } from '@/hooks/useDebounce';
-
 interface SearchboxProps {
   handleSearch?: (query: string) => void;
   placeholder?: string;
@@ -21,6 +20,7 @@ const Searchbox: React.FC<SearchboxProps> = ({
 }) => {
   const [query, setQuery] = useState<string>('');
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const debouncedQuery = useDebounce<string>(query, debounceTime);
 
@@ -33,7 +33,7 @@ const Searchbox: React.FC<SearchboxProps> = ({
 
     // set query params to search by route
     const query = {
-      name: debouncedQuery,
+      search: debouncedQuery,
     };
 
     const url = qs.stringifyUrl(
@@ -44,7 +44,9 @@ const Searchbox: React.FC<SearchboxProps> = ({
       { skipNull: true, skipEmptyString: true }
     );
 
-    router.push(url);
+    startTransition(() => {
+      router.push(url);
+    });
   }, [debouncedQuery, handleSearch, router]);
 
   const onSearch = (query: string) => {
@@ -61,7 +63,12 @@ const Searchbox: React.FC<SearchboxProps> = ({
           onSearch(e.target.value);
         }}
       />
-      <Search className="h-4 w-4 absolute top-3 left-2 text-neutral-500" />
+      {!isPending && (
+        <Search className="h-4 w-4 absolute top-3 left-2 text-neutral-500" />
+      )}
+      {isPending && (
+        <Loader2 className="h-4 w-4 absolute top-3 left-2 text-white" />
+      )}
     </div>
   );
 };
