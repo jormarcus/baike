@@ -20,7 +20,9 @@ const CardContent: React.FC<{
     <div className="h-full w-full object-cover transition duration-300 group-hover:scale-110 ease-cubic-bezier rounded-3xl flex items-center justify-center">
       {image ? (
         <Image
-          fill
+          priority
+          height={300}
+          width={300}
           sizes="(max-width: 768px) 33vw, (max-width: 1200px) 50vw, 33vw"
           src={image}
           alt={name}
