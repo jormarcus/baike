@@ -320,7 +320,7 @@ export async function addCollectionsToRecipe(
 }
 
 export async function getPaginatedRecipes(
-  query: string,
+  query = '',
   param = '',
   skip = 0,
   take = 10
@@ -343,11 +343,15 @@ export async function getPaginatedRecipes(
   }
   const recipes = await prisma.recipe.findMany({
     where: {
-      authorId: user.id,
-      name: {
-        contains: query,
-        mode: 'insensitive',
-      },
+      AND: [
+        { authorId: user.id },
+        {
+          name: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+      ],
     },
     orderBy: {
       name: 'asc',
@@ -379,16 +383,20 @@ export async function getRecipesTotalCount(query: string): Promise<number> {
 
   return await prisma.recipe.count({
     where: {
-      authorId: user.id,
-      name: {
-        contains: query,
-        mode: 'insensitive',
-      },
+      AND: [
+        { authorId: user.id },
+        {
+          name: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+      ],
     },
   });
 }
 
-export async function getRecipesWithCount(query: string, param = '') {
+export async function getRecipesWithCount(query = '', param = '') {
   const recipes = await getPaginatedRecipes(query, param, 0, 10);
   const totalCount = await getRecipesTotalCount(query);
 
