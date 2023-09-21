@@ -43,7 +43,7 @@ export async function createCollection(name: string, revalidatePage: boolean) {
   return newCollection;
 }
 
-export async function getCollectionTotalCount(): Promise<number> {
+export async function getCollectionTotalCount(query: string): Promise<number> {
   const user = await getCurrentUser();
   if (!user) {
     throw new Error('User not found');
@@ -51,7 +51,15 @@ export async function getCollectionTotalCount(): Promise<number> {
 
   return await prisma.collection.count({
     where: {
-      userId: user.id,
+      AND: [
+        { userId: user.id },
+        {
+          name: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+      ],
     },
   });
 }
@@ -126,39 +134,14 @@ export async function getCollectionsWithRecipeNameByUserIdAndRecipeId(
 
   return collections;
 }
-export async function getCollectionsWithRecipeNamesAndImage(): Promise<
-  CollectionWithRecipeNamesAndImage[]
-> {
-  const user = await getCurrentUser();
-  if (!user) {
-    throw new Error('User not found');
-  }
-
-  const collections = await prisma.collection.findMany({
-    where: {
-      userId: user.id,
-    },
-    include: {
-      recipes: {
-        select: {
-          id: true,
-          name: true,
-          imageSrc: true,
-        },
-      },
-    },
-  });
-
-  return collections;
-}
 
 // for collections page initial load
-export async function getCollectionsWithCount(): Promise<{
+export async function getCollectionsWithCount(query = ''): Promise<{
   collections: CollectionWithRecipeNamesAndImage[];
   totalCount: number;
 }> {
-  const collections = await getCollectionsWithRecipeNamesAndImage();
-  const totalCount = await getCollectionTotalCount();
+  const collections = await getPaginatedCollections(query);
+  const totalCount = await getCollectionTotalCount(query);
 
   return { collections, totalCount };
 }
@@ -220,11 +203,7 @@ export async function addRecipesToCollection(
 }
 
 // collections page search/infscroll
-export async function getPaginatedCollections(
-  query: string,
-  skip = 0,
-  take = 10
-) {
+export async function getPaginatedCollections(query = '', skip = 0, take = 10) {
   const user = await getCurrentUser();
   if (!user) {
     throw new Error('User not found');
@@ -232,11 +211,15 @@ export async function getPaginatedCollections(
 
   const collections = await prisma.collection.findMany({
     where: {
-      userId: user.id,
-      name: {
-        contains: query,
-        mode: 'insensitive',
-      },
+      AND: [
+        { userId: user.id },
+        {
+          name: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+      ],
     },
     include: {
       recipes: {
@@ -245,6 +228,7 @@ export async function getPaginatedCollections(
           name: true,
           imageSrc: true,
         },
+        take: 5,
       },
     },
     orderBy: {

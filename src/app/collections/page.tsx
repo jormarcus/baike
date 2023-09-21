@@ -1,18 +1,25 @@
 import EmptyState from '@/components/ui/EmptyState';
 import { getCurrentUser } from '../_actions/user-actions';
 import { getCollectionsWithCount } from '../_actions/collection-actions';
-import AddCollectionModal from '@/components/modals/AddCollectionModal';
 import { CollectionWithRecipeNamesAndImage } from '@/types';
 import CollectionsList from '@/components/collections/CollectionsList';
 
-interface CollectionsPageProps {}
+interface CollectionsPageProps {
+  searchParams: {
+    search: string;
+  };
+}
 
-export default async function CollectionsPage() {
+export default async function CollectionsPage({
+  searchParams,
+}: CollectionsPageProps) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
+
+  const query: string = searchParams.search || '';
 
   const {
     collections,
@@ -20,17 +27,14 @@ export default async function CollectionsPage() {
   }: {
     collections: CollectionWithRecipeNamesAndImage[];
     totalCount: number;
-  } = await getCollectionsWithCount();
+  } = await getCollectionsWithCount(query);
 
   return (
-    <div className="flex flex-col justify-center gap-2">
-      <div className="flex flex-row justify-end">
-        <AddCollectionModal />
-      </div>
+    <>
       <CollectionsList
         initialCollections={collections}
         totalCount={totalCount}
       />
-    </div>
+    </>
   );
 }

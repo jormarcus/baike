@@ -1,14 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { CollectionWithRecipeNamesAndImage } from '@/types';
-import { useSearchParams } from 'next/navigation';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import CollectionCard from './CollectionCard';
-
 import { getPaginatedCollections } from '@/app/_actions/collection-actions';
-import Loading from '@/app/collections/loading';
+import EmptyState from '../ui/EmptyState';
 
 interface CollectionsListProps {
   initialCollections: CollectionWithRecipeNamesAndImage[];
@@ -20,27 +19,34 @@ const CollectionsList: React.FC<CollectionsListProps> = ({
   totalCount,
 }) => {
   const searchParams = useSearchParams();
-  const [collections, setCollections] =
-    useState<CollectionWithRecipeNamesAndImage[]>(initialCollections);
+  const [collections, setCollections] = useState<
+    CollectionWithRecipeNamesAndImage[]
+  >([]);
 
   const container = useRef<HTMLDivElement>(null);
   const options = {};
   const isVisible = useIntersectionObserver(container, options);
 
   useEffect(() => {
+    setCollections(initialCollections);
+  }, [initialCollections]);
+
+  useEffect(() => {
     const getCollections = async () => {
       try {
         const skip = collections.length;
-        if (skip >= totalCount) return;
+        if (skip >= totalCount) {
+          return;
+        }
 
-        console.log('searchParams - search', searchParams.get('search'));
+        const query: string = searchParams.get('search') || '';
+
         const fetchedCollections: CollectionWithRecipeNamesAndImage[] =
-          await getPaginatedCollections(searchParams.get('search') || '', skip);
+          await getPaginatedCollections(query, skip);
         setCollections((prevCollections) => [
           ...prevCollections,
           ...fetchedCollections,
         ]);
-        console.log('fetchedCollections', fetchedCollections);
       } catch (error) {
         console.error(error);
       }
@@ -52,20 +58,26 @@ const CollectionsList: React.FC<CollectionsListProps> = ({
   }, [isVisible, collections.length, searchParams, totalCount]);
 
   return (
-    <div>
-      <div className="flex flex-col gap-4 pb-2">
-        {collections.map((collection) => (
-          <CollectionCard key={collection.id} collection={collection} />
-        ))}
+    <>
+      <div className="w-full h-full mx-auto max-w-screen-xl md:px-xl px-md flex flex-col gap-4 pb-2">
+        {collections.length > 0 ? (
+          collections.map((collection, index) => {
+            return index === collections.length - 1 && index < totalCount ? (
+              <div ref={container} key={collection.id}>
+                <CollectionCard collection={collection} />
+              </div>
+            ) : (
+              <CollectionCard key={collection.id} collection={collection} />
+            );
+          })
+        ) : (
+          <EmptyState
+            title="You do not have any collections"
+            subtitle="Create one"
+          />
+        )}
       </div>
-      {totalCount > collections.length ? (
-        <div ref={container} className="w-full mt-2">
-          <Loading />
-        </div>
-      ) : (
-        ''
-      )}
-    </div>
+    </>
   );
 };
 
