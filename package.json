@@ -14,7 +14,7 @@
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
     "schema": "src/prisma/schema.prisma",
-    "migrate-diff": "npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/0_init/migration.sql"
+    "migrate-diff": "npx prisma migrate diff --from-empty --to-schema-datamodel src/prisma/schema.prisma --script > src/prisma/migrations/0_init/migration.sql"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
