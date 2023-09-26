@@ -120,3 +120,23 @@ const collectionWithRecipeNamesAndImage =
 export type CollectionWithRecipeNamesAndImage = Prisma.CollectionGetPayload<
   typeof collectionWithRecipeNamesAndImage
 >;
+
+export type ImportedRecipe = Omit<
+  Recipe,
+  | 'createdAt'
+  | 'updatedAt'
+  | 'authorId'
+  | 'id'
+  | 'imageSrc'
+  | 'likesCount'
+  | 'averageRating'
+  | 'posts'
+  | 'ratings'
+  | 'collections'
+  | 'ingredients'
+  | 'servings'
+> & {
+  image?: string;
+  ingredients: string[];
+  servings?: string;
+};

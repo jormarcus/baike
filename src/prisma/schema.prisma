@@ -78,17 +78,17 @@ model Recipe {
   description   String?
   servings      Int?
   instructions  String[]
-  prepHours     Int?
-  prepMinutes   Int?
-  cookHours     Int?
-  cookMinutes   Int?
+  prepHours     Int          @default(0)
+  prepMinutes   Int          @default(0)
+  cookHours     Int          @default(0)
+  cookMinutes   Int          @default(0)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   isPublic      Boolean      @default(true)
   likesCount    Int          @default(0)
   notes         String?
   averageRating Float        @default(0)
-  Post          Post[]
+  posts         Post[]
   ratings       Rating[]
   collections   Collection[] @relation("CollectionToRecipe")
   ingredients   Ingredient[] @relation("IngredientToRecipe")

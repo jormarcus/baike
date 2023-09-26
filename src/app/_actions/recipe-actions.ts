@@ -6,12 +6,13 @@ import { parseIngredient } from 'parse-ingredient';
 
 import { formatSafeRecipe } from '@/helpers/format-dto';
 import { getCurrentUser } from './user-actions';
-import { Recipe } from '@/lib/validators/recipe-validator';
+import { Recipe, RecipeSchema } from '@/lib/validators/recipe-validator';
 import { Ingredient } from '@/lib/validators/ingredient-validator';
-import { CollectionWithRecipeNames, SafeRecipe } from '@/types';
+import { CollectionWithRecipeNames, ImportedRecipe, SafeRecipe } from '@/types';
 import { capitalizeFirstLetter, omit } from '@/lib/utils';
 import { Recipe as PrismaRecipe } from '@prisma/client';
 import { Ingredient as PrismaIngredient } from '@prisma/client';
+import { importRecipeLambda } from '@/lib/aws-lambda';
 
 function parseIngredients(ingredients: { input: string; id?: number }[]) {
   return ingredients.map((ingredient, index) => {
@@ -238,33 +239,37 @@ export async function getPopularFeedRecipes() {
 }
 
 export async function importRecipe(url: string): Promise<SafeRecipe> {
-  console.log('importing recipe from url: ', url);
-  // TODO - Replace this with call to flask app
-  return {
-    id: 1,
-    name: 'test',
-    imageSrc: null,
-    prepHours: 10,
-    prepMinutes: 10,
-    cookHours: 5,
-    cookMinutes: 5,
-    servings: 1,
-    isPublic: false,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    averageRating: 5,
-    likesCount: 1,
-    // notesCount: 0,
-    instructions: [],
-    ingredients: [],
-    description: '',
-    // reviewsCount: 1,
-    authorId: 1,
-    url: '',
+  const importedRecipe: Awaited<ImportedRecipe> = await importRecipeLambda(url);
+
+  let ingredients: Ingredient[] = [];
+
+  if (importedRecipe?.ingredients && importedRecipe.ingredients.length > 0) {
+    ingredients = parseIngredients(
+      importedRecipe.ingredients.map((i) => ({ input: i }))
+    );
+  }
+
+  const recipe = {
+    name: importedRecipe.name,
+    description: importedRecipe?.description || '',
+    ingredients,
+    imageSrc: importedRecipe.image,
+    instructions: importedRecipe.instructions,
+    servings: importedRecipe?.servings ? parseInt(importedRecipe?.servings) : 0,
+    prepHours: importedRecipe.prepHours,
+    prepMinutes: importedRecipe.prepMinutes,
+    cookHours: importedRecipe.cookHours,
+    cookMinutes: importedRecipe.cookMinutes,
     notes: '',
-    ratings: [],
-    collections: [],
+    url,
+    isPublic: true,
   };
+
+  RecipeSchema.parse(recipe);
+
+  const savedRecipe = await createRecipe(recipe);
+
+  return savedRecipe;
 }
 
 export async function addCollectionsToRecipe(

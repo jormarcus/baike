@@ -1,7 +1,7 @@
 'use client';
 
 import toast from 'react-hot-toast';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/Button';
@@ -16,17 +16,22 @@ import {
 } from '@/components/ui/Dialog';
 import { Input } from '@/components/inputs/Input';
 import { Label } from '@/components/ui/Label';
-import { importRecipe } from '@/app/_actions/recipe-actions';
 import { Import } from 'lucide-react';
+
+import { useRouter } from 'next/navigation';
+import { importRecipe } from '@/app/_actions/recipe-actions';
 
 interface ImportRecipeModalProps {}
 
 const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isPending, startTransition] = useTransition();
+  const [isOpen, setIsOpen] = useState(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
@@ -34,20 +39,32 @@ const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
     },
   });
 
+  const handleOpenChange = () => {
+    setIsOpen((prev) => !prev);
+    reset();
+  };
+
   const onImport: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    console.log('data: ', data);
-    try {
-      await importRecipe(data.url);
-    } catch (error) {
-      toast.error('Something went wrong!');
-    } finally {
-      setIsLoading(false);
-    }
+
+    // @ts-ignore
+    startTransition(async () => {
+      try {
+        const newRecipe = await importRecipe(data.url);
+        router.push(`/recipe/${newRecipe.id}`);
+        setIsOpen(false);
+      } catch (error) {
+        error instanceof Error
+          ? toast.error(error.message)
+          : toast.error('Something went wrong.');
+      } finally {
+        setIsLoading(false);
+      }
+    });
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 flex gap-2">
           <Import />
@@ -67,11 +84,11 @@ const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
               Recipe URL
             </Label>
             <Input
-              id="importUrl"
+              id="url"
               className="col-span-3"
               required
-              {...register('importUrl', { required: true })}
-              disabled={isLoading}
+              {...register('url', { required: true })}
+              disabled={isLoading || isPending}
             />
           </div>
         </div>
@@ -79,7 +96,7 @@ const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
           <Button
             className="dark:bg-amber-500 dark:text-white dark:hover:bg-amber-400"
             type="submit"
-            disabled={!!errors.root?.message || isLoading}
+            disabled={!!errors.root?.message || isLoading || isPending}
             onClick={handleSubmit(onImport)}
           >
             Import
