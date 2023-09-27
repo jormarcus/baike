@@ -189,14 +189,14 @@ model Chat {
   userId            Int       @map("user_id")
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
-  userMessagesCount Int       @default(0)
+  userMessagesCount Int       @default(0) @map("user_messages_count")
   user              User      @relation(fields: [userId], references: [id])
   messages          Message[]
 }
 
 model Message {
   id            Int      @id @default(autoincrement())
-  isUserMessage Boolean
+  isUserMessage Boolean  @map("is_user_message")
   text          String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

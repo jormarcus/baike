@@ -22,6 +22,7 @@ const ChatInputHome: React.FC = () => {
 
   useEffect(() => {
     setMessages([]);
+    setInput('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
