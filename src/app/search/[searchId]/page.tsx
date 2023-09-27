@@ -62,8 +62,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
           className="fixed bottom-0 max-w-md sm:max-w-lg lg:max-w-xl px-4 self-center"
         >
           <Input
-            className="p-4 mb-8 dark:bg-neutral-950
-        dark:text-neutral-400 rounded-3xl shadow-xl h-[64px] text-center"
+            className="p-4 mb-8 dark:bg-neutral-950 dark:text-neutral-400 rounded-3xl shadow-xl h-[64px] text-center"
             id="chat-input"
             value={input}
             placeholder="Ask follow-up..."

@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 import { SafeRecipe } from '@/types';
 import FeatureCard from '../FeatureCard';
+import RecipeImage from './RecipeImage';
 
 interface RecipeCardProps {
   recipe: SafeRecipe;
@@ -18,20 +19,7 @@ const CardContent: React.FC<{
 }> = ({ image, name }) => (
   <div className="flex-grow-3 flex-shrink relative aspect-square overflow-hidden rounded-3xl">
     <div className="h-full w-full object-cover transition duration-300 group-hover:scale-110 ease-cubic-bezier rounded-3xl flex items-center justify-center">
-      {image ? (
-        <Image
-          priority
-          height={300}
-          width={300}
-          sizes="(max-width: 768px) 33vw, (max-width: 1200px) 50vw, 33vw"
-          src={image}
-          alt={name}
-          decoding="async"
-          className="object-cover aspect-square"
-        />
-      ) : (
-        <Croissant size={60} />
-      )}
+      <RecipeImage height={300} width={300} image={image} alt={name} />
     </div>
     <div className="absolute right-4 top-4">
       <Heart
