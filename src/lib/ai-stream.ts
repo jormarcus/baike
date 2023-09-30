@@ -21,8 +21,10 @@ export async function createAIChat(messages: ChatGPTMessage[], chatId: number) {
     model: 'gpt-3.5-turbo-0613',
     stream: true,
     messages,
-    functions,
-    function_call: 'auto',
+    temperature: 0.2,
+    // functions are too slow. Removing them and sending ai responses as markdown
+    // functions,
+    // function_call: 'auto',
   });
 
   // Convert the response into a friendly text-stream
