@@ -59,7 +59,10 @@
     "react-hook-form": "^7.46.2",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
+    "react-markdown": "^9.0.0",
     "react-spinners": "^0.13.8",
+    "react-textarea-autosize": "^8.5.3",
+    "remark-gfm": "^4.0.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.0.4",
@@ -67,6 +70,7 @@
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.418.0",
+    "@tailwindcss/typography": "^0.5.10",
     "@types/pg": "^8.10.3",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.30",

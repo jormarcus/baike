@@ -2,14 +2,15 @@
 
 import { ChangeEvent, FormEvent, createContext } from 'react';
 import { Message, useChat } from 'ai/react';
-
-import { throwContextNotInitializedError } from '@/lib/utils';
 import {
   ChatRequest,
   ChatRequestOptions,
   FunctionCallHandler,
   nanoid,
 } from 'ai';
+import toast from 'react-hot-toast';
+
+import { throwContextNotInitializedError } from '@/lib/utils';
 
 const functionCallHandler: FunctionCallHandler = async (
   chatMessages,
@@ -22,8 +23,6 @@ const functionCallHandler: FunctionCallHandler = async (
       // If JSON is invalid, return an appropriate message to the model so that it may retry?
       console.log(parsedFunctionCallArguments);
     }
-
-    // Generate a fake temperature
 
     const functionResponse: ChatRequest = {
       messages: [
@@ -79,7 +78,13 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({
     setMessages,
     reload,
   } = useChat({
-    experimental_onFunctionCall: functionCallHandler,
+    // experimental_onFunctionCall: functionCallHandler,
+    onResponse: (response) => {
+      if (response.status === 429) {
+        toast.error('You have reached your request limit for the day.');
+        return;
+      }
+    },
   });
 
   return (

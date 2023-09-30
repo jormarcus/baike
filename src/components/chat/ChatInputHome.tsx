@@ -1,18 +1,26 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { createTempMessage } from '@/helpers/messages-helper';
 import { createThread } from '@/services/thread-services';
 import { formatChatGPTMessage } from '@/helpers/format-dto';
 import { ChatContext } from '@/context/ChatContext';
-import Textarea from '../inputs/Textarea';
+
 import { Button } from '../ui/Button';
 import { Icons } from '../Icons';
+import Textarea from '../inputs/Textarea';
+
+const examples = [
+  'Get me the top 5 trending recipes from New York Times Recipes.',
+  'Simple dinner recipes that can be cooked in under 30 minutes.',
+  'What is the most favorited recipe on instagram this week?',
+];
 
 const ChatInputHome: React.FC = () => {
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { setMessages, reload, input, handleInputChange, setInput } =
@@ -55,14 +63,30 @@ const ChatInputHome: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full max-w-2xl">
-      <form className="relative mx-4 flex" onSubmit={handleSubmit}>
+    <div className="max-w-screen-md sm:w-full flex flex-col items-center">
+      <div className="max-w-screen-sm flex flex-col space-y-4 border border-neutral-600 dark:bg-secondary p-6 sm:p-10">
+        {examples.map((example, i) => (
+          <button
+            key={i}
+            className="rounded-md border border-neutral-600 bg-secondary px-5 py-3 text-left text-sm text-neutral-400 transition-all duration-75 hover:border-white hover:text-neutral-100 active:bg-neutral-100 active:text-neutral-700"
+            onClick={() => {
+              setInput(example);
+              inputRef.current?.focus();
+            }}
+          >
+            {example}
+          </button>
+        ))}
+      </div>
+
+      <form className="relative flex w-full mt-16" onSubmit={handleSubmit}>
         <Textarea
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               handleSubmit(e);
             }
           }}
+          ref={inputRef}
           rows={2}
           value={input}
           autoFocus
@@ -72,11 +96,11 @@ const ChatInputHome: React.FC = () => {
           className="
         grow
         min-w-0
-        dark:bg-neutral-950
+        border border-neutral-600
         dark:text-neutral-400 rounded-md
         py-3 px-4 shadow-md hover:shadow-lg
         resize-none 
-        bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+        bg-secondary disabled:cursor-not-allowed disabled:opacity-50"
         />
         <Button
           type="submit"
