@@ -11,25 +11,25 @@ interface ProfileTabsProps {}
 const ProfileTabs: React.FC<ProfileTabsProps> = ({}) => {
   return (
     <div className="group relative my-4 flex flex-col space-y-2 w-full">
-      <Tabs defaultValue="posts" className="relative mr-auto w-full">
+      <Tabs defaultValue="activity" className="relative mr-auto w-full">
         <div className="flex items-center justify-between pb-3">
           <TabsList className="w-full justify-center rounded-none border-b bg-transparent p-0">
             <TabsTrigger
-              value="posts"
+              value="activity"
               className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
             >
-              Posts
+              Activity
             </TabsTrigger>
             <TabsTrigger
-              value="saved"
+              value="created"
               className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
             >
-              Saved
+              Created
             </TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="posts" className="relative rounded-md border">
-          <div className="posts flex min-h-[350px] w-full justify-center p-10 items-center">
+        <TabsContent value="activity" className="relative rounded-md border">
+          <div className="activity flex min-h-[350px] w-full justify-center p-10 items-center">
             <React.Suspense
               fallback={
                 <div className="flex items-center text-sm text-muted-foreground">
@@ -38,12 +38,12 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({}) => {
                 </div>
               }
             >
-              Posts
+              Activity
             </React.Suspense>
           </div>
         </TabsContent>
-        <TabsContent value="saved" className="relative rounded-md border">
-          <div className="saved flex min-h-[350px] w-full justify-center p-10 items-center">
+        <TabsContent value="created" className="relative rounded-md border">
+          <div className="created flex min-h-[350px] w-full justify-center p-10 items-center">
             <React.Suspense
               fallback={
                 <div className="flex items-center text-sm text-muted-foreground">
@@ -52,7 +52,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({}) => {
                 </div>
               }
             >
-              Saved
+              Created
             </React.Suspense>
           </div>
         </TabsContent>

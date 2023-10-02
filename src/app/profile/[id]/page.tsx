@@ -7,6 +7,7 @@ import { getCurrentUser } from '../../_actions/user-actions';
 import { Button } from '@/components/ui/Button';
 import ProfileTabs from '@/components/profile/ProfileTabs';
 import ReportUserButton from '@/components/profile/ReportButton';
+import EditProfileModal from '@/components/profile/EditProfileModal';
 
 interface ProfilePageProps {
   params: {
@@ -64,9 +65,11 @@ async function ProfilePage({ params }: { params: { id: string } }) {
             </div>
             <div>
               {isOwnProfile ? (
-                <Button className="bg-amber-500 text-white">
-                  Edit Profile
-                </Button>
+                <EditProfileModal
+                  image={currentUser.image}
+                  name={currentUser.name}
+                  email={currentUser.email}
+                />
               ) : (
                 <Button className="bg-amber-500 text-white">Follow</Button>
               )}
