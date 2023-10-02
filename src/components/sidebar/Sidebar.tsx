@@ -83,7 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
       },
       {
         label: 'Profile',
-        href: '/profile',
+        href: `/profile/${currentUser?.id || ''}`,
         icon: <Icons.userCircle />,
       },
       {
@@ -92,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
         icon: <Icons.plusCircle />,
       },
     ];
-  }, []);
+  }, [currentUser?.id]);
 
   return (
     <div
