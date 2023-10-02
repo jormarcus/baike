@@ -1,5 +1,6 @@
 'use client';
 
+import { Pencil } from 'lucide-react';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
 import { useCallback } from 'react';
@@ -41,24 +42,27 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
         return (
           <div
             onClick={() => open?.()}
-            className="relative flex cursor-pointer flex-col items-center justify-center gap-4 border-2 border-dashed border-neutral-500 dark:border-neutral-600 rounded-xl p-3 aspect-square transition hover:opacity-70 whitespace-nowrap
-          "
+            className="relative flex cursor-pointer flex-col items-center justify-center gap-4 border-2 border-dashed border-neutral-500 dark:border-neutral-600 rounded-xl aspect-square transition hover:opacity-70 whitespace-nowrap h-[200px] w-[200px]"
           >
-            <TbPhotoPlus size={50} />
-            <div className="text-lg font-semibold">Click to upload</div>
             {value ? (
-              <div
-                className="
-              absolute inset-0 h-full w-full"
-              >
+              <>
                 <Image
-                  fill
-                  style={{ objectFit: 'cover' }}
+                  className="relative object-cover"
                   src={value}
                   alt="recipe image"
+                  height={200}
+                  width={200}
                 />
-              </div>
-            ) : null}
+                <div className="p-2 absolute bottom-[-12px] right-[-12px] border rounded-full  dark:bg-secondary  dark:text-white">
+                  <Pencil height={20} width={20} />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="text-lg font-semibold">Click to upload</div>
+                <TbPhotoPlus size={50} />
+              </>
+            )}
           </div>
         );
       }}
