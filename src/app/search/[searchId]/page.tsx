@@ -146,9 +146,10 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
             required
             rows={1}
             autoFocus
-            placeholder="Send a message"
+            placeholder="Ask follow up..."
             value={input}
             onChange={handleInputChange}
+            autoComplete="off"
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 formRef.current?.requestSubmit();
@@ -156,13 +157,13 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
               }
             }}
             spellCheck={false}
-            className="w-full pr-10 focus:outline-none p-4 mb-8 dark:bg-neutral-950 dark:text-neutral-400 rounded-3xl shadow-xl h-[64px] resize-none"
+            className="overflow-auto w-full pr-10 outline-none focus:outline-none p-4 mb-8 dark:bg-neutral-950 dark:text-neutral-400 rounded-3xl shadow-xl h-[55px] resize-none dark:caret-white"
           />
           <Button
             type="submit"
             disabled={disabled}
             className={cn(
-              'absolute inset-y-0 right-3 my-auto flex h-8 w-8 items-center justify-center rounded-md text-neutral-500 bg-transparent hover:bg-transparent m-2 px-2 transition-all',
+              'absolute inset-y-4 sm:inset-y-5 right-6 my-auto flex h-8 w-8 items-center justify-center rounded-md text-neutral-500 bg-transparent hover:bg-transparent m-2 px-2 transition-all',
               isEmpty
                 ? 'cursor-default'
                 : 'bg-amber-500 text-neutral-200 hover:bg-amber-500'
