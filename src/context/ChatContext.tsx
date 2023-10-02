@@ -3,41 +3,41 @@
 import { ChangeEvent, FormEvent, createContext } from 'react';
 import { Message, useChat } from 'ai/react';
 import {
-  ChatRequest,
+  // ChatRequest,
   ChatRequestOptions,
-  FunctionCallHandler,
-  nanoid,
+  // FunctionCallHandler,
+  // nanoid,
 } from 'ai';
 import toast from 'react-hot-toast';
 
 import { throwContextNotInitializedError } from '@/lib/utils';
 
-const functionCallHandler: FunctionCallHandler = async (
-  chatMessages,
-  functionCall
-) => {
-  if (functionCall.name === 'createRecipe') {
-    if (functionCall.arguments) {
-      const parsedFunctionCallArguments = JSON.parse(functionCall.arguments);
-      // You now have access to the parsed arguments here (assuming the JSON was valid)
-      // If JSON is invalid, return an appropriate message to the model so that it may retry?
-      console.log(parsedFunctionCallArguments);
-    }
+// const functionCallHandler: FunctionCallHandler = async (
+//   chatMessages,
+//   functionCall
+// ) => {
+//   if (functionCall.name === 'importRecipe') {
+//     if (functionCall.arguments) {
+//       const parsedFunctionCallArguments = JSON.parse(functionCall.arguments);
+//       // You now have access to the parsed arguments here (assuming the JSON was valid)
+//       // If JSON is invalid, return an appropriate message to the model so that it may retry?
+//       console.log(parsedFunctionCallArguments);
+//     }
 
-    const functionResponse: ChatRequest = {
-      messages: [
-        ...chatMessages,
-        {
-          id: nanoid(),
-          name: 'createRecipe',
-          role: 'function' as const,
-          content: functionCall.arguments || '',
-        },
-      ],
-    };
-    return functionResponse;
-  }
-};
+//     const functionResponse: ChatRequest = {
+//       messages: [
+//         ...chatMessages,
+//         {
+//           id: nanoid(),
+//           name: 'importRecipe',
+//           role: 'function' as const,
+//           content: functionCall.arguments || '',
+//         },
+//       ],
+//     };
+//     return functionResponse;
+//   }
+// };
 
 interface ChatContextStore {
   messages: Message[];

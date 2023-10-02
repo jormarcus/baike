@@ -51,6 +51,7 @@ const ChatInputHome: React.FC = () => {
 
       const chatGPTMessage = formatChatGPTMessage(message);
       setMessages([chatGPTMessage]);
+      setInput('');
 
       reload({ options: { body: { chatId: data.id } } });
 
