@@ -31,28 +31,40 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
   const chatIdEncoded = params.searchId;
   const chatId = chatIdEncoded ? decodeURIComponent(chatIdEncoded) : '';
 
-  const { messages, input, handleInputChange, handleSubmit, setMessages } =
+  const { messages, input, handleInputChange, handleSubmit, setMessages, reload } =
     useContext(ChatContext);
 
   useEffect(() => {
-    setIsLoading(true);
-
     async function getChatHistory() {
-      const messageHistory: SafeMessage[] = await getMessages(
-        parseInt(chatId),
-        0
-      );
-      const safeMessages = messageHistory.map(formatChatGPTMessage);
-      console.log(safeMessages);
-      setMessages(safeMessages);
+      try {
+        setIsLoading(true);
+        const messageHistory: SafeMessage[] = await getMessages(
+          parseInt(chatId),
+          0
+        );
+        const safeMessages = messageHistory.map(formatChatGPTMessage);
+        console.log(safeMessages);
+        setMessages(safeMessages);
+
+        // if the last message is from the user, reload the chat
+        // this can happen if the user refreshes the page while ai is responding
+        if (safeMessages.length > 0 && safeMessages[safeMessages.length - 1].role === 'user') {
+          reload({ options: { body: { chatId } } });
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error('Something went wrong!');
+      } finally {
+        setIsLoading(false);
+      }
     }
 
-    // if navigating from threads page, get chat history
-    getChatHistory();
+    if (messages.length === 0) {
+      getChatHistory();
+    }
 
-    setIsLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [chatId, messages.length, reload, setMessages]);
+
 
   const disabled = isLoading || input.length === 0;
 

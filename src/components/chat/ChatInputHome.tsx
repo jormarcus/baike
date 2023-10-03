@@ -4,11 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { createTempMessage } from '@/helpers/messages-helper';
 import { createThread } from '@/services/thread-services';
-import { formatChatGPTMessage } from '@/helpers/format-dto';
 import { ChatContext } from '@/context/ChatContext';
-
 import { Button } from '../ui/Button';
 import { Icons } from '../Icons';
 import Textarea from '../inputs/Textarea';
@@ -23,7 +20,7 @@ const ChatInputHome: React.FC = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { setMessages, reload, input, handleInputChange, setInput } =
+  const { setMessages, input, handleInputChange, setInput, handleSubmit } =
     useContext(ChatContext);
 
   const isEmpty = input.length === 0;
@@ -34,7 +31,7 @@ const ChatInputHome: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSubmit = async (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -45,15 +42,9 @@ const ChatInputHome: React.FC = () => {
         return;
       }
 
-      // TODO the id for the message is not good
-      // should i save the message and then call
-      const message = createTempMessage(e.target.value, data.id, true);
-
-      const chatGPTMessage = formatChatGPTMessage(message);
-      setMessages([chatGPTMessage]);
+      // send message to openai api using vercel ai sdk
+      handleSubmit(e, { options: { body: { chatId: data.id } } });
       setInput('');
-
-      reload({ options: { body: { chatId: data.id } } });
 
       router.push(`/search/${data.id}`);
     } catch (error) {
@@ -80,11 +71,11 @@ const ChatInputHome: React.FC = () => {
         ))}
       </div>
 
-      <form className="relative flex w-full mt-16" onSubmit={handleSubmit}>
+      <form className="relative flex w-full mt-16" onSubmit={onSubmit}>
         <Textarea
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
-              handleSubmit(e);
+              onSubmit(e);
             }
           }}
           ref={inputRef}
@@ -105,7 +96,7 @@ const ChatInputHome: React.FC = () => {
         />
         <Button
           type="submit"
-          onClick={(e) => handleSubmit(e)}
+          onClick={(e) => onSubmit(e)}
           className={`absolute bottom-0 right-0 text-neutral-500 bg-transparent hover:bg-transparent m-2 h-8 px-2
         ${
           isEmpty
