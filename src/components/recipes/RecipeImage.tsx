@@ -4,16 +4,9 @@ import Image from 'next/image';
 interface RecipeImageProps {
   image: string | null;
   alt: string;
-  height: number;
-  width: number;
 }
 
-const RecipeImage: React.FC<RecipeImageProps> = ({
-  image,
-  alt,
-  height,
-  width,
-}) => {
+const RecipeImage: React.FC<RecipeImageProps> = ({ image, alt }) => {
   if (!image) {
     return (
       <div className="dark:bg-neutral-950 flex items-center justify-center h-full w-full rounded-xl aspect-square">
@@ -27,8 +20,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
       image.includes('lh3.googleusercontent.com') ||
       image.includes('res.cloudinary.comm') ? (
         <Image
-          height={height}
-          width={width}
+          fill
           src={image}
           alt={alt}
           decoding="async"

@@ -19,7 +19,7 @@ const CardContent: React.FC<{
 }> = ({ image, name }) => (
   <div className="flex-grow-3 flex-shrink relative aspect-square overflow-hidden rounded-3xl">
     <div className="h-full w-full object-cover transition duration-300 group-hover:scale-110 ease-cubic-bezier rounded-3xl flex items-center justify-center">
-      <RecipeImage height={300} width={300} image={image} alt={name} />
+      <RecipeImage image={image} alt={name} />
     </div>
     <div className="absolute right-4 top-4">
       <Heart

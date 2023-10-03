@@ -29,7 +29,7 @@ export default async function RecipePage({
   }
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col items-center sm:items-start space-y-8">
+    <div className="mx-auto flex max-w-4xl flex-col items-center sm:items-start space-y-4 mt-8 px-4 sm:px-0">
       <RecipeActionButtonRow recipe={recipe} />
 
       <div className="flex flex-col gap-8 sm:gap-16">
@@ -38,12 +38,9 @@ export default async function RecipePage({
             <h1 className="sm:hidden font-serif font-extrabold tracking-tight text-3xl lg:text-4xl whitespace-nowrap">
               {recipe.name}
             </h1>
-            <RecipeImage
-              image={recipe.imageSrc}
-              alt={recipe.name}
-              width={400}
-              height={400}
-            />
+            <div className="px-16 sm:p-0">
+              <RecipeImage image={recipe.imageSrc} alt={recipe.name} />
+            </div>
             <div className="flex justify-center">
               <Rating
                 userRating={
