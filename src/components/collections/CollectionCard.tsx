@@ -22,7 +22,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
   };
 
   return (
-    <div className="max-w-3xl w-full">
+    <div className="w-full">
       <FeatureCard>
         <Link
           href={`/collection/${collection.id}`}

@@ -59,11 +59,11 @@ const CollectionsList: React.FC<CollectionsListProps> = ({
 
   return (
     <>
-      <div className="w-full h-full mx-auto max-w-screen-xl md:px-xl px-md flex flex-col gap-4 pb-2">
+      <div className="w-full h-full mx-auto max-w-3xl md:px-xl px-md flex flex-col gap-4 pb-2 items-center justify-center">
         {collections.length > 0 ? (
           collections.map((collection, index) => {
             return index === collections.length - 1 && index < totalCount ? (
-              <div ref={container} key={collection.id}>
+              <div ref={container} key={collection.id} className="w-full">
                 <CollectionCard collection={collection} />
               </div>
             ) : (

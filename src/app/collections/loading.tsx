@@ -3,7 +3,7 @@ import { Folder } from 'lucide-react';
 
 const Loading = () => {
   return (
-    <div className="w-full flex flex-col gap-4 pb-2">
+    <div className="w-full flex flex-col gap-4 pb-2 justify-center items-center">
       {Array.from({ length: 10 }).map((_, index) => (
         <div
           key={index}
