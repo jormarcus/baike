@@ -17,7 +17,7 @@ export async function POST(req: Request, res: Response) {
   return NextResponse.json({ data: allergies });
 }
 
-export async function PUT(req: Request, res: Response) {
-  // const allergies = await createAllergies(req.body);
-  // return NextResponse.json({ data: allergies });
-}
+// export async function PUT(req: Request, res: Response) {
+// const allergies = await createAllergies(req.body);
+// return NextResponse.json({ data: allergies });
+// }

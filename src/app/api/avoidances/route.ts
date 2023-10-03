@@ -17,8 +17,8 @@ export async function POST(req: Request, res: Response) {
   return NextResponse.json({ data: avoidances });
 }
 
-export async function PUT(req: Request, res: Response) {
-  const body = await req.json();
-  // const avoidances = await createAvoidances(body);
-  // return NextResponse.json({ data: avoidances });
-}
+// export async function PUT(req: Request, res: Response) {
+//   const body = await req.json();
+// const avoidances = await createAvoidances(body);
+// return NextResponse.json({ data: avoidances });
+// }
