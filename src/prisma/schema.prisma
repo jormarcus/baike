@@ -95,18 +95,20 @@ model Recipe {
 }
 
 model Ingredient {
-  id              Int      @id @default(autoincrement())
+  id              Int         @id @default(autoincrement())
   name            String
   quantity        Float?
   quantity2       Float?
   unitOfMeasure   String?
   unitOfMeasureID String?
-  isGroupHeader   Boolean  @default(false)
+  isGroupHeader   Boolean     @default(false)
   input           String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  order           Int      @default(0)
-  recipes         Recipe[] @relation("IngredientToRecipe")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  order           Int         @default(0)
+  recipes         Recipe[]    @relation("IngredientToRecipe")
+  allergies       Allergy[]   @relation("IngredientToAllergy")
+  avoidances      Avoidance[] @relation("IngredientToAvoidance")
 }
 
 model Collection {
@@ -231,4 +233,16 @@ model Comment {
   replies   Comment[] @relation("ReplyTo")
   author    User      @relation(fields: [authorId], references: [id])
   Like      Like[]
+}
+
+model Allergy {
+  id          Int          @id @default(autoincrement())
+  userId      Int          @map("user_id")
+  ingredients Ingredient[] @relation("IngredientToAllergy")
+}
+
+model Avoidance {
+  id          Int          @id @default(autoincrement())
+  userId      Int          @map("user_id")
+  ingredients Ingredient[] @relation("IngredientToAvoidance")
 }
