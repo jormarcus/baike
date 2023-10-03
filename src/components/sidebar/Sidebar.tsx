@@ -97,13 +97,13 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   return (
     <div
       className={cn(
-        'hidden md:block flex-none bg-transparent h-full z-20 transition-all ease-in-out duration-300',
+        'hidden md:block flex-none bg-transparent h-full z-20 transition-all ease-in-out duration-500 overflow-hidden',
         isCollapsed ? 'w-24' : 'w-60'
       )}
     >
       <aside
         className={cn(
-          'fixed flex flex-col',
+          'fixed flex flex-col transition-all ease-in-out duration-500',
           isCollapsed ? 'w-24' : 'w-60 px-2'
         )}
       >
@@ -121,9 +121,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
                 toggleCollapsed={toggleCollapsed}
               />
             </div>
-          </div>
-          <div className="mt-6">
-            <NewThreadButton isCollapsed={isCollapsed} />
           </div>
           <div className="mt-4 relative items-center">
             {sideBarItems.map((item) => {
