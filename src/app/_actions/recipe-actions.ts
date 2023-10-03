@@ -19,8 +19,12 @@ function parseIngredients(ingredients: { input: string; id?: number }[]) {
     const parsedIngredient = parseIngredient(ingredient.input)[0];
     return {
       name: capitalizeFirstLetter(parsedIngredient.description),
-      quantity: parsedIngredient.quantity,
-      quantity2: parsedIngredient.quantity2,
+      quantity: parsedIngredient.quantity
+        ? parseFloat(parsedIngredient.quantity.toFixed(2))
+        : null,
+      quantity2: parsedIngredient.quantity2
+        ? parseFloat(parsedIngredient.quantity2.toFixed(2))
+        : null,
       unitOfMeasure: parsedIngredient.unitOfMeasure,
       unitOfMeasureID: parsedIngredient.unitOfMeasureID,
       isGroupHeader: parsedIngredient.isGroupHeader,
