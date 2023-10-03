@@ -7,6 +7,7 @@ import { LoginModalProvider } from '@/context/LoginModalContext';
 import { RegisterModalProvider } from '@/context/RegisterModalContext';
 import AuthContext from '@/context/AuthContext';
 import { ChatProvider } from '@/context/ChatContext';
+import { UserPreferencesProvider } from '@/context/UserPreferencesContext';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -18,7 +19,9 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
       <AuthContext>
         <RegisterModalProvider>
           <LoginModalProvider>
-            <ChatProvider>{children}</ChatProvider>
+            <UserPreferencesProvider>
+              <ChatProvider>{children}</ChatProvider>
+            </UserPreferencesProvider>
           </LoginModalProvider>
         </RegisterModalProvider>
       </AuthContext>
