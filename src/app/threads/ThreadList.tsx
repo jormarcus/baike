@@ -42,7 +42,7 @@ const ThreadList: React.FC<ThreadListProps> = ({
   }, [isVisible, threads.length, totalCount]);
 
   return (
-    <div className="h-full flex flex-col justify-center gap-2 max-w-3xl">
+    <div className="h-full flex flex-col justify-center gap-4 max-w-3xl">
       {threads.map((thread, i) => (
         <ThreadCard key={thread.id} thread={thread} />
       ))}
