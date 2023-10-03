@@ -101,3 +101,8 @@
   content: '';
   inset: -1px;
 }
+
+.grid-wizard-container {
+  display: grid;
+  grid-template-rows: 1fr 6fr 1fr;
+}

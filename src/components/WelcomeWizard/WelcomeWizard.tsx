@@ -7,7 +7,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import { useUserPreferences } from '@/context/UserPreferencesContext';
 import { useState } from 'react';
@@ -81,27 +80,29 @@ const WelcomeWizard: React.FC<WelcomeWizardProps> = ({}) => {
   };
 
   return (
-    <div>
-      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{steps[activeStep]['title']}</DialogTitle>
-            <DialogDescription>
-              {steps[activeStep]['description']}
-            </DialogDescription>
-          </DialogHeader>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+      <DialogContent className="grid-wizard-container max-w-5xl w-full h-4/6">
+        <DialogHeader>
+          <DialogTitle className="text-2xl text-center">
+            {steps[activeStep]['title']}
+          </DialogTitle>
+          <DialogDescription>
+            {steps[activeStep]['description']}
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex flex-col items-center w-auto h-auto relative">
           {steps[activeStep]['component']({})}
-          <DialogFooter>
-            {activeStep > 0 && <Button onClick={handleBack}>Back</Button>}
-            {activeStep < steps.length - 1 ? (
-              <Button onClick={handleNext}>Next</Button>
-            ) : (
-              <Button onClick={() => setIsOpen(false)}>Save</Button>
-            )}
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+        </div>
+        <DialogFooter className="self-end">
+          {activeStep > 0 && <Button onClick={handleBack}>Back</Button>}
+          {activeStep < steps.length - 1 ? (
+            <Button onClick={handleNext}>Next</Button>
+          ) : (
+            <Button onClick={() => setIsOpen(false)}>Save</Button>
+          )}
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

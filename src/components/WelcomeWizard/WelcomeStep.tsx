@@ -4,14 +4,13 @@ interface WelcomeStepProps {}
 
 const WelcomeStep: React.FC = ({}) => {
   return (
-    <div className="flex flex-col">
-      <Image
-        src="/images/food.svg"
-        width={200}
-        height={200}
-        alt="Baike preview image"
-      />
-    </div>
+    <Image
+      src="/images/baike-preview.png"
+      fill
+      alt="Baike preview image"
+      priority
+      className="object-cover w-full h-full aspect-square"
+    />
   );
 };
 
