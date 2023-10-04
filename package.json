@@ -2,6 +2,7 @@
   "name": "baike",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,10 +10,11 @@
     "lint": "next lint",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "prisma:generate": "prisma generate",
+    "prisma:seed": "prisma seed",
     "postinstall": "prisma generate"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
+    "seed": "node --loader ts-node/esm src/prisma/seed/seed.ts",
     "schema": "src/prisma/schema.prisma",
     "migrate-diff": "npx prisma migrate diff --from-empty --to-schema-datamodel src/prisma/schema.prisma --script > src/prisma/migrations/0_init/migration.sql"
   },
@@ -34,7 +36,6 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.6",
     "@tailwindcss/forms": "^0.5.6",
-    "@types/node": "18.15.13",
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
     "@upstash/redis": "^1.22.0",
@@ -74,10 +75,12 @@
   "devDependencies": {
     "@aws-sdk/types": "^3.418.0",
     "@tailwindcss/typography": "^0.5.10",
+    "@types/node": "^20.8.2",
     "@types/pg": "^8.10.3",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.30",
     "prisma": "^5.3.1",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "ts-node": "^10.9.1"
   }
 }
