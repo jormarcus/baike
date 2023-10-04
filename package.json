@@ -2,7 +2,6 @@
   "name": "baike",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,11 +9,10 @@
     "lint": "next lint",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "prisma:generate": "prisma generate",
-    "prisma:seed": "prisma seed",
+    "prisma:seed": "node --loader ts-node/esm src/prisma/seed.ts",
     "postinstall": "prisma generate"
   },
   "prisma": {
-    "seed": "node --loader ts-node/esm src/prisma/seed/seed.ts",
     "schema": "src/prisma/schema.prisma",
     "migrate-diff": "npx prisma migrate diff --from-empty --to-schema-datamodel src/prisma/schema.prisma --script > src/prisma/migrations/0_init/migration.sql"
   },

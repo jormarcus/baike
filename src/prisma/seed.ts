@@ -1,4 +1,569 @@
-import prisma from '@/lib/prismadb';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+const seedAvoidances = async () => {
+  const avoidances = [
+    { name: 'Milk' },
+    { name: 'Eggs' },
+    { name: 'Fish' },
+    { name: 'Crustacean shellfish' },
+    { name: 'Tree nuts' },
+    { name: 'Peanuts' },
+    { name: 'Wheat' },
+    { name: 'Soy' },
+    { name: 'Sesame' },
+    { name: 'Linseed' },
+    { name: 'Peach' },
+    { name: 'Banana' },
+    { name: 'Avocado' },
+    { name: 'Kiwi fruit' },
+    { name: 'Passion fruit' },
+    { name: 'Celery' },
+    { name: 'Garlic' },
+    { name: 'Mustard' },
+    { name: 'Aniseed' },
+    { name: 'Chamomile' },
+    { name: 'Buckwheat' },
+    { name: 'Sulfites' },
+    { name: 'Alcohol' },
+    { name: 'Gluten' },
+    { name: 'Caffeine' },
+    { name: 'Lactose' },
+    { name: 'Meat' },
+    { name: 'Mollusc' },
+  ];
+
+  for (const avoidance of avoidances) {
+    await prisma.avoidance.create({
+      data: avoidance,
+    });
+  }
+};
+
+export const seedRecipes = async () => {
+  const recipes = [
+    {
+      id: 1,
+      name: 'Banana Pancakes',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/6x0Lw9L4MEU8INHnK4tXGRV9XWI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20334-banana-pancakes-i-DDMFS-4x3-9f291f03044247d48c9ec26917952402.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/20334/banana-pancakes-i/',
+      description:
+        'Quick and easy homemade banana pancakes made from scratch. A fun twist on ordinary pancakes.',
+      servings: 6,
+      instructions: [
+        'Gather all ingredients.',
+        'Combine flour, white sugar, baking powder, and salt in a bowl. Mix together egg, milk, vegetable oil, and bananas in a second bowl.',
+        'Stir flour mixture into banana mixture; batter will be slightly lumpy.',
+        'Heat a lightly oiled griddle or frying pan over medium high heat. Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake.',
+        'Cook until pancakes are golden brown, 3 to 5 minutes per side. Serve hot.',
+        'Serve hot and enjoy!',
+      ],
+      prepHours: 0,
+      prepMinutes: 5,
+      cookHours: 0,
+      cookMinutes: 10,
+      createdAt: '2023-09-27 15:27:04.168',
+      updatedAt: '2023-09-27 15:27:04.168',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 3,
+      name: 'Chicken Pot Pie',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/vlTW2Csu30V0zGDOm-5C4LDVGhA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/26317-chicken-pot-pie-xi-MFS_275-4x3-87a594bb9406495cbf51b166f7112e5c.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/26317/chicken-pot-pie-ix/',
+      description:
+        'A delicious, homemade chicken pot pie made from scratch with carrots, peas, and celery. This comfort food classic will be a hit with your family.',
+      servings: 8,
+      instructions: [
+        'Gather all ingredients and preheat the oven to 425 degrees F (220 degrees C.)',
+        'Combine chicken, carrots, peas, and celery in a saucepan; add water to cover and bring to a boil. Boil for 15 minutes, then remove from the heat and drain.',
+        'While the chicken is cooking, melt butter in another saucepan over medium heat. Add onion and cook until soft and translucent, 5 to 7 minutes. Stir in flour, salt, pepper, and celery seed',
+        'Slowly stir in chicken broth and milk.',
+        'Reduce heat to medium-low and simmer until thick, 5 to 10 minutes. Remove from heat and set aside.',
+        'Place chicken and vegetables in the bottom pie crust. Pour hot liquid mixture over top.',
+        'Cover with top crust, seal the edges, and cut away any excess dough. Make several small slits in the top crust to allow steam to escape.',
+        'Bake in the preheated oven until pastry is golden brown and filling is bubbly, 30 to 35 minutes. Cool for 10 minutes before serving.',
+        'Serve immediately and enjoy!',
+      ],
+      prepHours: 0,
+      prepMinutes: 20,
+      cookHours: 0,
+      cookMinutes: 50,
+      createdAt: '2023-09-27 15:47:52.938',
+      updatedAt: '2023-09-27 15:47:52.938',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 4,
+      name: 'Quick and Easy Chicken Noodle Soup',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/pTGS0SZsSQK85sV_RQE_K6ZfoN4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/26460-quick-and-easy-chicken-noodle-soup-allrecipes-1x1-1-b88125437574471db3e114c40bc6928e.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/26460/quick-and-easy-chicken-noodle-soup/',
+      description:
+        'This easy chicken noodle soup recipe made with veggies and leftover chicken is warm, comforting, and ready to ladle into bowls in just over 30 minutes.',
+      servings: 6,
+      instructions: [
+        'Melt butter in a large pot over medium heat. Add onion and celery and cook until just tender, about 5 minutes.',
+        'Add chicken broth, vegetable broth, chicken, egg noodles, carrots, basil, oregano, salt, and pepper. Stir to combine and bring to a boil.',
+        'Reduce heat and simmer for 20 minutes.',
+      ],
+      prepHours: 0,
+      prepMinutes: 10,
+      cookHours: 0,
+      cookMinutes: 30,
+      createdAt: '2023-10-01 01:59:35.03',
+      updatedAt: '2023-10-01 01:59:35.03',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 5,
+      name: 'Apple Cobbler',
+      imageSrc:
+        'https://res.cloudinary.com/drj8m3z6v/image/upload/v1696283796/o4tpdqre0igifq2lupfv.jpg',
+      authorId: 1,
+      url: '',
+      description: 'Delicious apple cobbler.',
+      servings: 2,
+      instructions: ['Mix ingredients in a bowl', 'Core and slice apples'],
+      prepHours: 0,
+      prepMinutes: 20,
+      cookHours: 1,
+      cookMinutes: 0,
+      createdAt: '2023-10-02 21:57:33.645',
+      updatedAt: '2023-10-02 21:57:33.645',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 7,
+      name: 'Broccoli and Chicken Stir-Fry',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/wbWfb-cXCq1yd6NlpJR7z5Nr1Wc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/240708-broccoli-and-chicken-stir-fry-DDMFS-4x3-27886203cb2744f99d15247496019942.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/240708/broccoli-and-chicken-stir-fry/',
+      description:
+        'This chicken and broccoli recipe makes for a quick weeknight dinner. Stir-fry chicken, broccoli, and onion in a mix of soy, ginger, and brown sugar.',
+      servings: 3,
+      instructions: [
+        'Gather all ingredients.',
+        'Stir soy sauce, brown sugar, ginger, and red pepper flakes together in a bowl until sugar dissolves. Mix water and cornstarch together in a small bowl; stir with a whisk until cornstarch dissolves completely.',
+        'Heat oil in a large skillet over high heat. Fry chicken and onion in hot oil until chicken is no longer pink in the center and onion is tender, 5 to 7 minutes.',
+        'Stir in broccoli with chicken and onion; sauté until broccoli is hot, about 5 minutes.',
+        'Push chicken and vegetable mixture to the side of the skillet. Pour soy sauce mixture into the vacant part of the skillet. Stir cornstarch slurry into soy sauce mixture until the color is consistent.',
+        'Move chicken and vegetables back into the center of the pan; sauté until sauce thickens and coats chicken and vegetables, about 5 minutes more.',
+      ],
+      prepHours: 0,
+      prepMinutes: 15,
+      cookHours: 0,
+      cookMinutes: 20,
+      createdAt: '2023-10-03 14:45:16.059',
+      updatedAt: '2023-10-03 14:45:16.059',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 8,
+      name: 'Chicken Marsala',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/3Wlwc5yDGFPIFPTj_PdWTYDqTL8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8887-chicken-marsala-DDMFS-4x3-a0be8776efe74429a586af0ac1d7c1dd.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/8887/chicken-marsala/',
+      description:
+        "Chicken Marsala is an Italian-style recipe for tender pan-fried chicken breasts with a sweet Marsala wine and mushroom sauce. It's super quick and easy to make for a weeknight dinner AND sophisticated enough for company.",
+      servings: 4,
+      instructions: [
+        'Gather all ingredients.',
+        'In a shallow dish or bowl, mix together the flour, salt, pepper and oregano.',
+        'Coat chicken pieces in flour mixture.',
+        'In a large skillet, melt butter in olive oil over medium heat. Place chicken in the pan, and lightly brown.',
+        'Turn over chicken pieces, and add mushrooms. Pour in wine and sherry.',
+        'Cover skillet; simmer chicken 10 minutes, turning once, until no longer pink and juices run clear.',
+        'Serve hot and enjoy!',
+      ],
+      prepHours: 0,
+      prepMinutes: 10,
+      cookHours: 0,
+      cookMinutes: 20,
+      createdAt: '2023-10-03 14:51:35.405',
+      updatedAt: '2023-10-03 14:51:35.405',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 9,
+      name: 'Chicken Milanese',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/_P1b6XgQdOEI5a9JoBaYkm1t58I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/3566647-chicken-milanese-naples34102-4x3-1-b5d7690dec5a414bb8565c7b63ce744e.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/222979/chicken-milanese/',
+      description:
+        'Chicken Milanese is made with thin chicken breasts or cutlets, lightly breaded and pan-fried for a deliciously crispy, quick-and-easy main dish any night of the week!',
+      servings: 4,
+      instructions: [
+        'Preheat the oven to 200 degrees F (95 degrees C).',
+        'Beat eggs with salt and pepper in a shallow dish. Spread flour in another dish and bread crumbs in a third dish.',
+        'Working with one piece at a time, gently press chicken into flour to coat and shake off any excess. Dip into beaten eggs, then press into bread crumbs. Gently toss between your hands so excess bread crumbs can fall away. Place breaded chicken onto a plate while breading the rest; do not stack.',
+        'Heat vegetable oil in a large skillet over medium heat. Pan-fry chicken in batches of 2 or 3 pieces until golden brown and no longer pink in the center, 2 to 4 minutes per side. An instant-read thermometer inserted into the center should read at least 165 degrees F (74 degrees C). Transfer cooked chicken to a baking sheet and keep warm in the preheated oven while cooking remaining chicken.',
+        'Serve with lemon wedges.',
+      ],
+      prepHours: 0,
+      prepMinutes: 15,
+      cookHours: 0,
+      cookMinutes: 15,
+      createdAt: '2023-10-03 14:55:00.445',
+      updatedAt: '2023-10-03 14:55:00.445',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 10,
+      name: 'Pasta Salad',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/b0JoulfOsZDw7VHEFxQjPCrpus4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/14385-pasta-salad-DDMFS-4x3-28eb5dbe00624780b36cabfef15ca183.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/14385/pasta-salad/',
+      description:
+        'This pasta salad uses tri-colored spiral pasta, crunchy bell peppers, tomatoes, and an easy dressing to create a tasty and beautiful salad for six.',
+      servings: 6,
+      instructions: [
+        'Gather all ingredients.',
+        'Bring a large pot of lightly salted water to a boil. Cook pasta in the boiling water, stirring occasionally, until tender yet firm to the bite, about 10 to 12 minutes; rinse under cold water and drain.',
+        'Whisk Italian dressing and salad spice mix together until smooth. Combine pasta, tomatoes, bell peppers, and olives in a salad bowl.',
+        'Pour dressing over salad and toss to coat.',
+        'Refrigerate salad, 8 hours to overnight.',
+        'Enjoy!',
+      ],
+      prepHours: 0,
+      prepMinutes: 20,
+      cookHours: 0,
+      cookMinutes: 10,
+      createdAt: '2023-10-03 14:55:13.86',
+      updatedAt: '2023-10-03 14:55:13.86',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 2,
+      name: 'Chocolate Chip Cookies',
+      imageSrc:
+        'https://res.cloudinary.com/drj8m3z6v/image/upload/v1696344951/erwwy7ub6dw8bpdfjt4t.jpg',
+      authorId: 1,
+      url: '',
+      description: '',
+      servings: 6,
+      instructions: [
+        'Mix ingredients in a bowl',
+        'Preheat oven to 400 degress',
+      ],
+      prepHours: 0,
+      prepMinutes: 10,
+      cookHours: 0,
+      cookMinutes: 15,
+      createdAt: '2023-09-27 15:43:36.148',
+      updatedAt: '2023-10-03 14:56:02.047',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 5,
+    },
+    {
+      id: 11,
+      name: 'Roasted New Red Potatoes',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/ZaL1tHrFaKMxmnRQU7FvJj0kKt0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/644668-8c07cad9cd1c4cf79a658424db03de6d.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/76954/roasted-new-red-potatoes/',
+      description:
+        'Roasted red potatoes tossed with olive oil, salt, and pepper, then cooked in the oven until tender in the middle and perfectly crisp on the outside.',
+      servings: 8,
+      instructions: [
+        'Preheat the oven to 400 degrees F (200 degrees C) and adjust the oven rack to the lowest position.',
+        'Toss potatoes with oil, salt, and pepper in a bowl. Arrange, cut-side down, on a rimmed cookie sheet or jellyroll pan.',
+        'Roast potatoes in the preheated oven until tender and golden brown, 20 to 30 minutes. Transfer to a serving dish.',
+      ],
+      prepHours: 0,
+      prepMinutes: 5,
+      cookHours: 0,
+      cookMinutes: 20,
+      createdAt: '2023-10-03 14:57:37.164',
+      updatedAt: '2023-10-03 14:57:37.164',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 12,
+      name: 'Perfect Summer Fruit Salad',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/pXqfb4xf-T3a-trkKdu-SCfC1hI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/2289556-0981629410f0446d9bec11f0a9ece43c.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/214947/perfect-summer-fruit-salad/',
+      description:
+        'This fantastic fruit salad combines pineapple, kiwi, bananas, oranges, grapes, and berries in a sweet citrusy sauce for a colorful dessert.',
+      servings: 10,
+      instructions: [
+        'For the sauce: Bring orange juice, lemon juice, brown sugar, orange zest, and lemon zest to a boil in a saucepan over medium-high heat. Reduce heat to medium-low and simmer until slightly thickened, about 5 minutes. Remove from heat and stir in vanilla extract. Set aside to cool.',
+        'For the salad: Layer fruit in a large, clear glass bowl in this order: pineapple, strawberries, kiwi fruit, bananas, oranges, grapes, and blueberries. Pour cooled sauce over fruit; cover and refrigerate for 3 to 4 hours before serving.',
+      ],
+      prepHours: 0,
+      prepMinutes: 25,
+      cookHours: 0,
+      cookMinutes: 5,
+      createdAt: '2023-10-03 14:58:10.625',
+      updatedAt: '2023-10-03 14:58:10.625',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 13,
+      name: 'Homemade Crispy Hash Browns',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/3FXvOnlaER8gcmZA2X-SyjyU9Mo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/57783-emilys-famous-hash-browns-DDMFS-4x3-ce2a6ec1178640258faf601d6848ff11.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/57783/emilys-famous-hash-browns/',
+      description:
+        'These crispy, homemade hash browns are quick, easy, and family-friendly, making them perfect as a side dish for any breakfast or brunch on weekdays or weekends.',
+      servings: 4,
+      instructions: [
+        'Gather all ingredients.',
+        'Rinse shredded potatoes until water is clear, then drain and squeeze dry.',
+        'Place shreds in a bowl and mix in the onion, flour, and egg until evenly distributed.',
+        'Heat about 1/4 inch of oil in a large heavy skillet over medium-high heat. When oil is sizzling hot, place potatoes into the pan in a 1/2 inch thick layer. Cover the whole bottom of the pan, or make separate piles like pancakes.',
+        'Cook until nicely browned on the bottom, then flip over and brown on the other side. It should take at least 5 minutes per side. If you are cooking them in one big piece, it can be cut into quarters for easier flipping.',
+        'Remove from pan, and drain on paper towels. Season with salt and pepper and serve immediately.',
+        'Serve hot and enjoy!',
+      ],
+      prepHours: 0,
+      prepMinutes: 20,
+      cookHours: 0,
+      cookMinutes: 15,
+      createdAt: '2023-10-03 14:58:37.014',
+      updatedAt: '2023-10-03 14:58:37.014',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 14,
+      name: 'Gnocchi',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/jOPKFsr6fvXjxAaRXThxTL6UTv8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/1070416-a1a6c982aaef4da3acfdda0ae7f3b87f.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/18465/gnocchi-i/',
+      description:
+        "Gnocchi is easy to make with just three easy ingredients: mashed potato, flour and an egg — that's all you need to knead for gnocchi!",
+      servings: 4,
+      instructions: [
+        'Bring a large pot of salted water to a boil; add potatoes and cook until tender but still firm, about 15 minutes. Drain, cool, and mash with a fork or potato masher.',
+        'Combine 1 cup mashed potato, flour, and egg in a large bowl. Knead until dough forms a ball. Shape small portions of the dough into long "snakes". On a floured surface, cut snakes into 1/2-inch pieces.',
+        'Bring a large pot of lightly salted water to a boil. Drop in gnocchi and cook for 3 to 5 minutes or until gnocchi have risen to the top; drain and serve.',
+      ],
+      prepHours: 0,
+      prepMinutes: 30,
+      cookHours: 0,
+      cookMinutes: 30,
+      createdAt: '2023-10-03 14:58:45.386',
+      updatedAt: '2023-10-03 14:58:45.386',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 15,
+      name: 'Easy Roasted Broccoli',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/wzrJD5icKZtvVXJ-47xIJaJszyk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/1765553-easy-roasted-broccoli-FranceC-1x1-1-327e091005644ea99b1ce0107d3dd2c6.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/240438/easy-roasted-broccoli/',
+      description:
+        'Roasted broccoli florets and broccoli stems are cooked with just olive oil, salt, and pepper. So much more flavorsome than boiled or steamed broccoli!',
+      servings: 4,
+      instructions: [
+        'Preheat the oven to 400 degrees F (200 degrees C).',
+        'Cut broccoli florets from the stalk. Peel the stalk and slice into 1/4-inch slices. Mix florets and stem pieces with olive oil in a bowl and transfer to a baking sheet; season with salt and pepper.',
+        'Roast in the preheated oven until broccoli is tender and lightly browned, about 18 to 20 minutes.',
+      ],
+      prepHours: 0,
+      prepMinutes: 10,
+      cookHours: 0,
+      cookMinutes: 20,
+      createdAt: '2023-10-03 14:58:55.218',
+      updatedAt: '2023-10-03 14:58:55.218',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 16,
+      name: '3-Ingredient Banana Oatmeal Cookies',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/rtfVfA2SBsC1zmkk3hDIXjs3o9I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/7972686_3-Ingredient-Banana-Oatmeal-Cookies_Yoly_4x3-9e829047c7dc4a37ae27dbd047a80043.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/3-ingredient-banana-oatmeal-cookies-recipe-7972686',
+      description:
+        "These 3-ingredient banana oatmeal cookies—just oats, bananas, and raisins—make a great alternative breakfast for when you're on the go, or you can pack them in the kids’ lunch boxes for a healthier snack.",
+      servings: 9,
+      instructions: [
+        'Preheat the oven to 350 degrees F (180 degrees C). Line a baking sheet with parchment paper.',
+        'Stir bananas and oats together in a bowl until well combined. Stir in raisins. Using a medium sized cookie scoop, drop dough onto the prepared baking sheet. Using your fingers, gently pat down dough to form a round cookie.',
+        'Bake in the preheated oven until beginning to brown on the bottom, 14 to 15 minutes. Cool on a wire rack.',
+      ],
+      prepHours: 0,
+      prepMinutes: 10,
+      cookHours: 0,
+      cookMinutes: 15,
+      createdAt: '2023-10-03 14:59:25.286',
+      updatedAt: '2023-10-03 14:59:25.286',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 17,
+      name: 'Cinnamon Roll Cookies',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/SdteP2J6QbsTyAg0cRQvazSVCf0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/7775443-cinnamon-roll-cookies-ddmfs-3x4-5694-7d10fd548c9f4c19b790a6fbf87081a1.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/cinnamon-roll-cookies-recipe-7775443',
+      description:
+        'These cinnamon roll cookies are reminiscent of a classic cinnamon roll with cream cheese icing - irresistable!',
+      servings: 40,
+      instructions: [
+        'Gather all ingredients.',
+        'Beat 1 cup butter in a large bowl with a stand mixer fitted with a paddle attachment on medium-high 30 seconds.',
+        'Add the white sugar and salt. Beat on medium 2 minutes, scraping bowl as needed.',
+        'Beat in egg and vanilla.',
+        'Mix in flour on low speed.',
+        'Remove dough from mixer and place on plastic wrap. Shape into a rectangle. Wrap dough in plastic wrap; chill until easy to handle (at least 1 hour)',
+        'Generously flour the dough and roll to a 12x10-inch rectangle on a large, floured piece of parchment paper',
+        'Brush dough with the lightly beaten egg.',
+        'Stir together brown sugar and cinnamon and sprinkle evenly over dough.',
+        'Tightly roll up dough, starting from a long side.',
+        'Wrap roll in plastic wrap and place on a baking sheet or tray. Freeze 30 minutes or until firm enough to slice.',
+        'Preheat oven to 375 degrees F (190 degrees C). Line a cookie sheet with parchment paper. Cut roll of cookies using a thin-bladed, serrated knife into 1/4-inch slices.',
+        'Place 2 inches apart on prepared cookie sheets. Bake cookies until set and light browned on the bottoms, 8 to 10 minutes. Cool on cookie sheet 1 minute. Remove; cool on wire rack.',
+        'Meanwhile, prepare icing. Whisk together cream cheese and the remaining 1 tablespoon butter in a small bowl.',
+        'Stir in confectioners sugar and enough cream to make an icing of drizzling consistency.',
+        'Drizzle cooled cookies with cream cheese icing.',
+      ],
+      prepHours: 0,
+      prepMinutes: 30,
+      cookHours: 0,
+      cookMinutes: 10,
+      createdAt: '2023-10-03 14:59:34.936',
+      updatedAt: '2023-10-03 14:59:34.936',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 18,
+      name: 'Caramel Apple Pie Cookies',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/D0Cdd0X0MHx4XYsj_iuF6gmyJNY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/7642173-Caramel-Apple-Pie-Cookies-DDMFS-3x4-5351-ba8edfa6d4364135b0a278d95e983f2b.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/caramel-apple-pie-cookies-recipe-7642173',
+      description:
+        "These caramel apple pie cookies taste like mini apple pies. Try them warmed up with ice cream and you'll be reminded ot Thanksgiving.",
+      servings: 20,
+      instructions: [
+        'Gather all ingredients. Preheat oven to 425 degrees F (220 degrees C). Let pie crusts stand according to package directions. Line 2 baking sheets with parchment paper; set aside.',
+        "Transfer apple pie filling into a food processor. Lightly pulse apple pie filling in a food processor until in 1/4-inch chunks (see Cook's Note).",
+        'Roll one pie crust into a 14-inch circle on a lightly floured piece of parchment paper.',
+        'Using a pizza cutter or a sharp knife, cut 1/4-inch wide strips.',
+        'Cover cut pie dough with parchment paper or plastic wrap and set aside.',
+        'Roll remaining pie crust dough into a 13-inch circle on lightly floured piece of parchment paper.',
+        'Spread caramel sauce over rolled pastry.',
+        'Spoon apple pie filling over caramel sauce, spreading so that it is evenly distributed.',
+        'Create a lattice top with dough strips by alternately placing strips on top of the filling.',
+        'Using a 2 1/2-inch diameter cookie cutter, cut rounds from pastry.',
+        'Transfer cookies to the prepared baking sheets.',
+        'Stir together sugar and apple pie spice in a small bowl.',
+        'Brush cookies with half and half and sprinkle cookies with sugar and spice mixture.',
+        'Bake in the preheated oven until cookies are golden brown, about 12 minutes (working in batches).',
+        'Cool on baking sheets on wire racks for 20 minutes. Remove cookies to a serving tray and serve warm.',
+      ],
+      prepHours: 0,
+      prepMinutes: 30,
+      cookHours: 0,
+      cookMinutes: 12,
+      createdAt: '2023-10-03 14:59:46.682',
+      updatedAt: '2023-10-03 14:59:46.682',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+    {
+      id: 19,
+      name: 'Cherry Pie',
+      imageSrc:
+        'https://www.allrecipes.com/thmb/jVEJJq5Cze4sSxDN8Dy_1mabt0I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/5279850-cherry-pie-iii-Susie-Sun-1x1-1-0cf62c43e1084d73b696b45df29e594a.jpg',
+      authorId: 1,
+      url: 'https://www.allrecipes.com/recipe/12701/cherry-pie-iii/',
+      description:
+        'This prize-winning cherry pie recipe features a homemade flaky, buttery crust, a thick and perfectly sweetened sour cherry filling, and a hint of almond.',
+      servings: 8,
+      instructions: [
+        'Whisk flour and salt together in a bowl. Cut in shortening with 2 knives or a pastry blender until mixture resembles coarse crumbs. Mix in cold water by hand just until dough holds together. Divide dough in half and form into disks. Wrap each disk in plastic wrap and refrigerate until chilled, 30 minutes to 1 hour.',
+        'Roll out 1 dough disk into an 11-inch circle and press it into a 9-inch pie dish. Place in the refrigerator until needed. Roll out remaining dough disk into an 11-inch circle for the top crust, transfer it to a plate or baking sheet, and refrigerate until needed.',
+        'Preheat the oven to 375 degrees F (190 degrees C). Place a baking tray in the oven to preheat.',
+        'Place cherries, sugar, and cornstarch in a medium, non-aluminum saucepan. Allow mixture to stand until juices begin to release, about 10 minutes. Bring to a boil over medium heat, stirring constantly. Lower the heat and simmer until juices thicken and become translucent, about 1 minute. Remove from heat and stir in butter and almond extract. Allow filling to cool to lukewarm.',
+        'Pour cooled filling into prepared pie crust. Cover with top crust, trim and crimp the edges to seal, and cut vents for steam.',
+        'Bake in the preheated oven on the preheated baking tray until crust is golden brown, 45 to 55 minutes. Allow to cool for several hours before slicing.',
+      ],
+      prepHours: 0,
+      prepMinutes: 30,
+      cookHours: 0,
+      cookMinutes: 55,
+      createdAt: '2023-10-03 18:16:21.558',
+      updatedAt: '2023-10-03 18:16:21.558',
+      isPublic: true,
+      likesCount: 0,
+      notes: '',
+      averageRating: 0,
+    },
+  ];
+
+  for (const recipe of recipes) {
+    await prisma.recipe.create({
+      data: recipe,
+    });
+  }
+};
 
 export const seedIngredients = async () => {
   const ingredients = [
@@ -1311,3 +1876,80 @@ export const seedIngredients = async () => {
     });
   }
 };
+
+export const seedUsers = async () => {
+  const users = [
+    {
+      name: 'User 1',
+      email: 'user1@example.com',
+    },
+    {
+      name: 'User 2',
+      email: 'user2@example.com',
+    },
+    {
+      name: 'User 3',
+      email: 'user3@example.com',
+    },
+    {
+      name: 'User 4',
+      email: 'user4@example.com',
+    },
+    {
+      name: 'User 5',
+      email: 'user5@example.com',
+    },
+    {
+      name: 'User 6',
+      email: 'user6@example.com',
+    },
+    {
+      name: 'User 7',
+      email: 'user7@example.com',
+    },
+    {
+      name: 'User 8',
+      email: 'user8@example.com',
+    },
+    {
+      name: 'User 9',
+      email: 'user9@example.com',
+    },
+    {
+      name: 'Harry Potter',
+      email: 'hp@example.com',
+    },
+    {
+      name: 'Hermione Granger',
+      email: 'hg@example.com',
+    },
+    {
+      name: 'Ron Weasley',
+      email: 'rw@example.com',
+    },
+    // Add more users here
+  ];
+
+  for (const user of users) {
+    await prisma.user.create({
+      data: user,
+    });
+  }
+};
+
+async function main() {
+  // await seedUsers();
+  // await seedRecipes();
+  // await seedIngredients();
+  await seedAvoidances();
+  console.log('Seed completed');
+}
+
+main()
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
