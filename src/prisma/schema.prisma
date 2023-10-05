@@ -56,7 +56,6 @@ model User {
   ReviewLike     ReviewLike[]
   accounts       Account[]
   sessions       Session[]
-  allergens      Allergen[]
   avoidances     Avoidance[]
 
   @@map("users")
@@ -109,17 +108,7 @@ model Ingredient {
   updatedAt       DateTime    @updatedAt
   order           Int         @default(0)
   recipes         Recipe[]    @relation("IngredientToRecipe")
-  allergens       Allergen[]
   avoidances      Avoidance[]
-}
-
-model Allergen {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique
-  users       User[]
-  ingredients Ingredient[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
 }
 
 model Avoidance {

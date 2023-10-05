@@ -1,118 +1,73 @@
+'use server';
+
+import { Avoidance } from '@prisma/client';
+
 import prisma from '@/lib/prismadb';
-import { getCurrentUser } from './user-actions';
-
-export async function getAllergies() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    throw new Error('User not found');
-  }
-
-  const allergies = await prisma.allergy.findMany({
-    where: {
-      userId: user.id,
-    },
-    include: {
-      ingredients: true,
-    },
-  });
-
-  console.log('allergies', allergies);
-
-  return allergies;
-}
-
-export async function createAllergies(ingredientIds: number[]) {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    throw new Error('User not found');
-  }
-
-  const newAllergies = await prisma.allergy.create({
-    data: {
-      userId: user.id,
-      ingredients: {
-        connect: ingredientIds.map((id) => ({ id })),
-      },
-    },
-    include: {
-      ingredients: true,
-    },
-  });
-
-  console.log('created allergies', newAllergies);
-
-  return newAllergies;
-}
-
-export async function updateAllergies(ingredientIds: number[]) {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    throw new Error('User not found');
-  }
-
-  const allergies = await prisma.allergy.update({
-    where: {
-      id: user.id,
-    },
-    data: {
-      ingredients: {
-        connect: ingredientIds.map((id) => ({ id })),
-      },
-    },
-    include: {
-      ingredients: true,
-    },
-  });
-
-  console.log('updated allergies', allergies);
-
-  return allergies;
-}
+import { getSession } from './user-actions';
 
 export async function getAvoidances() {
-  const user = await getCurrentUser();
+  return await prisma.avoidance.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: {
+      name: 'asc',
+    },
+  });
+}
 
-  if (!user) {
-    throw new Error('User not found');
+export async function getUserAvoidances() {
+  const session = await getSession();
+
+  if (!session?.user?.email) {
+    throw new Error('Session not found');
   }
 
-  const avoidances = await prisma.avoidance.findMany({
+  // use the session email to get the user
+  // so we do not have to get the user twice
+  const currentUser = await prisma.user.findUnique({
     where: {
-      userId: user.id,
+      email: session.user.email as string,
     },
     include: {
-      ingredients: true,
+      avoidances: true,
     },
   });
 
-  console.log('avoidances', avoidances);
-
-  return avoidances;
-}
-
-export async function createAvoidances(ingredientIds: number[]) {
-  const user = await getCurrentUser();
-
-  if (!user) {
+  if (!currentUser) {
     throw new Error('User not found');
   }
 
-  const newAvoidances = await prisma.avoidance.create({
+  console.log('avoidances', currentUser.avoidances);
+
+  return currentUser.avoidances;
+}
+
+export async function addAvoidancesToUser(avoidances: Avoidance[]) {
+  const session = await getSession();
+
+  if (!session?.user?.email) {
+    throw new Error('Session not found');
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      email: session.user.email as string,
+    },
     data: {
-      userId: user.id,
-      ingredients: {
-        connect: ingredientIds.map((id) => ({ id })),
+      avoidances: {
+        connect: avoidances.map((avoidance) => ({ id: avoidance.id })),
       },
     },
     include: {
-      ingredients: true,
+      avoidances: true,
     },
   });
 
-  console.log('created Avoidances', newAvoidances);
+  if (!updatedUser) {
+    throw new Error('User not found');
+  }
 
-  return newAvoidances;
+  return updatedUser.avoidances;
 }
