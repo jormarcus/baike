@@ -42,7 +42,7 @@ const SidebarToggle: React.FC<{
   <div
     onClick={toggleCollapsed}
     className={cn(
-      'p-3 flex items-center justify-center bg-neutral-950 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition-all duration-200 h-11 w-11 flex-shrink-0 flex-grow-0',
+      'p-3 flex items-center justify-center dark:bg-neutral-950 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition-all duration-200 h-11 w-11 flex-shrink-0 flex-grow-0',
       className
     )}
   >

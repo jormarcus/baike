@@ -31,8 +31,14 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
   const chatIdEncoded = params.searchId;
   const chatId = chatIdEncoded ? decodeURIComponent(chatIdEncoded) : '';
 
-  const { messages, input, handleInputChange, handleSubmit, setMessages, reload } =
-    useContext(ChatContext);
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    setMessages,
+    reload,
+  } = useContext(ChatContext);
 
   useEffect(() => {
     async function getChatHistory() {
@@ -48,7 +54,10 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
 
         // if the last message is from the user, reload the chat
         // this can happen if the user refreshes the page while ai is responding
-        if (safeMessages.length > 0 && safeMessages[safeMessages.length - 1].role === 'user') {
+        if (
+          safeMessages.length > 0 &&
+          safeMessages[safeMessages.length - 1].role === 'user'
+        ) {
           reload({ options: { body: { chatId } } });
         }
       } catch (error) {
@@ -62,9 +71,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
     if (messages.length === 0) {
       getChatHistory();
     }
-
   }, [chatId, messages.length, reload, setMessages]);
-
 
   const disabled = isLoading || input.length === 0;
 
@@ -105,8 +112,8 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
                 className={clsx(
                   'flex w-full items-center justify-center border-b border-neutral-400 py-8',
                   message.role === 'user'
-                    ? 'dark:bg-neutral-900'
-                    : 'dark:bg-neutral-700'
+                    ? 'bg-neutral-100 dark:bg-neutral-900'
+                    : 'dark:bg-neutral-700 bg-neutral-300'
                 )}
               >
                 <div className="flex w-full max-w-screen-md items-start space-x-4 px-5 sm:px-0">

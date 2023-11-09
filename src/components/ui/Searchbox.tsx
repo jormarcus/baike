@@ -66,7 +66,7 @@ const Searchbox: React.FC<SearchboxProps> = ({
       <Input
         id="search"
         placeholder={placeholder}
-        className="bg-neutral-950 dark:placeholder:text-neutral-400 stretch pl-8"
+        className="stretch pl-8"
         onChange={(e) => {
           onSearch(e.target.value);
         }}

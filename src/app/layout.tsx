@@ -7,6 +7,7 @@ import Providers from '../providers/Providers';
 import Sidebar from '../components/sidebar/Sidebar';
 import { getCurrentUser } from './_actions/user-actions';
 import ToastProvider from '@/providers/ToastProvider';
+import Themechanger from '@/components/ThemeChanger';
 
 export const metadata = {
   title: 'Baike',
@@ -37,11 +38,12 @@ export default async function RootLayout({
             <div className="flex h-full min-h-[100vh]">
               <Sidebar currentUser={currentUser} />
               <div className="lg:py-2 lg:pr-2 grow">
-                <div className="lg:rounded-lg shadow-sm md:dark:border h-full bg-clip-border border-border bg-background overflow-clip">
+                <div className="lg:rounded-lg shadow-sm md:border md:dark:border h-full bg-clip-border border-neutral-600 bg-background overflow-clip">
                   {children}
                 </div>
               </div>
             </div>
+            <Themechanger />
           </Providers>
         </main>
       </body>

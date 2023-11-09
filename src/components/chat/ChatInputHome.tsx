@@ -11,9 +11,9 @@ import { Icons } from '../Icons';
 import Textarea from '../inputs/Textarea';
 
 const examples = [
-  'Get me the top 5 trending recipes from New York Times Recipes.',
-  'Simple dinner recipes that can be cooked in under 30 minutes.',
-  'What is the most favorited recipe on instagram this week?',
+  'What are some simple dinner recipes that can be cooked in under 30 minutes?',
+  'I want to eat healthier. Can you find some recipes that have low carb and high protein content?',
+  "I'm planning to prepare a holiday dessert, but some of my guests have dietary restrictions. Can you suggest dairy and nut-free options? Please include information about their cooking time and level of difficulty.",
 ];
 
 const ChatInputHome: React.FC = () => {
@@ -60,7 +60,7 @@ const ChatInputHome: React.FC = () => {
         {examples.map((example, i) => (
           <button
             key={i}
-            className="rounded-md border border-neutral-600 bg-secondary px-5 py-3 text-left text-sm text-neutral-400 transition-all duration-75 hover:border-white hover:text-neutral-100 active:bg-neutral-100 active:text-neutral-700"
+            className="rounded-md border border-neutral-600 bg-secondary px-5 py-3 text-left text-sm duration-75 hover:text-gray-800 transition dark:text-gray-500 dark:hover:text-gray-300"
             onClick={() => {
               setInput(example);
               inputRef.current?.focus();

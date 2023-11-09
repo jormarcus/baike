@@ -14,7 +14,7 @@ const ServingsModifier: React.FC<ServingsModifierProps> = ({ servings }) => {
   }, [servings]);
   return (
     <div className="flex items-center border border-neutral-500 w-fit rounded-xl p-1">
-      <Button variant="outline">
+      <Button variant="ghost">
         <Minus
           className="bg-neutral-950 text-white rounded-md
       "
@@ -24,7 +24,7 @@ const ServingsModifier: React.FC<ServingsModifierProps> = ({ servings }) => {
         <span>{servings || 1}</span>
         <span>{servingsLabel}</span>
       </div>
-      <Button variant="outline" className="w-fit">
+      <Button variant="ghost" className="w-fit">
         <Plus
           className="bg-neutral-950 text-white rounded-md
       "

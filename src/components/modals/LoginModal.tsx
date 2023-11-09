@@ -46,7 +46,8 @@ const LoginModal = () => {
             className="
             cursor-pointer
             hover:underline
-            text-white
+            text-neutral-400
+            dark:text-white
           "
           >
             Create an account
