@@ -9,7 +9,7 @@ import SidebarItem from './SidebarItem';
 import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
 import Logo from '../ui/Logo';
-import { useRecipeCompare } from '@/context/RecipeCompareContext';
+// import { useRecipeCompare } from '@/context/RecipeCompareContext';
 import SidebarToggle from './SidebarToggle';
 import AuthContent from './AuthContent';
 
@@ -20,7 +20,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
-  const { setIsRecipeCompareExpanded } = useRecipeCompare();
+  // const { setIsRecipeCompareExpanded } = useRecipeCompare();
 
   const sidebarVariants = {
     expanded: { width: 240 },
@@ -34,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
 
   const toggleCollapsed = () => {
     setIsCollapsed((prevState) => !prevState);
-    setIsRecipeCompareExpanded((prevState) => !prevState);
+    // setIsRecipeCompareExpanded((prevState) => !prevState);
   };
 
   const sideBarItems = useMemo(() => {
