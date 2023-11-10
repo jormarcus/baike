@@ -24,7 +24,11 @@ const Themechanger = () => {
       {light ? (
         <BsMoonStarsFill onClick={() => setTheme('dark')} size={27} />
       ) : (
-        <BsFillSunFill onClick={() => setTheme('light')} size={27} />
+        <BsFillSunFill
+          className="text-amber-500"
+          onClick={() => setTheme('light')}
+          size={27}
+        />
       )}
     </button>
   );

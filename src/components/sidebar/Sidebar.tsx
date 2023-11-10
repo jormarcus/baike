@@ -2,16 +2,16 @@
 
 import { useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 import { SafeUser } from '../../types';
 import SidebarItem from './SidebarItem';
 import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
-import AuthContent from './AuthContent';
 import Logo from '../ui/Logo';
 import { useRecipeCompare } from '@/context/RecipeCompareContext';
 import SidebarToggle from './SidebarToggle';
-import { motion } from 'framer-motion';
+import AuthContent from './AuthContent';
 
 interface SidebarProps {
   currentUser?: SafeUser | null;
@@ -78,11 +78,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
       variants={sidebarVariants}
       initial={{ width: 240 }}
       transition={{ duration: 0.3 }}
-      className={cn(
-        'hidden md:block flex-none bg-transparent h-full z-20 overflow-hidden'
-      )}
+      className={cn('hidden md:block flex-none bg-transparent h-full z-20')}
     >
-      <aside className={cn('flex flex-col', isCollapsed ? '' : 'px-2')}>
+      <aside className={cn('flex flex-col h-full', isCollapsed ? '' : 'px-2')}>
         <div className="pt-6 sticky flex flex-col h-full">
           <div
             className={cn(
@@ -97,9 +95,10 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
             />
           </div>
           <motion.div
+            animate={isCollapsed ? 'collapsed' : 'expanded'}
             variants={sideBarItemsVariants}
             transition={{ duration: 0.7 }}
-            className="mt-4 relative items-center"
+            className="mt-4 relative items-center space-y-1 h-full"
           >
             {sideBarItems.map((item) => {
               const isActive = pathname === item.href;
