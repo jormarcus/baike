@@ -12,8 +12,8 @@ import Textarea from '../inputs/Textarea';
 
 const examples = [
   'What are some simple dinner recipes that can be cooked in under 30 minutes?',
-  'I want to eat healthier. Can you find some recipes that have low carb and high protein content?',
-  "I'm planning to prepare a holiday dessert, but some of my guests have dietary restrictions. Can you suggest dairy and nut-free options? Please include information about their cooking time and level of difficulty.",
+  'I want to eat healthier. Can you suggest recipes that are low on carbs and high on protein?',
+  "I'm planning to prepare a holiday dessert, but some of my guests have dietary restrictions. Can you suggest dairy and nut-free options? Include information about their cooking time and difficulty.",
 ];
 
 const ChatInputHome: React.FC = () => {
