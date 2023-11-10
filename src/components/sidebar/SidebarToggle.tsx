@@ -1,4 +1,3 @@
-import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { ArrowLeftToLine, ArrowRightFromLine } from 'lucide-react';
 
@@ -12,16 +11,18 @@ const SidebarToggle: React.FC<SidebarToggleProps> = ({
   toggleCollapsed,
 }) => {
   const sideBarToggleVariants = {
-    expanded: { x: 0 },
-    collapsed: { x: -25 },
+    expanded: { left: 180, top: 24 },
+    collapsed: { left: 25, top: 24 },
   };
 
   return (
     <motion.div
       variants={sideBarToggleVariants}
+      animate={isCollapsed ? 'collapsed' : 'expanded'}
       onClick={toggleCollapsed}
       transition={{ duration: 0.5 }}
-      className="p-3 flex items-center justify-center dark:bg-neutral-950 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 h-11 w-11 flex-shrink-0 flex-grow-0"
+      initial="expanded"
+      className="absolute p-3 flex items-center justify-center dark:bg-neutral-950 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 h-11 w-11 flex-shrink-0 flex-grow-0 z-20"
     >
       {isCollapsed ? <ArrowRightFromLine /> : <ArrowLeftToLine />}
     </motion.div>

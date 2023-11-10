@@ -37,8 +37,8 @@ export default async function RootLayout({
             <ToastProvider />
             <div className="flex h-full min-h-[100vh]">
               <Sidebar currentUser={currentUser} />
-              <div className="lg:py-2 lg:pr-2 grow">
-                <div className="lg:rounded-lg shadow-sm md:border md:dark:border h-full bg-clip-border border-neutral-600 bg-background overflow-clip">
+              <div className="py-2 pr-2 grow">
+                <div className="rounded-lg shadow-sm border dark:border h-full bg-clip-border border-neutral-600 bg-background overflow-clip">
                   {children}
                 </div>
               </div>

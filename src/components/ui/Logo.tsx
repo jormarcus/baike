@@ -13,7 +13,7 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ isCollapsed }) => {
   const LogoVariants = {
     expanded: { x: 0, y: 0 },
-    collapsed: { x: 30, y: 60 },
+    collapsed: { x: 12, y: 14 },
   };
 
   const LogoTextVariants = {
@@ -30,8 +30,8 @@ const Logo: React.FC<LogoProps> = ({ isCollapsed }) => {
   };
 
   return (
-    <div>
-      <Link href="/" className="flex items-center justify-center">
+    <>
+      <Link href="/" className="flex items-center pl-4 mb-2">
         <motion.div
           variants={LogoVariants}
           transition={{ duration: 0.7 }}
@@ -62,7 +62,7 @@ const Logo: React.FC<LogoProps> = ({ isCollapsed }) => {
           ))}
         </motion.span>
       </Link>
-    </div>
+    </>
   );
 };
 

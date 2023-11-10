@@ -23,13 +23,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   // const { setIsRecipeCompareExpanded } = useRecipeCompare();
 
   const sidebarVariants = {
-    expanded: { width: 240 },
-    collapsed: { width: 96 },
-  };
-
-  const sideBarItemsVariants = {
-    expanded: { y: 0 },
-    collapsed: { y: 50 },
+    expanded: { width: 240, y: 0 },
+    collapsed: { width: 96, y: 50 },
   };
 
   const toggleCollapsed = () => {
@@ -73,52 +68,49 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   }, [currentUser?.id]);
 
   return (
-    <motion.div
-      animate={isCollapsed ? 'collapsed' : 'expanded'}
-      variants={sidebarVariants}
-      initial={{ width: 240 }}
-      transition={{ duration: 0.3 }}
-      className={cn('hidden md:block flex-none bg-transparent h-full z-20')}
-    >
-      <aside className={cn('flex flex-col h-full', isCollapsed ? '' : 'px-2')}>
-        <div className="pt-6 sticky flex flex-col h-full">
-          <div
-            className={cn(
-              'mb-2 flex items-center justify-between',
-              isCollapsed ? 'gap-4' : 'px-4'
-            )}
-          >
+    <>
+      <motion.div
+        animate={isCollapsed ? 'collapsed' : 'expanded'}
+        variants={sidebarVariants}
+        initial={{ width: 240 }}
+        transition={{ duration: 0.5 }}
+        className={cn('flex-none bg-transparent h-full z-20 w-full')}
+      >
+        <aside>
+          <div className="pt-6 sticky flex flex-col h-full">
             <Logo isCollapsed={isCollapsed} />
-            <SidebarToggle
-              isCollapsed={isCollapsed}
-              toggleCollapsed={toggleCollapsed}
-            />
+            <motion.div
+              animate={isCollapsed ? 'collapsed' : 'expanded'}
+              transition={{ duration: 0.7 }}
+              className="mt-4 relative items-center space-y-1 h-full"
+            >
+              {sideBarItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <div key={item.label}>
+                    <SidebarItem
+                      label={item.label}
+                      href={item.href}
+                      Icon={item.icon}
+                      isActive={isActive}
+                      isCollapsed={isCollapsed}
+                    />
+                  </div>
+                );
+              })}
+              <AuthContent
+                currentUser={currentUser}
+                isCollapsed={isCollapsed}
+              />
+            </motion.div>
           </div>
-          <motion.div
-            animate={isCollapsed ? 'collapsed' : 'expanded'}
-            variants={sideBarItemsVariants}
-            transition={{ duration: 0.7 }}
-            className="mt-4 relative items-center space-y-1 h-full"
-          >
-            {sideBarItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <div key={item.label}>
-                  <SidebarItem
-                    label={item.label}
-                    href={item.href}
-                    Icon={item.icon}
-                    isActive={isActive}
-                    isCollapsed={isCollapsed}
-                  />
-                </div>
-              );
-            })}
-            <AuthContent currentUser={currentUser} isCollapsed={isCollapsed} />
-          </motion.div>
-        </div>
-      </aside>
-    </motion.div>
+        </aside>
+      </motion.div>
+      <SidebarToggle
+        isCollapsed={isCollapsed}
+        toggleCollapsed={toggleCollapsed}
+      />
+    </>
   );
 };
 
