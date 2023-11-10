@@ -6,9 +6,9 @@ interface RecipesLayoutProps {
 
 const RecipesLayout: React.FC<RecipesLayoutProps> = ({ children }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col max-h-[100vh]">
       <RecipesPageHeader />
-      <div className="h-full m-16">{children}</div>
+      <div>{children}</div>
     </div>
   );
 };

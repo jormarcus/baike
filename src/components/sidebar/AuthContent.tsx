@@ -37,7 +37,12 @@ const AuthContent: React.FC<{
           </Button>
         </div>
       ) : (
-        <div className="px-0.5 m-px flex flex-col gap-4 transition duration-300 overflow-hidden relative rounded-md">
+        <div
+          className={cn(
+            'px-0.5 m-px flex flex-col gap-4 transition duration-300 overflow-hidden relative rounded-md',
+            isCollapsed ? 'px-0 m-4' : ''
+          )}
+        >
           <Button
             className="dark:bg-neutral-950 dark:text-white border dark:border-neutral-600 dark:hover:bg-neutral-900 flex flex-nowrap items-center transition duration-300"
             onClick={() => loginModal.onOpen()}
@@ -45,7 +50,7 @@ const AuthContent: React.FC<{
             Login
           </Button>
           <Button
-            className="bg-amber-500 text-neutral-100 hover:bg-amber-600 hover:text-white transition duration-300 overflow-hidden relative rounded-md"
+            className="bg-amber-500 text-neutral-100 hover:bg-amber-600 hover:text-white transition duration-300 overflow-hidden relative rounded-md whitespace-nowrap"
             onClick={() => registerModal.onOpen()}
           >
             Sign up

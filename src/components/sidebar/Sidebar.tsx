@@ -1,62 +1,40 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
-import dynamicIconImports from 'lucide-react/dynamicIconImports';
+import { usePathname } from 'next/navigation';
 
 import { SafeUser } from '../../types';
 import SidebarItem from './SidebarItem';
 import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
 import AuthContent from './AuthContent';
-import { usePathname } from 'next/navigation';
-import { ArrowLeftToLine, ArrowRightFromLine } from 'lucide-react';
 import Logo from '../ui/Logo';
+import { useRecipeCompare } from '@/context/RecipeCompareContext';
+import SidebarToggle from './SidebarToggle';
+import { motion } from 'framer-motion';
 
 interface SidebarProps {
   currentUser?: SafeUser | null;
 }
 
-const NewThreadButton: React.FC<{ isCollapsed: boolean }> = ({
-  isCollapsed,
-}) => (
-  <Link
-    href="/"
-    className={cn(
-      'mx-4 flex items-center gap-3 bg-neutral-950 border-2 border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition-all duration-300 h-10 flex-shrink-0 flex-grow',
-      isCollapsed ? 'justify-center mx-6' : 'p-3'
-    )}
-  >
-    <Icons.plus className="h-6 w-6 hover:scale-105 transition-all duration-300 ease-in-out" />
-    {!isCollapsed ? (
-      <div className="text-sm font-semibold">New thread</div>
-    ) : null}
-  </Link>
-);
-
-const SidebarToggle: React.FC<{
-  isCollapsed: boolean;
-  toggleCollapsed: () => void;
-  className?: string | undefined;
-}> = ({ isCollapsed, toggleCollapsed, className }) => (
-  <div
-    onClick={toggleCollapsed}
-    className={cn(
-      'p-3 flex items-center justify-center dark:bg-neutral-950 border border-neutral-600 rounded-md cursor-pointer hover:border-amber-500 transition-all duration-200 h-11 w-11 flex-shrink-0 flex-grow-0',
-      className
-    )}
-  >
-    {isCollapsed ? <ArrowRightFromLine /> : <ArrowLeftToLine />}
-  </div>
-);
-
 const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
-  const pathname = usePathname();
-
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const pathname = usePathname();
+  const { setIsRecipeCompareExpanded } = useRecipeCompare();
+
+  const sidebarVariants = {
+    expanded: { width: 240 },
+    collapsed: { width: 96 },
+  };
+
+  const sideBarItemsVariants = {
+    expanded: { y: 0 },
+    collapsed: { y: 50 },
+  };
 
   const toggleCollapsed = () => {
     setIsCollapsed((prevState) => !prevState);
+    setIsRecipeCompareExpanded((prevState) => !prevState);
   };
 
   const sideBarItems = useMemo(() => {
@@ -95,34 +73,34 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   }, [currentUser?.id]);
 
   return (
-    <div
+    <motion.div
+      animate={isCollapsed ? 'collapsed' : 'expanded'}
+      variants={sidebarVariants}
+      initial={{ width: 240 }}
+      transition={{ duration: 0.3 }}
       className={cn(
-        'hidden md:block flex-none bg-transparent h-full z-20 transition-all ease-in-out duration-500 overflow-hidden',
-        isCollapsed ? 'w-24' : 'w-60'
+        'hidden md:block flex-none bg-transparent h-full z-20 overflow-hidden'
       )}
     >
-      <aside
-        className={cn(
-          'fixed flex flex-col transition-all ease-in-out duration-500',
-          isCollapsed ? 'w-24' : 'w-60 px-2'
-        )}
-      >
-        <div className="pt-6 pb-2 sticky flex flex-col h-full">
+      <aside className={cn('flex flex-col', isCollapsed ? '' : 'px-2')}>
+        <div className="pt-6 sticky flex flex-col h-full">
           <div
             className={cn(
               'mb-2 flex items-center justify-between',
-              isCollapsed ? 'flex-col-reverse gap-4' : 'px-4'
+              isCollapsed ? 'gap-4' : 'px-4'
             )}
           >
             <Logo isCollapsed={isCollapsed} />
-            <div className={cn(isCollapsed ? '' : 'self-end')}>
-              <SidebarToggle
-                isCollapsed={isCollapsed}
-                toggleCollapsed={toggleCollapsed}
-              />
-            </div>
+            <SidebarToggle
+              isCollapsed={isCollapsed}
+              toggleCollapsed={toggleCollapsed}
+            />
           </div>
-          <div className="mt-4 relative items-center">
+          <motion.div
+            variants={sideBarItemsVariants}
+            transition={{ duration: 0.7 }}
+            className="mt-4 relative items-center"
+          >
             {sideBarItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -137,11 +115,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
                 </div>
               );
             })}
-          </div>
-          <AuthContent currentUser={currentUser} isCollapsed={isCollapsed} />
+            <AuthContent currentUser={currentUser} isCollapsed={isCollapsed} />
+          </motion.div>
         </div>
       </aside>
-    </div>
+    </motion.div>
   );
 };
 
