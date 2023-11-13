@@ -1,23 +1,20 @@
-import React from 'react';
 import { Settings, Share2 } from 'lucide-react';
 import Image from 'next/image';
 
 import { getCurrentUser } from '../../_actions/user-actions';
-
 import { Button } from '@/components/ui/Button';
 import ProfileTabs from '@/components/profile/ProfileTabs';
 import ReportUserButton from '@/components/profile/ReportButton';
 import EditProfileModal from '@/components/profile/EditProfileModal';
-
-interface ProfilePageProps {
-  params: {
-    id: string;
-  };
-}
+import EmptyState from '@/components/ui/EmptyState';
 
 async function ProfilePage({ params }: { params: { id: string } }) {
   const currentUser = await getCurrentUser();
   const isOwnProfile = currentUser?.id === parseInt(params.id);
+
+  if (!currentUser) {
+    return <EmptyState title="Unauthorized" subtitle="Please login" />;
+  }
 
   return (
     <div className="flex flex-col items-center mt-16 h-full max-w-screen-md mx-auto md:px-8 px-4">
