@@ -67,9 +67,6 @@
 
     --ring: 240 3.7% 15.9%;
   }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
@@ -105,4 +102,19 @@
 .grid-wizard-container {
   display: grid;
   grid-template-rows: 1fr 6fr 1fr;
+}
+
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari, and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge, and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
 }

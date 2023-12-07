@@ -9,6 +9,7 @@ import AuthContext from '@/context/AuthContext';
 import { ChatProvider } from '@/context/ChatContext';
 import { UserPreferencesProvider } from '@/context/UserPreferencesContext';
 import { WelcomeWizardProvider } from '@/context/WelcomeWizardContext';
+import { RecipeCompareProvider } from '@/context/RecipeCompareContext';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -22,7 +23,9 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
           <LoginModalProvider>
             <UserPreferencesProvider>
               <WelcomeWizardProvider>
-                <ChatProvider>{children}</ChatProvider>
+                <ChatProvider>
+                  <RecipeCompareProvider>{children}</RecipeCompareProvider>
+                </ChatProvider>
               </WelcomeWizardProvider>
             </UserPreferencesProvider>
           </LoginModalProvider>

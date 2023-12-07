@@ -1,13 +1,13 @@
 'use client';
 
-import Image from 'next/image';
 import { FaStar } from 'react-icons/fa';
-import { Croissant, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import Link from 'next/link';
 
 import { SafeRecipe } from '@/types';
 import FeatureCard from '../FeatureCard';
 import RecipeImage from './RecipeImage';
+import { Label } from '../ui/Label';
 
 interface RecipeCardProps {
   recipe: SafeRecipe;
@@ -21,10 +21,10 @@ const CardContent: React.FC<{
     <div className="h-full w-full object-cover transition duration-300 group-hover:scale-110 ease-cubic-bezier rounded-3xl flex items-center justify-center">
       <RecipeImage image={image} alt={name} />
     </div>
-    <div className="absolute right-4 top-4">
+    <div className="absolute right-4 top-4 bg-transparent">
       <Heart
-        size={20}
-        className="hover:text-amber-500 hover:fill-amber-500 transition duration-300"
+        size={24}
+        className="fill-[#00000080] hover:text-amber-500 hover:fill-amber-500 transition duration-300"
       />
     </div>
   </div>
@@ -42,6 +42,14 @@ const CardFooter: React.FC<{
         <div className="text-md font-semibold">{averageRating}</div>
       </div>
     </div>
+    <div className="flex items-center space-x-2 mt-2 leading-7">
+      <input
+        // onChange={(e) => handleChange(e)}
+        type="checkbox"
+        className="h-5 w-5 rounded-md border-2 border-gray-300 text-amber-500 transition-colors duration-300 focus:ring-0 focus:ring-offset-0 focus-visible:ring-2 focus-visible:ring-amber-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-100 group-active:border-amber-500 group-active:checked:text-amber-500/2 cursor-pointer"
+      />
+      <Label>Compare</Label>
+    </div>
   </div>
 );
 
@@ -52,8 +60,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
     <FeatureCard>
       <Link href={`/recipe/${id}`} className="flex flex-col">
         <CardContent image={imageSrc} name={name} />
-        <CardFooter name={name} averageRating={5} />
       </Link>
+      <CardFooter name={name} averageRating={5} />
     </FeatureCard>
   );
 };
