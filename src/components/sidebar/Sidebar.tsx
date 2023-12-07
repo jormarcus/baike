@@ -9,7 +9,6 @@ import SidebarItem from './SidebarItem';
 import { Icons } from '../Icons';
 import { cn } from '@/lib/utils';
 import Logo from '../ui/Logo';
-// import { useRecipeCompare } from '@/context/RecipeCompareContext';
 import SidebarToggle from './SidebarToggle';
 import AuthContent from './AuthContent';
 
@@ -20,7 +19,6 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
-  // const { setIsRecipeCompareExpanded } = useRecipeCompare();
 
   const sidebarVariants = {
     expanded: { width: 240, y: 0 },
@@ -29,7 +27,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
 
   const toggleCollapsed = () => {
     setIsCollapsed((prevState) => !prevState);
-    // setIsRecipeCompareExpanded((prevState) => !prevState);
   };
 
   const sideBarItems = useMemo(() => {
@@ -58,6 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
         label: 'Profile',
         href: `/profile/${currentUser?.id || ''}`,
         icon: <Icons.userCircle />,
+        hide: !currentUser,
       },
       {
         label: 'Add recipe',
@@ -65,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
         icon: <Icons.plusCircle />,
       },
     ];
-  }, [currentUser?.id]);
+  }, [currentUser]);
 
   return (
     <>
@@ -77,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
         className={cn('flex-none bg-transparent h-full z-20 w-full')}
       >
         <aside>
-          <div className="pt-6 sticky flex flex-col h-full">
+          <div className="pt-6 fixed flex flex-col h-full">
             <Logo isCollapsed={isCollapsed} />
             <motion.div
               animate={isCollapsed ? 'collapsed' : 'expanded'}
@@ -86,17 +84,21 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
             >
               {sideBarItems.map((item) => {
                 const isActive = pathname === item.href;
-                return (
-                  <div key={item.label}>
-                    <SidebarItem
-                      label={item.label}
-                      href={item.href}
-                      Icon={item.icon}
-                      isActive={isActive}
-                      isCollapsed={isCollapsed}
-                    />
-                  </div>
-                );
+                if (item.hide) {
+                  return null;
+                } else {
+                  return (
+                    <div key={item.label}>
+                      <SidebarItem
+                        label={item.label}
+                        href={item.href}
+                        Icon={item.icon}
+                        isActive={isActive}
+                        isCollapsed={isCollapsed}
+                      />
+                    </div>
+                  );
+                }
               })}
               <AuthContent
                 currentUser={currentUser}
