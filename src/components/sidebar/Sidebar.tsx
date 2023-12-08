@@ -81,6 +81,10 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
               animate={isCollapsed ? 'collapsed' : 'expanded'}
               transition={{ duration: 0.7 }}
               className="mt-4 relative items-center space-y-1 h-full"
+              variants={{
+                expanded: { width: 240 },
+                collapsed: { width: 96 },
+              }}
             >
               {sideBarItems.map((item) => {
                 const isActive = pathname === item.href;

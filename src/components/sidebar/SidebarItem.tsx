@@ -57,7 +57,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   };
 
   return (
-    <div className={cn(isCollapsed ? 'px-6' : 'px-0')}>
+    <div className={cn(isCollapsed ? 'px-4' : 'px-2')}>
       <Link href={href} prefetch={false}>
         <motion.li
           animate={controls}

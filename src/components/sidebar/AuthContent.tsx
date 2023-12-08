@@ -20,14 +20,14 @@ const AuthContent: React.FC<{
       {currentUser ? (
         <div
           className={cn(
-            'flex transition duration-300 overflow-hidden relative rounded-md',
-            isCollapsed ? 'mx-0 px-6 justify-center' : ''
+            'flex transition duration-300 overflow-hidden relative rounded-md w-full px-2',
+            isCollapsed ? 'px-4' : ''
           )}
         >
           <Button
             className={cn(
-              'dark:bg:transparent dark:text-white dark:border-neutral-600 dark:hover:bg-secondary flex flex-nowrap gap-3 m-px px-3 py-2 rounded-md hover:bg-secondary ml-1',
-              isCollapsed ? 'justify-center mx-6' : ''
+              'items-start justify-start dark:bg:transparent dark:text-white dark:border-neutral-600 dark:hover:bg-secondary flex flex-nowrap gap-3 m-px py-2 rounded-md hover:bg-secondary w-full',
+              isCollapsed ? 'justify-center' : ''
             )}
             variant="ghost"
             onClick={() => signOut()}
