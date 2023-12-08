@@ -79,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
             <Logo isCollapsed={isCollapsed} />
             <motion.div
               animate={isCollapsed ? 'collapsed' : 'expanded'}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.5 }}
               className="mt-4 relative items-center space-y-1 h-full"
               initial={{ width: 240 }}
               variants={{
