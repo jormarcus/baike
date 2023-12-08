@@ -49,7 +49,6 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
           0
         );
         const safeMessages = messageHistory.map(formatChatGPTMessage);
-        console.log(safeMessages);
         setMessages(safeMessages);
 
         // if the last message is from the user, reload the chat
@@ -61,7 +60,6 @@ const ChatPage: React.FC<ChatPageProps> = ({ params }) => {
           reload({ options: { body: { chatId } } });
         }
       } catch (error) {
-        console.log(error);
         toast.error('Something went wrong!');
       } finally {
         setIsLoading(false);

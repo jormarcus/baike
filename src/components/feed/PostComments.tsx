@@ -4,6 +4,7 @@ import { Input } from '../inputs/Input';
 import { Button } from '../ui/Button';
 import { addComment } from '@/app/_actions/post-actions';
 import { Icons } from '../Icons';
+import toast from 'react-hot-toast';
 
 const PostComments: React.FC<{ postId: number; commentsCount: number }> = ({
   postId,
@@ -25,7 +26,7 @@ const PostComments: React.FC<{ postId: number; commentsCount: number }> = ({
       await addComment(e.target.value, postId);
       setInput('');
     } catch (error) {
-      console.log(error);
+      toast.error('Something went wrong!');
     } finally {
       setIsLoading(false);
     }

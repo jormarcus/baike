@@ -39,8 +39,6 @@ export async function getUserAvoidances() {
     throw new Error('User not found');
   }
 
-  console.log('avoidances', currentUser.avoidances);
-
   return currentUser.avoidances;
 }
 

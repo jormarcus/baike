@@ -63,9 +63,5 @@ export async function upsertRating(
     },
   });
 
-  console.log(
-    `Updated averageRating for recipe with id ${recipeId}: ${averageRating}`
-  );
-
   revalidatePath(`/recipe/${recipeId}`);
 }

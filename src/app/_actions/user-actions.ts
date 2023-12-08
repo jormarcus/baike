@@ -60,7 +60,5 @@ export async function updateProfile(data: {
     },
   });
 
-  console.log('updated user', updatedUser);
-
   revalidatePath(`/profile/${user.id}`);
 }

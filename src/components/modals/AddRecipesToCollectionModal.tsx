@@ -98,7 +98,6 @@ const AddRecipesToCollectionModal: React.FC<
 
         setRecipes(recipes);
       } catch (error) {
-        console.log('error: ', error);
         toast.error('Something went wrong!');
       } finally {
         setIsLoading(false);
