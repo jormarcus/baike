@@ -59,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
       },
       {
         label: 'Add recipe',
-        href: '/recipes/add',
+        href: '/recipe/add',
         icon: <Icons.plusCircle />,
       },
     ];
