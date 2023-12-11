@@ -3,7 +3,7 @@
 import { Croissant, PlusCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-import ImportRecipeModal from '../modals/import-recipe-modal';
+import ImportRecipeModal from './import-recipe-modal';
 import { Button } from '../ui/button';
 import Searchbox from '../ui/searchbox';
 

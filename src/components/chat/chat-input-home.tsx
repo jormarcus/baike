@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { ChatContext } from '@/context/chat-context';
 import { Button } from '../ui/button';
 import { Icons } from '../icons';
-import Textarea from '../inputs/textarea';
+import Textarea from '../ui/textarea';
 import { createChat } from '@/app/_actions/chat-actions';
 
 const examples = [

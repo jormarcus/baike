@@ -29,7 +29,7 @@ import {
   FormMessage,
 } from '../ui/form';
 import { CollectionWithRecipeNames } from '@/types';
-import AddCollectionModal from './add-collection-modal';
+import AddCollectionModal from '../collections/add-collection-modal';
 import { addCollectionsToRecipe } from '@/app/_actions/recipe-actions';
 import { Checkbox } from '../ui/checkbox';
 import { getCollectionsWithRecipeNameByUserIdAndRecipeId } from '@/app/_actions/collection-actions';

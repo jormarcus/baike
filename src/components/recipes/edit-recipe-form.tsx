@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 
-import { Input } from '@/components/inputs/input';
+import { Input } from '@/components/ui/input';
 import {
   Form,
   FormControl,
@@ -26,10 +26,10 @@ import {
 import { Recipe, RecipeSchema } from '@/lib/validators/recipe-validator';
 import { Icons } from '@/components/icons';
 import { useRange } from '@/hooks/use-generate-range';
-import Textarea from '@/components/inputs/textarea';
+import Textarea from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import ImageUploader from '@/components/image-uploader';
+import ImageUploader from '@/components/ui/image-uploader';
 import { SafeRecipe } from '@/types';
 import { useRouter } from 'next/navigation';
 import { Label } from '../ui/label';

@@ -1,7 +1,7 @@
 import EmptyState from '@/components/ui/empty-state';
 import { getChatsWithCount } from '../_actions/chat-actions';
 import { getCurrentUser } from '../_actions/user-actions';
-import ChatHistory from './chat-history';
+import ChatHistory from './_components/chat-history';
 
 export default async function ChatHistoryPage() {
   const { chats, totalCount } = await getChatsWithCount('', 0, 10);

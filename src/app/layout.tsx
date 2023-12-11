@@ -1,8 +1,8 @@
 import { Nunito } from 'next/font/google';
 
 import './globals.css';
-import LoginModal from '../components/modals/login-modal';
-import RegisterModal from '../components/modals/register-modal';
+import LoginModal from '../components/auth/login-modal';
+import RegisterModal from '../components/auth/register-modal';
 import Providers from '../providers/providers';
 import Sidebar from '../components/sidebar/sidebar';
 import { getCurrentUser } from './_actions/user-actions';

@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { SafeChat } from '@/types';
-import { getChatHistory } from '../_actions/chat-actions';
+import { getChatHistory } from '../../_actions/chat-actions';
 import ChatHistoryCard from '@/components/chat/chat-history-card';
-import Loading from './loading';
+import Loading from '../loading';
 import useIntersectionObserver from '@/hooks/use-intersection-observer';
 
 interface ChatHistoryProps {

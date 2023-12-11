@@ -16,7 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Input } from '@/components/inputs/input';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createCollection } from '@/app/_actions/collection-actions';
 import { Plus } from 'lucide-react';
