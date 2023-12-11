@@ -3,9 +3,9 @@
 import { Edit, Heart, Share } from 'lucide-react';
 
 import { Button } from '../ui/button';
-import AddRecipeToCollectionModal from '../modals/add-recipe-to-collection-modal';
+import AddRecipeToCollectionModal from './add-recipe-to-collection-modal';
 import { SafeRecipe } from '@/types';
-import DeleteRecipeModal from '../modals/delete-recipe-modal';
+import DeleteRecipeModal from './delete-recipe-modal';
 import { useRouter } from 'next/navigation';
 
 interface RecipeActionButtonRowProps {

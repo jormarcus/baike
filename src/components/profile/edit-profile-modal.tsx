@@ -15,11 +15,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Input } from '@/components/inputs/input';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '../ui/button';
 import { updateProfile } from '@/app/_actions/user-actions';
-import ImageUploader from '../image-uploader';
+import ImageUploader from '../ui/image-uploader';
 import {
   UserProfile,
   UserProfileSchema,

@@ -1,24 +1,24 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { AiFillGithub } from 'react-icons/ai';
 import { signIn } from 'next-auth/react';
 import { FcGoogle } from 'react-icons/fc';
-import { AiFillGithub } from 'react-icons/ai';
+import { useCallback, useState } from 'react';
 
 import { useRegisterModal } from '@/context/register-modal-context';
 import { useLoginModal } from '@/context/login-modal-context';
-import Modal from './modal';
+import Modal from '../ui/modal';
 import { Button } from '../ui/button';
 
-const LoginModal = () => {
-  const loginModal = useLoginModal();
+const RegisterModal = () => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const onToggle = useCallback(() => {
-    loginModal.onClose();
-    registerModal.onOpen();
-  }, [loginModal, registerModal]);
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [registerModal, loginModal]);
 
   const bodyContent = (
     <div className="max-w-sm mx-auto flex flex-col gap-4">
@@ -27,7 +27,7 @@ const LoginModal = () => {
         variant="outline"
         onClick={() => signIn('google')}
       >
-        <FcGoogle className="mr-2 h-4 w-4" />
+        <FcGoogle className="mr-2 h-4 w-3" />
         Continue with Google
       </Button>
       <Button
@@ -35,22 +35,24 @@ const LoginModal = () => {
         variant="outline"
         onClick={() => signIn('github')}
       >
-        <AiFillGithub className="mr-2 h-4 w-4" />
+        <AiFillGithub className="mr-2 h-4 w-3" />
         Continue with Github
       </Button>
-      <div className="mt-4 text-center font-light">
-        <p className="flex gap-2 justify-center dark:text-neutral-400">
-          First time using Baike?
+      <div
+        className="
+          mt-4 
+          text-center 
+          font-light 
+          text-neutral-600
+        "
+      >
+        <p className="flex flex-row justify-center gap-2">
+          Already have an account?
           <span
             onClick={onToggle}
-            className="
-            cursor-pointer
-            hover:underline
-            text-neutral-400
-            dark:text-white
-          "
+            className="cursor-pointer text-neutral-400 dark:text-white hover:underline"
           >
-            Create an account
+            Log in
           </span>
         </p>
       </div>
@@ -60,12 +62,12 @@ const LoginModal = () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={loginModal.isOpen}
-      title="Login"
-      onClose={loginModal.onClose}
+      isOpen={registerModal.isOpen}
+      title="Register"
+      onClose={registerModal.onClose}
       body={bodyContent}
     />
   );
 };
 
-export default LoginModal;
+export default RegisterModal;

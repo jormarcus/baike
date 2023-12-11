@@ -12,7 +12,7 @@ import { ChatContext } from '@/context/chat-context';
 import { getMessages } from '@/app/_actions/message-actions';
 import { SafeMessage } from '@/types';
 import { formatChatGPTMessage } from '@/helpers/format-dto';
-import Textarea from '@/components/inputs/textarea';
+import Textarea from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { importRecipe } from '@/app/_actions/recipe-actions';

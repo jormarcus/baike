@@ -1,5 +1,5 @@
 import { getCollectionWithRecipesById } from '@/app/_actions/collection-actions';
-import AddRecipesToCollectionModal from '@/components/modals/add-recipes-to-collection-modal';
+import AddRecipesToCollectionModal from '@/components/recipes/add-recipes-to-collection-modal';
 import RecipeCard from '@/components/recipes/recipe-card';
 import EmptyState from '@/components/ui/empty-state';
 import { SafeCollection } from '@/types';

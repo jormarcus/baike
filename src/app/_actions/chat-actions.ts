@@ -87,7 +87,15 @@ export async function getChatWithMessagesById(id: number) {
   return formatSafeChat(chat);
 }
 
-export async function deleteChat(id: number) {
+export async function deleteChatAndMessages(id: number) {
+  // Delete all messages associated with the chat
+  await prisma.message.deleteMany({
+    where: {
+      chatId: id,
+    },
+  });
+
+  // Delete the chat
   const chat = await prisma.chat.delete({
     where: {
       id,

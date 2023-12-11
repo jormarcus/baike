@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { Input } from '../inputs/input';
+import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { addComment } from '@/app/_actions/post-actions';
 import { Icons } from '../icons';

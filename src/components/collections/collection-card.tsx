@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Folder } from 'lucide-react';
 
 import { CollectionWithRecipeNamesAndImage } from '@/types';
-import FeatureCard from '../feature-card';
+import FeatureCard from '../ui/feature-card';
 import { useIsMobile } from '@/hooks/use-is-mobile';
 import { cn } from '@/lib/utils';
 

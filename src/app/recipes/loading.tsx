@@ -1,4 +1,4 @@
-import FeatureCard from '@/components/feature-card';
+import FeatureCard from '@/components/ui/feature-card';
 import Skeleton from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Croissant } from 'lucide-react';

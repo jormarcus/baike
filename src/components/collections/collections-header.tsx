@@ -1,6 +1,6 @@
 import { FolderPlus } from 'lucide-react';
 import Searchbox from '../ui/searchbox';
-import AddCollectionModal from '../modals/add-collection-modal';
+import AddCollectionModal from './add-collection-modal';
 
 interface CollectionsHeaderProps {}
 
