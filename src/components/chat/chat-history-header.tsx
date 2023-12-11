@@ -1,6 +1,6 @@
 'use client';
 
-import { FolderPlus, PlusCircle } from 'lucide-react';
+import { MessageSquare, PlusCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import Searchbox from '../ui/searchbox';
@@ -15,7 +15,7 @@ const ChatHistoryHeader: React.FC<ChatHistoryHeaderProps> = () => {
     <div className="sticky top-0 z-[15] border border-border/60 dark:border-border/80 divide-border/60 dark:divide-border/80 ring-border dark:ring-border bg-background dark:bg-background">
       <div className="py-4 md:py-8 mx-auto max-w-screen-xl px-4 md:px-12 flex flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-4">
-          <FolderPlus size={30} />
+          <MessageSquare size={30} />
           <h2 className="text-3xl">Chat History</h2>
         </div>
 
