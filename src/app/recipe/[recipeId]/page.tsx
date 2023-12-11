@@ -37,7 +37,12 @@ export default async function RecipePage({
               {recipe.name}
             </h1>
             <div className="px-16 sm:p-0">
-              <RecipeImage image={recipe.imageSrc} alt={recipe.name} />
+              <RecipeImage
+                image={recipe.imageSrc}
+                alt={recipe.name}
+                height={80}
+                width={80}
+              />
             </div>
             <div className="flex justify-center">
               <Rating

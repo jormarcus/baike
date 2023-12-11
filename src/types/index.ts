@@ -29,7 +29,7 @@ export type SafeRecipe = Omit<
   authorId: number;
   ratings: Rating[] | null;
   collections: Collection[];
-  ingredients: Ingredient[];
+  ingredients: Ingredient[] | SafeIngredient[];
   belongsToCollection?: boolean;
 };
 

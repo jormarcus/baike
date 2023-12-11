@@ -4,7 +4,7 @@ import prisma from '@/lib/prismadb';
 import { revalidatePath } from 'next/cache';
 import { parseIngredient } from 'parse-ingredient';
 
-import { formatSafeRecipe } from '@/helpers/format-dto';
+import { formatSafeIngredient, formatSafeRecipe } from '@/helpers/format-dto';
 import { getCurrentUser } from './user-actions';
 import { Recipe, RecipeSchema } from '@/lib/validators/recipe-validator';
 import { Ingredient } from '@/lib/validators/ingredient-validator';
@@ -413,4 +413,23 @@ export async function getRecipesWithCount(query = '', param = '') {
     recipes,
     totalCount,
   };
+}
+
+export async function getIngredientsByRecipeId(recipeId: number) {
+  const recipe = await prisma.recipe.findUnique({
+    where: {
+      id: recipeId,
+    },
+    include: {
+      ingredients: {
+        orderBy: {
+          order: 'asc',
+        },
+      },
+    },
+  });
+
+  return recipe?.ingredients && recipe.ingredients.length > 0
+    ? recipe.ingredients.map(formatSafeIngredient)
+    : [];
 }

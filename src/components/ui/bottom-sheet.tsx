@@ -22,6 +22,7 @@ type BottomSheetProps = {
   fullHeight?: string;
   onClickOutside?: () => void;
   closeOnClickOutside?: boolean;
+  onOpen?: () => void;
 };
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
@@ -34,6 +35,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   fullHeight = '70vh',
   onClickOutside,
   closeOnClickOutside = true,
+  onOpen,
 }) => {
   const componentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState<string>(compactHeight);
@@ -58,12 +60,16 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   ) => {
     setHeight(info.offset.y < 0 ? fullHeight : compactHeight);
     setOpen(info.offset.y < 0);
+    if (info.offset.y < 0) {
+      onOpen?.();
+    }
   };
 
   const handleClick = () => {
     if (isOpen) return;
     setHeight(!isOpen ? fullHeight : compactHeight);
     setOpen(!isOpen);
+    onOpen?.();
   };
 
   if (!children) return null;
@@ -78,7 +84,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
       <motion.div
         drag="y"
         className={cn(
-          'fixed box-border bottom-0 z-[100] text-center w-full pt-2 pb-6 bg-secondary dark:bg-secondary rounded-tl-2xl rounded-tr-2xl rounded-bl-md rounded-br-md shadow-md after:box-content after:b-[-100] after:z-[99] after:p-0 after:m-auto',
+          'fixed box-border bottom-0 z-[100] text-center w-full pt-2 pb-6 bg:secondary dark:bg-secondary rounded-tl-2xl rounded-tr-2xl rounded-bl-md rounded-br-md shadow-md after:box-content after:b-[-100] after:z-[99] after:p-0 after:m-auto',
           rootClassName
         )}
         style={{

@@ -4,13 +4,20 @@ import Image from 'next/image';
 interface RecipeImageProps {
   image: string | null;
   alt: string;
+  height: number;
+  width: number;
 }
 
-const RecipeImage: React.FC<RecipeImageProps> = ({ image, alt }) => {
+const RecipeImage: React.FC<RecipeImageProps> = ({
+  image,
+  alt,
+  height,
+  width,
+}) => {
   if (!image) {
     return (
       <div className="dark:bg-neutral-950 flex items-center justify-center h-full w-full rounded-xl aspect-square">
-        <Croissant className="text-white" height={80} width={80} />
+        <Croissant className="text-white" height={height} width={width} />
       </div>
     );
   }
@@ -20,7 +27,6 @@ const RecipeImage: React.FC<RecipeImageProps> = ({ image, alt }) => {
       image.includes('lh3.googleusercontent.com') ||
       image.includes('res.cloudinary.comm') ? (
         <Image
-          fill
           src={image}
           alt={alt}
           decoding="async"
@@ -32,7 +38,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({ image, alt }) => {
         <img
           src={image}
           alt={alt}
-          className="object-cover transition group-hover:scale-110 aspect-square"
+          className="object-cover transition group-hover:scale-110 aspect-square min-h-[150] w-full"
         />
       )}
     </div>
