@@ -12,7 +12,7 @@ const ChatHistoryHeader: React.FC<ChatHistoryHeaderProps> = () => {
   const router = useRouter();
 
   return (
-    <div className="sticky top-0 z-[15] border border-border/60 dark:border-border/80 divide-border/60 dark:divide-border/80 ring-border dark:ring-border bg-background dark:bg-background">
+    <div className="sticky top-0 z-[15] rounded-tl-lg rounded-tr-lg border border-border/60 dark:border-border/80 divide-border/60 dark:divide-border/80 ring-border dark:ring-border bg-background dark:bg-background">
       <div className="py-4 md:py-8 mx-auto max-w-screen-xl px-4 md:px-12 flex flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-4">
           <MessageSquare size={30} />
