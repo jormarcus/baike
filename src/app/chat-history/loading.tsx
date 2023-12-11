@@ -1,5 +1,6 @@
 import Skeleton from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { MoreVertical } from 'lucide-react';
 import { HTMLAttributes } from 'react';
 
 interface LoadingProps extends HTMLAttributes<HTMLDivElement> {}
@@ -18,6 +19,9 @@ const Loading: React.FC<LoadingProps> = ({ className }) => {
           className="flex items-center space-x-4 space-y-2 border p-2 border-neutral-600 rounded-md max-w-3xl w-full"
         >
           <div className="space-y-2 w-full">
+            <div className="flex justify-end pt-2 pr-4">
+              <MoreVertical />
+            </div>
             <Skeleton className="h-8 max-w-xs" />
             <Skeleton className="h-8 w-full" />
             <div className="flex gap-2">
