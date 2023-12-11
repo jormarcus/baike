@@ -1,7 +1,7 @@
 import { getRecipeById } from '@/app/_actions/recipe-actions';
-import EmptyState from '@/components/ui/EmptyState';
+import EmptyState from '@/components/ui/empty-state';
 import { SafeRecipe } from '@/types';
-import AddRecipeForm from '@/components/recipes/AddRecipeForm';
+import AddRecipeForm from '@/components/recipes/add-recipe-form';
 import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/app/_actions/user-actions';
 

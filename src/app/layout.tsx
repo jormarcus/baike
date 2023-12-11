@@ -1,13 +1,13 @@
 import { Nunito } from 'next/font/google';
 
 import './globals.css';
-import LoginModal from '../components/modals/LoginModal';
-import RegisterModal from '../components/modals/RegisterModal';
-import Providers from '../providers/Providers';
-import Sidebar from '../components/sidebar/Sidebar';
+import LoginModal from '../components/modals/login-modal';
+import RegisterModal from '../components/modals/register-modal';
+import Providers from '../providers/providers';
+import Sidebar from '../components/sidebar/sidebar';
 import { getCurrentUser } from './_actions/user-actions';
-import ToastProvider from '@/providers/ToastProvider';
-import Themechanger from '@/components/ThemeChanger';
+import ToastProvider from '@/providers/toast-provider';
+import Themechanger from '@/components/theme-changer';
 
 export const metadata = {
   title: 'Baike',

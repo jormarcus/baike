@@ -5,8 +5,8 @@ import { Loader2, Search } from 'lucide-react';
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { Input } from '../inputs/Input';
-import { useDebounce } from '@/hooks/useDebounce';
+import { Input } from '../inputs/input';
+import { useDebounce } from '@/hooks/use-debounce';
 interface SearchboxProps {
   handleSearch?: (query: string) => void;
   placeholder?: string;

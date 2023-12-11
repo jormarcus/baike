@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import CategoryItem from './CategoryItem';
+import CategoryItem from './category-item';
 
 const categoryItems = [
   {

@@ -1,4 +1,4 @@
-import { recipePrompt } from '@/helpers/prompts/recipePrompt';
+import { recipePrompt } from '@/helpers/prompts/recipe-prompt';
 import { createAIChat } from '@/lib/ai-stream';
 
 export async function POST(req: Request) {

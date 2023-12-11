@@ -1,15 +1,15 @@
 import { getRecipeById } from '@/app/_actions/recipe-actions';
-import EmptyState from '@/components/ui/EmptyState';
+import EmptyState from '@/components/ui/empty-state';
 import { SafeRecipe } from '@/types';
-import AverageRating from '@/components/recipes/AverageRating';
-import Rating from '@/components/recipes/Rating';
-import CollectionsRow from '@/components/recipes/CollectionsRow';
-import RecipeImage from '@/components/recipes/RecipeImage';
-import RecipeActionButtonRow from '@/components/recipes/RecipeActionButtonRow';
-import RecipeCookTime from '@/components/recipes/RecipeCookTime';
-import ServingsModifier from '@/components/recipes/ServingsModifier';
-import IngredientsList from '@/components/recipes/IngredientsList';
-import { Label } from '@/components/ui/Label';
+import AverageRating from '@/components/recipes/average-rating';
+import Rating from '@/components/recipes/rating';
+import CollectionsRow from '@/components/recipes/collections-row';
+import RecipeImage from '@/components/recipes/recipe-image';
+import RecipeActionButtonRow from '@/components/recipes/recipe-action-button-row';
+import RecipeCookTime from '@/components/recipes/recipe-cook-time';
+import ServingsModifier from '@/components/recipes/servings-modifier';
+import IngredientsList from '@/components/recipes/ingredients-list';
+import { Label } from '@/components/ui/label';
 
 interface RecipePageProps {
   params: {

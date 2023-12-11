@@ -1,4 +1,4 @@
-import RecipesPageHeader from '@/components/recipes/RecipesPageHeader';
+import RecipesPageHeader from '@/components/recipes/recipes-page-header';
 
 interface RecipesLayoutProps {
   children: React.ReactNode;

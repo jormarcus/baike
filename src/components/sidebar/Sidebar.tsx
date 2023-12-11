@@ -5,12 +5,12 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 import { SafeUser } from '../../types';
-import SidebarItem from './SidebarItem';
-import { Icons } from '../Icons';
+import SidebarItem from './sidebar-item';
+import { Icons } from '../icons';
 import { cn } from '@/lib/utils';
-import Logo from '../ui/Logo';
-import SidebarToggle from './SidebarToggle';
-import AuthContent from './AuthContent';
+import Logo from '../ui/logo';
+import SidebarToggle from './sidebar-toggle';
+import AuthContent from './auth-content';
 
 interface SidebarProps {
   currentUser?: SafeUser | null;

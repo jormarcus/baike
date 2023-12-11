@@ -1,5 +1,5 @@
-import WelcomeWizard from '@/components/WelcomeWizard/WelcomeWizard';
-import ChatInputHome from '@/components/chat/ChatInputHome';
+import WelcomeWizard from '@/components/welcome-wizard/welcome-wizard';
+import ChatInputHome from '@/components/chat/chat-input-home';
 
 export default async function Home() {
   return (

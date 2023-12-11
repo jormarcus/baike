@@ -1,8 +1,8 @@
-import EmptyState from '@/components/ui/EmptyState';
+import EmptyState from '@/components/ui/empty-state';
 import { getCurrentUser } from '../_actions/user-actions';
 import { getCollectionsWithCount } from '../_actions/collection-actions';
 import { CollectionWithRecipeNamesAndImage } from '@/types';
-import CollectionsList from '@/components/collections/CollectionsList';
+import CollectionsList from '@/components/collections/collections';
 
 interface CollectionsPageProps {
   searchParams: {

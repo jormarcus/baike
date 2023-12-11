@@ -5,10 +5,10 @@ import Image from 'next/image';
 import { Croissant } from 'lucide-react';
 
 import { SafePost } from '@/types';
-import { Avatar, AvatarImage } from '@/components/ui/Avatar';
-import PostDescription from './PostDescription';
-import PostActions from './PostActions';
-import PostComments from './PostComments';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import PostDescription from './post-description';
+import PostActions from './poast-actions';
+import PostComments from './post-comments';
 
 interface PostProps {
   post: SafePost;

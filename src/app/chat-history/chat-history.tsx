@@ -6,7 +6,7 @@ import { SafeChat } from '@/types';
 import { getChatHistory } from '../_actions/chat-actions';
 import ChatHistoryCard from '@/components/chat/chat-history-card';
 import Loading from './loading';
-import useIntersectionObserver from '@/hooks/useIntersectionObserver';
+import useIntersectionObserver from '@/hooks/use-intersection-observer';
 
 interface ChatHistoryProps {
   initalChats: SafeChat[];

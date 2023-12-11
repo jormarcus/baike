@@ -3,13 +3,13 @@
 import { ThemeProvider } from 'next-themes';
 import { FC, ReactNode } from 'react';
 
-import { LoginModalProvider } from '@/context/LoginModalContext';
-import { RegisterModalProvider } from '@/context/RegisterModalContext';
-import AuthContext from '@/context/AuthContext';
-import { ChatProvider } from '@/context/ChatContext';
-import { UserPreferencesProvider } from '@/context/UserPreferencesContext';
-import { WelcomeWizardProvider } from '@/context/WelcomeWizardContext';
-import { RecipeCompareProvider } from '@/context/RecipeCompareContext';
+import { LoginModalProvider } from '@/context/login-modal-context';
+import { RegisterModalProvider } from '@/context/register-modal-context';
+import AuthContext from '@/context/auth-context';
+import { ChatProvider } from '@/context/chat-context';
+import { UserPreferencesProvider } from '@/context/user-preferences-context';
+import { WelcomeWizardProvider } from '@/context/welcome-wizard-context';
+import { RecipeCompareProvider } from '@/context/recipe-compare-context';
 
 interface ProvidersProps {
   children: ReactNode;

@@ -1,8 +1,8 @@
 import { getRecipesWithCount } from '../_actions/recipe-actions';
 import { getCurrentUser } from '../_actions/user-actions';
-import EmptyState from '../../components/ui/EmptyState';
-import RecipesList from '@/components/recipes/RecipesList';
-import RecipeCompare from '@/components/recipes/RecipeCompare';
+import EmptyState from '../../components/ui/empty-state';
+import RecipesList from '@/components/recipes/recipes-list';
+import RecipeCompare from '@/components/recipes/recipe-compare';
 
 interface RecipesPageProps {
   searchParams: {

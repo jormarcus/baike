@@ -7,14 +7,14 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import toast from 'react-hot-toast';
 
-import { Icons } from '@/components/Icons';
-import { ChatContext } from '@/context/ChatContext';
+import { Icons } from '@/components/icons';
+import { ChatContext } from '@/context/chat-context';
 import { getMessages } from '@/app/_actions/message-actions';
 import { SafeMessage } from '@/types';
 import { formatChatGPTMessage } from '@/helpers/format-dto';
-import Textarea from '@/components/inputs/Textarea';
+import Textarea from '@/components/inputs/textarea';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { importRecipe } from '@/app/_actions/recipe-actions';
 
 interface ChatPageProps {

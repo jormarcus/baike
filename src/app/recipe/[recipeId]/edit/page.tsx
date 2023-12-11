@@ -1,7 +1,7 @@
 import { getRecipeById } from '@/app/_actions/recipe-actions';
-import EmptyState from '@/components/ui/EmptyState';
+import EmptyState from '@/components/ui/empty-state';
 import { SafeRecipe } from '@/types';
-import EditRecipeForm from '@/components/recipes/EditRecipeForm';
+import EditRecipeForm from '@/components/recipes/edit-recipe-form';
 
 interface EditRecipePageProps {
   params: {

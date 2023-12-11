@@ -2,7 +2,6 @@ import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { Configuration, OpenAIApi } from 'openai-edge';
 
 import { ChatGPTMessage } from '@/types';
-import { functions } from '@/app/api/chat/functions';
 import { createDBMessage } from './db';
 
 // Create an OpenAI API client (that's edge friendly!)

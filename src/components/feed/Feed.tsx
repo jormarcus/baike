@@ -1,7 +1,7 @@
 'use client';
 
 import { SafePost, SafeRecipe } from '@/types';
-import Post from './Post';
+import Post from './post';
 import { useEffect, useState } from 'react';
 
 interface FeedProps {

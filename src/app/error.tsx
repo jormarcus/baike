@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import EmptyState from '@/components/ui/EmptyState';
+import EmptyState from '@/components/ui/empty-state';
 
 interface ErrorStateProps {
   error: Error;

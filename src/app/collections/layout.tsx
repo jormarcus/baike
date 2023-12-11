@@ -1,4 +1,4 @@
-import CollectionsHeader from '@/components/collections/CollectionsHeader';
+import CollectionsHeader from '@/components/collections/collections-header';
 
 interface CollectionsLayoutProps {
   children: React.ReactNode;

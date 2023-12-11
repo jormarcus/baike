@@ -3,8 +3,8 @@
 import { FolderPlus, PlusCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-import Searchbox from '../ui/Searchbox';
-import { Button } from '../ui/Button';
+import Searchbox from '../ui/searchbox';
+import { Button } from '../ui/button';
 
 interface ChatHistoryHeaderProps {}
 

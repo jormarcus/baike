@@ -1,4 +1,4 @@
-import EmptyState from '@/components/ui/EmptyState';
+import EmptyState from '@/components/ui/empty-state';
 import { getChatsWithCount } from '../_actions/chat-actions';
 import { getCurrentUser } from '../_actions/user-actions';
 import ChatHistory from './chat-history';

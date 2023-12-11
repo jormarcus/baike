@@ -2,11 +2,11 @@ import { Settings, Share2 } from 'lucide-react';
 import Image from 'next/image';
 
 import { getCurrentUser } from '../../_actions/user-actions';
-import { Button } from '@/components/ui/Button';
-import ProfileTabs from '@/components/profile/ProfileTabs';
-import ReportUserButton from '@/components/profile/ReportButton';
-import EditProfileModal from '@/components/profile/EditProfileModal';
-import EmptyState from '@/components/ui/EmptyState';
+import { Button } from '@/components/ui/button';
+import ProfileTabs from '@/components/profile/profile-tabs';
+import ReportUserButton from '@/components/profile/report-button';
+import EditProfileModal from '@/components/profile/edit-profile-modal';
+import EmptyState from '@/components/ui/empty-state';
 
 async function ProfilePage({ params }: { params: { id: string } }) {
   const currentUser = await getCurrentUser();

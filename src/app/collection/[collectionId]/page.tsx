@@ -1,7 +1,7 @@
 import { getCollectionWithRecipesById } from '@/app/_actions/collection-actions';
-import AddRecipesToCollectionModal from '@/components/modals/AddRecipesToCollectionModal';
-import RecipeCard from '@/components/recipes/RecipeCard';
-import EmptyState from '@/components/ui/EmptyState';
+import AddRecipesToCollectionModal from '@/components/modals/add-recipes-to-collection-modal';
+import RecipeCard from '@/components/recipes/recipe-card';
+import EmptyState from '@/components/ui/empty-state';
 import { SafeCollection } from '@/types';
 
 interface CollectionPageProps {
