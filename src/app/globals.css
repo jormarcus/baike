@@ -56,7 +56,8 @@
     --primary:  240 10% 3.9%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 3.7% 15.9%;
+    /* --secondary: 240 3.7% 15.9%; */
+    --secondary: rgb(22, 27, 34);
     --secondary-foreground: 0 0% 98%;
 
     --accent: 240 3.7% 15.9%;
