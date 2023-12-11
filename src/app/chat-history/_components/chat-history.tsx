@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { SafeChat } from '@/types';
 import {
@@ -8,9 +9,8 @@ import {
   getChatHistory,
 } from '../../_actions/chat-actions';
 import ChatHistoryCard from '@/components/chat/chat-history-card';
-import Loading from '../loading';
 import useIntersectionObserver from '@/hooks/use-intersection-observer';
-import toast from 'react-hot-toast';
+import Loading from '@/app/loading';
 
 interface ChatHistoryProps {
   initalChats: SafeChat[];
@@ -21,12 +21,17 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
   initalChats,
   totalCount,
 }) => {
-  const [chats, setChats] = useState<SafeChat[]>(initalChats);
-  const [count, setCount] = useState<number>(totalCount);
+  const [chats, setChats] = useState<SafeChat[]>([]);
+  const [count, setCount] = useState<number>(0);
 
   const container = useRef<HTMLDivElement>(null);
   const options = {};
   const isVisible = useIntersectionObserver(container, options);
+
+  useEffect(() => {
+    setChats(initalChats);
+    setCount(totalCount);
+  }, [initalChats, totalCount]);
 
   useEffect(() => {
     const getChats = async () => {
@@ -65,18 +70,24 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
 
   return (
     <div className="h-full flex flex-col justify-center gap-4 max-w-3xl">
-      {chats.map((chat, i) => (
-        <ChatHistoryCard
-          key={chat.id}
-          chat={chat}
-          handleDelete={handleDelete}
-        />
-      ))}
-      {totalCount > chats.length ? (
-        <div ref={container} className="w-full">
-          <Loading className="mt-0 px-0" />
-        </div>
-      ) : null}
+      {chats.map((chat, i) =>
+        i === chats.length - 1 && i < totalCount - 1 ? (
+          <div ref={container} key={chat.id} className="w-full">
+            <ChatHistoryCard
+              key={chat.id}
+              chat={chat}
+              handleDelete={handleDelete}
+            />
+            <Loading />
+          </div>
+        ) : (
+          <ChatHistoryCard
+            key={chat.id}
+            chat={chat}
+            handleDelete={handleDelete}
+          />
+        )
+      )}
     </div>
   );
 };

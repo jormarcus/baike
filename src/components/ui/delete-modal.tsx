@@ -25,8 +25,8 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
 }) => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger name="reset" className="">
-        <span className="flex gap-2">
+      <AlertDialogTrigger name="delete">
+        <span className="flex gap-2 text-sm items-center hover:text-amber-500 transition duration-300">
           <Trash2 /> <span>Delete chat</span>
         </span>
       </AlertDialogTrigger>

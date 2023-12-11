@@ -2,7 +2,7 @@ import EmptyState from '@/components/ui/empty-state';
 import { getCurrentUser } from '../_actions/user-actions';
 import { getCollectionsWithCount } from '../_actions/collection-actions';
 import { CollectionWithRecipeNamesAndImage } from '@/types';
-import CollectionsList from '@/components/collections/collections';
+import Collections from '@/components/collections/collections';
 
 interface CollectionsPageProps {
   searchParams: {
@@ -31,10 +31,7 @@ export default async function CollectionsPage({
 
   return (
     <>
-      <CollectionsList
-        initialCollections={collections}
-        totalCount={totalCount}
-      />
+      <Collections initialCollections={collections} totalCount={totalCount} />
     </>
   );
 }
