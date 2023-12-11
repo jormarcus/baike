@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import Searchbox from '../ui/Searchbox';
 import { Button } from '../ui/Button';
 
-interface ThreadsHeaderProps {}
+interface ChatHistoryHeaderProps {}
 
-const ThreadsHeader: React.FC<ThreadsHeaderProps> = () => {
+const ChatHistoryHeader: React.FC<ChatHistoryHeaderProps> = () => {
   const router = useRouter();
 
   return (
@@ -16,11 +16,11 @@ const ThreadsHeader: React.FC<ThreadsHeaderProps> = () => {
       <div className="py-4 md:py-8 mx-auto max-w-screen-xl px-4 md:px-12 flex flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-4">
           <FolderPlus size={30} />
-          <h2 className="text-3xl">Threads</h2>
+          <h2 className="text-3xl">Chat History</h2>
         </div>
 
         <div className="flex items-center justify-center max-w-md w-full">
-          <Searchbox placeholder="Search your threads..." />
+          <Searchbox placeholder="Search your chats..." />
         </div>
 
         <Button
@@ -36,4 +36,4 @@ const ThreadsHeader: React.FC<ThreadsHeaderProps> = () => {
   );
 };
 
-export default ThreadsHeader;
+export default ChatHistoryHeader;

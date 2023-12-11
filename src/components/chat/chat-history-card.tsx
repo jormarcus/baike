@@ -4,29 +4,29 @@ import Link from 'next/link';
 import { forwardRef, useMemo } from 'react';
 import { timeAgo } from '@/helpers/date-time-helper';
 
-interface ThreadCardProps {
-  thread: SafeChat;
+interface ChatHistoryCardProps {
+  chat: SafeChat;
 }
-const ThreadCard = forwardRef(({ thread }: { thread: SafeChat }, ref) => {
+const ChatHistoryCard = forwardRef(({ chat }: { chat: SafeChat }, ref) => {
   const time = useMemo(() => {
-    return timeAgo(new Date(thread.createdAt));
-  }, [thread.createdAt]);
+    return timeAgo(new Date(chat.createdAt));
+  }, [chat.createdAt]);
 
   return (
     <div className="flex flex-col space-y-2 w-full border p-2 border-neutral-600 rounded-md cursor-pointer hover:border-500">
       <Link
-        href={`/search/${thread.id}?prev=threads`}
+        href={`/search/${chat.id}`}
         className="flex flex-col items w-full pr-4"
       >
-        <div className="text-xl font-bold">{thread.title}</div>
+        <div className="text-xl font-bold">{chat.title}</div>
         <p className="line-clamp-2 mt-1 break-all font-sans text-sm selection:text-white dark:selection:bg-opacity-50 selection:bg-opacity-70">
-          {thread.firstAnswer ?? 'No preview available.'}
+          {chat.firstAnswer ?? 'No preview available.'}
         </p>
       </Link>
       <div className="flex gap-4 text-sm font-semibold pt-2">
         <div className="flex items-center gap-1">
           <MessageSquare height={14} width={14} />
-          <div>{thread.userMessagesCount}</div>
+          <div>{chat.userMessagesCount}</div>
         </div>
         <div className="flex items-center gap-1">
           <Clock4 height={14} width={14} />
@@ -37,6 +37,6 @@ const ThreadCard = forwardRef(({ thread }: { thread: SafeChat }, ref) => {
   );
 });
 
-ThreadCard.displayName = 'ThreadCard';
+ChatHistoryCard.displayName = 'ChatHistoryCard';
 
-export default ThreadCard;
+export default ChatHistoryCard;

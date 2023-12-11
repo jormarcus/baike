@@ -1,10 +1,10 @@
 import EmptyState from '@/components/ui/EmptyState';
 import { getChatsWithCount } from '../_actions/chat-actions';
 import { getCurrentUser } from '../_actions/user-actions';
-import ThreadList from './ThreadList';
+import ChatHistory from './chat-history';
 
-export default async function ThreadsPage() {
-  const { chats: threads, totalCount } = await getChatsWithCount('', 0, 10);
+export default async function ChatHistoryPage() {
+  const { chats, totalCount } = await getChatsWithCount('', 0, 10);
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -13,7 +13,7 @@ export default async function ThreadsPage() {
 
   return (
     <div className="mb-4 flex items-center justify-center">
-      <ThreadList initalThreads={threads} totalCount={totalCount} />
+      <ChatHistory initalChats={chats} totalCount={totalCount} />
     </div>
   );
 }

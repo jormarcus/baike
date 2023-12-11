@@ -3,50 +3,50 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { SafeChat } from '@/types';
-import { getChats } from '../_actions/chat-actions';
-import ThreadCard from '@/components/chat/ThreadCard';
+import { getChatHistory } from '../_actions/chat-actions';
+import ChatHistoryCard from '@/components/chat/chat-history-card';
 import Loading from './loading';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
-interface ThreadListProps {
-  initalThreads: SafeChat[];
+interface ChatHistoryProps {
+  initalChats: SafeChat[];
   totalCount: number;
 }
 
-const ThreadList: React.FC<ThreadListProps> = ({
-  initalThreads,
+const ChatHistory: React.FC<ChatHistoryProps> = ({
+  initalChats,
   totalCount,
 }) => {
-  const [threads, setThreads] = useState<SafeChat[]>(initalThreads);
+  const [chats, setChats] = useState<SafeChat[]>(initalChats);
 
   const container = useRef<HTMLDivElement>(null);
   const options = {};
   const isVisible = useIntersectionObserver(container, options);
 
   useEffect(() => {
-    const getThreads = async () => {
+    const getChats = async () => {
       try {
-        const skip = threads.length;
+        const skip = chats.length;
         if (skip >= totalCount) return;
 
-        const chats: SafeChat[] = await getChats('', skip, 10);
-        setThreads((prevThreads) => [...prevThreads, ...chats]);
+        const fetchedChats: SafeChat[] = await getChatHistory('', skip, 10);
+        setChats((prevChats) => [...prevChats, ...fetchedChats]);
       } catch (error) {
         console.error(error);
       }
     };
 
     if (isVisible) {
-      getThreads();
+      getChats();
     }
-  }, [isVisible, threads.length, totalCount]);
+  }, [isVisible, chats.length, totalCount]);
 
   return (
     <div className="h-full flex flex-col justify-center gap-4 max-w-3xl">
-      {threads.map((thread, i) => (
-        <ThreadCard key={thread.id} thread={thread} />
+      {chats.map((chat, i) => (
+        <ChatHistoryCard key={chat.id} chat={chat} />
       ))}
-      {totalCount > threads.length ? (
+      {totalCount > chats.length ? (
         <div ref={container} className="w-full">
           <Loading className="mt-0 px-0" />
         </div>
@@ -55,4 +55,4 @@ const ThreadList: React.FC<ThreadListProps> = ({
   );
 };
 
-export default ThreadList;
+export default ChatHistory;

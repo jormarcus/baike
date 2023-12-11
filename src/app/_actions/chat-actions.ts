@@ -36,7 +36,7 @@ export async function getChatById(id: number) {
   return formatSafeChat(chat);
 }
 
-export async function getChats(query: string, skip = 0, take = 10) {
+export async function getChatHistory(query: string, skip = 0, take = 10) {
   const user = await getCurrentUser();
 
   const chats = await prisma.chat.findMany({
@@ -127,7 +127,7 @@ export async function getChatsTotalCount(query: string) {
 }
 
 export async function getChatsWithCount(query: string, skip = 0, take = 10) {
-  const chats = await getChats(query, skip, take);
+  const chats = await getChatHistory(query, skip, take);
   const totalCount = await getChatsTotalCount(query);
 
   return { chats, totalCount };

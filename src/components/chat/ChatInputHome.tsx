@@ -4,11 +4,11 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { createThread } from '@/services/thread-services';
 import { ChatContext } from '@/context/ChatContext';
 import { Button } from '../ui/Button';
 import { Icons } from '../Icons';
 import Textarea from '../inputs/Textarea';
+import { createChat } from '@/app/_actions/chat-actions';
 
 const examples = [
   'What are some simple dinner recipes that can be cooked in under 30 minutes?',
@@ -35,18 +35,18 @@ const ChatInputHome: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // create thread instance and save to db
-      const { data } = await createThread();
-      if (!data) {
-        toast.error('Something went wrong!');
+      // create chat instance and save to db
+      const chat = await createChat();
+      if (!chat) {
+        toast.error('Failed to create chat');
         return;
       }
 
       // send message to openai api using vercel ai sdk
-      handleSubmit(e, { options: { body: { chatId: data.id } } });
+      handleSubmit(e, { options: { body: { chatId: chat.id } } });
       setInput('');
 
-      router.push(`/search/${data.id}`);
+      router.push(`/search/${chat.id}`);
     } catch (error) {
       console.log(error);
     } finally {

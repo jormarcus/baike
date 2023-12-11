@@ -47,8 +47,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
         icon: <Icons.folderPlus />,
       },
       {
-        label: 'Threads',
-        href: '/threads',
+        label: 'Chat history',
+        href: '/chat-history',
         icon: <Icons.messageSquare />,
       },
       {

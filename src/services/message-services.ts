@@ -1,5 +1,21 @@
 import { SafeMessage } from '@/types';
 
+export async function createChat() {
+  const response = await fetch('/api/chat-history', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({}),
+  });
+
+  if (!response.ok) {
+    throw new Error('Something went wrong.');
+  }
+
+  return await response.json();
+}
+
 export async function sendMessage(messages: SafeMessage[]) {
   const response = await fetch('/api/message', {
     method: 'POST',
