@@ -6,8 +6,12 @@ import { useSearchParams } from 'next/navigation';
 import { CollectionWithRecipeNamesAndImage } from '@/types';
 import useIntersectionObserver from '@/hooks/use-intersection-observer';
 import CollectionCard from './collection-card';
-import { getPaginatedCollections } from '@/app/_actions/collection-actions';
+import {
+  deleteCollection,
+  getPaginatedCollections,
+} from '@/app/_actions/collection-actions';
 import EmptyState from '../ui/empty-state';
+import toast from 'react-hot-toast';
 
 interface CollectionsProps {
   initialCollections: CollectionWithRecipeNamesAndImage[];
@@ -22,6 +26,7 @@ const Collections: React.FC<CollectionsProps> = ({
   const [collections, setCollections] = useState<
     CollectionWithRecipeNamesAndImage[]
   >([]);
+  const [count, setCount] = useState<number>(0);
 
   const container = useRef<HTMLDivElement>(null);
   const options = {};
@@ -29,7 +34,8 @@ const Collections: React.FC<CollectionsProps> = ({
 
   useEffect(() => {
     setCollections(initialCollections);
-  }, [initialCollections]);
+    setCount(totalCount);
+  }, [initialCollections, totalCount]);
 
   useEffect(() => {
     const getCollections = async () => {
@@ -57,6 +63,23 @@ const Collections: React.FC<CollectionsProps> = ({
     }
   }, [isVisible, collections.length, searchParams, totalCount]);
 
+  const handleDelete = async (id: number) => {
+    try {
+      const deletedCollection = await deleteCollection(id);
+      if (!deletedCollection) {
+        toast.error('Failed to delete collection');
+        return;
+      }
+      setCollections((prevCollections) =>
+        prevCollections.filter((collection) => collection.id !== id)
+      );
+      setCount((prevCount) => prevCount - 1);
+      toast.success('collection deleted');
+    } catch (error) {
+      toast.error('Failed to delete collection');
+    }
+  };
+
   return (
     <>
       <div className="w-full h-full mx-auto max-w-3xl md:px-xl px-md flex flex-col gap-4 pb-2 items-center justify-center">
@@ -64,10 +87,17 @@ const Collections: React.FC<CollectionsProps> = ({
           collections.map((collection, index) => {
             return index === collections.length - 1 && index < totalCount ? (
               <div ref={container} key={collection.id} className="w-full">
-                <CollectionCard collection={collection} />
+                <CollectionCard
+                  collection={collection}
+                  handleDelete={handleDelete}
+                />
               </div>
             ) : (
-              <CollectionCard key={collection.id} collection={collection} />
+              <CollectionCard
+                key={collection.id}
+                collection={collection}
+                handleDelete={handleDelete}
+              />
             );
           })
         ) : (

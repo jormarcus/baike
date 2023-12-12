@@ -27,13 +27,13 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
     <AlertDialog>
       <AlertDialogTrigger name="delete">
         <span className="flex gap-2 text-sm items-center hover:text-amber-500 transition duration-300">
-          <Trash2 /> <span>Delete chat</span>
+          <Trash2 /> <span>{`Delete ${deleteFieldName}`}</span>
         </span>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {`Are you sure you want to delete ${deleteFieldName} - "${deleteFieldItemName}"?`}
+            {`Are you sure you want to delete ${deleteFieldName} - ${deleteFieldItemName}?`}
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>

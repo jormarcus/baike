@@ -7,7 +7,7 @@ const Loading = () => {
       {Array.from({ length: 10 }).map((_, index) => (
         <div
           key={index}
-          className="max-w-3xl w-full flex rounded-3xl items-center justify-between gap-4 overflow-hidden bg-gradient-to-r from-neutral-500/10 from-75% to-100% p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4"
+          className="max-w-3xl w-full flex rounded-md items-center justify-between gap-4 overflow-hidden bg-gradient-to-r from-neutral-500/10 from-75% to-100% p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4"
         >
           <div className="flex justify-center items-center">
             <Folder />
