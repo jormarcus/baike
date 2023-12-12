@@ -16,7 +16,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
 }) => {
   if (!image) {
     return (
-      <div className="dark:bg-neutral-950 flex items-center justify-center h-full w-full rounded-xl aspect-square">
+      <div className="bg-neutral-950 dark:bg-neutral-950 flex items-center justify-center h-full w-full rounded-xl aspect-square">
         <Croissant className="text-white" height={height} width={width} />
       </div>
     );
