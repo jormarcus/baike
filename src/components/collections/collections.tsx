@@ -1,20 +1,22 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
-import { CollectionWithRecipeNamesAndImage } from '@/types';
-import useIntersectionObserver from '@/hooks/use-intersection-observer';
-import CollectionCard from './collection-card';
+import { SafeCollection } from "@/types";
+import useIntersectionObserver from "@/hooks/use-intersection-observer";
+import CollectionCard from "./collection-card";
 import {
   deleteCollection,
   getPaginatedCollections,
-} from '@/app/_actions/collection-actions';
-import EmptyState from '../ui/empty-state';
-import toast from 'react-hot-toast';
+} from "@/app/_actions/collection-actions";
+import EmptyState from "../ui/empty-state";
+import toast from "react-hot-toast";
+import RecipeCard from "../recipes/recipe-card";
+import AddRecipesToCollectionModal from "../recipes/add-recipes-to-collection-modal";
 
 interface CollectionsProps {
-  initialCollections: CollectionWithRecipeNamesAndImage[];
+  initialCollections: SafeCollection[];
   totalCount: number;
 }
 
@@ -23,12 +25,10 @@ const Collections: React.FC<CollectionsProps> = ({
   totalCount,
 }) => {
   const searchParams = useSearchParams();
-  const [collections, setCollections] = useState<
-    CollectionWithRecipeNamesAndImage[]
-  >([]);
+  const [collections, setCollections] = useState<SafeCollection[]>([]);
   const [count, setCount] = useState<number>(0);
   const [activeCollection, setActiveCollection] =
-    useState<CollectionWithRecipeNamesAndImage | null>(null);
+    useState<SafeCollection | null>(null);
 
   const container = useRef<HTMLDivElement>(null);
   const options = {};
@@ -48,9 +48,9 @@ const Collections: React.FC<CollectionsProps> = ({
           return;
         }
 
-        const query: string = searchParams.get('search') || '';
+        const query: string = searchParams.get("search") || "";
 
-        const fetchedCollections: CollectionWithRecipeNamesAndImage[] =
+        const fetchedCollections: SafeCollection[] =
           await getPaginatedCollections(query, skip);
         setCollections((prevCollections) => [
           ...prevCollections,
@@ -70,23 +70,23 @@ const Collections: React.FC<CollectionsProps> = ({
     try {
       const deletedCollection = await deleteCollection(id);
       if (!deletedCollection) {
-        toast.error('Failed to delete collection');
+        toast.error("Failed to delete collection");
         return;
       }
       setCollections((prevCollections) =>
-        prevCollections.filter((collection) => collection.id !== id)
+        prevCollections.filter((collection) => collection.id !== id),
       );
       setCount((prevCount) => prevCount - 1);
-      toast.success('collection deleted');
+      toast.success("collection deleted");
     } catch (error) {
-      toast.error('Failed to delete collection');
+      toast.error("Failed to delete collection");
     }
   };
 
   return (
-    <div className="w-full h-full">
-      <div className="w-full flex">
-        <div className="w-full flex flex-col border border-neutral-500 min-w-[400px] max-w-[460px] overflow-y-scroll rounded-md h-screen">
+    <div className="h-full w-full">
+      <div className="flex w-full">
+        <div className="flex h-[calc(100vh-120px)] w-full min-w-[400px] max-w-[460px] flex-col overflow-y-scroll rounded-md border border-neutral-500">
           {collections.length > 0 ? (
             collections.map((collection, index) => {
               return index === collections.length - 1 && index < totalCount ? (
@@ -113,8 +113,29 @@ const Collections: React.FC<CollectionsProps> = ({
             />
           )}
         </div>
-        <div className="w-full flex flex-col border border-neutral-500 min-w-[620px] max-w-[700px] overflow-y-scroll rounded-md h-screen">
-          list of recipes
+        <div className="flex h-[calc(100vh-120px)] w-full min-w-[620px] max-w-[700px] flex-col overflow-y-scroll rounded-md border border-neutral-500">
+          {activeCollection?.recipes &&
+          activeCollection.recipes.length === 0 ? (
+            <div className="flex h-1/2 flex-col items-center justify-evenly">
+              <EmptyState title="No recipes in this collection" />
+              <div className="max-w-sm">
+                <AddRecipesToCollectionModal
+                  collectionId={activeCollection.id}
+                  name={activeCollection.name}
+                  label="Add recipes to collection"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-wrap">
+              {activeCollection?.recipes &&
+                activeCollection?.recipes.map((recipe) => (
+                  <div key={recipe.id} className="w-1/3">
+                    <RecipeCard recipe={recipe} />
+                  </div>
+                ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import EmptyState from '@/components/ui/empty-state';
 import { getCurrentUser } from '../_actions/user-actions';
 import { getCollectionsWithCount } from '../_actions/collection-actions';
-import { CollectionWithRecipeNamesAndImage } from '@/types';
+import { SafeCollection } from '@/types';
 import Collections from '@/components/collections/collections';
 
 interface CollectionsPageProps {
@@ -25,7 +25,7 @@ export default async function CollectionsPage({
     collections,
     totalCount,
   }: {
-    collections: CollectionWithRecipeNamesAndImage[];
+    collections: SafeCollection[];
     totalCount: number;
   } = await getCollectionsWithCount(query);
 

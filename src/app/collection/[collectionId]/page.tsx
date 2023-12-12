@@ -28,6 +28,7 @@ export default async function CollectionPage({
         <AddRecipesToCollectionModal
           collectionId={collection.id}
           name={collection.name}
+          label="Add recipes to collection"
         />
       </div>
       {collection.recipes && collection.recipes.length === 0 ? (

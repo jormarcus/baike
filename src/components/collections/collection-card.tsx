@@ -1,13 +1,10 @@
-import Link from 'next/link';
-import { Folder } from 'lucide-react';
-
-import { CollectionWithRecipeNamesAndImage } from '@/types';
+import { SafeCollection } from '@/types';
 import RecipeImage from '../recipes/recipe-image';
 import CollectionPopover from './collection-popover';
 import { cn } from '@/lib/utils';
 
 interface CollectionCardProps {
-  collection: CollectionWithRecipeNamesAndImage;
+  collection: SafeCollection;
   handleDelete: (id: number) => void;
   isActive: boolean;
 }
@@ -37,7 +34,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
           <div className="h-[80px] w-[80px]">
             <RecipeImage
               image={
-                collection.recipes.length > 0
+                collection.recipes && collection.recipes.length > 0
                   ? collection.recipes[0]['imageSrc']
                   : null
               }

@@ -43,11 +43,12 @@ const AddRecipesToCollectionSchema = z.object({
 interface AddRecipesToCollectionModalProps {
   collectionId: number;
   name: string;
+  label: string;
 }
 
 const AddRecipesToCollectionModal: React.FC<
   AddRecipesToCollectionModalProps
-> = ({ collectionId, name }: { collectionId: number; name: string }) => {
+> = ({ collectionId, name, label }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [recipes, setRecipes] = useState<SafeRecipe[]>([]);
@@ -182,10 +183,10 @@ const AddRecipesToCollectionModal: React.FC<
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
         <Button className="dark:bg-amber-500 dark:text-white dark:hover:bg-amber-400">
-          Manage recipes
+          {label}
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="sm:max-w-[425px]">
+      <AlertDialogContent className="sm:max-w-xl">
         <AlertDialogHeader>
           <AlertDialogTitle>{`${name}`} collection</AlertDialogTitle>
           <AlertDialogDescription>
@@ -200,11 +201,12 @@ const AddRecipesToCollectionModal: React.FC<
             placeholder="Search your recipes..."
           />
         </div>
-        <div className="grid gap-4 pt-4">
+
+        <div className="pt-4">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="grid grid-cols-3 items-center gap-4 space-y-8 overflow-y-scroll max-h-[160px]"
+              className="flex flex-col gap-6 overflow-y-scroll"
             >
               <FormField
                 control={form.control}
@@ -229,6 +231,7 @@ const AddRecipesToCollectionModal: React.FC<
                                   onCheckedChange={(checked: CheckedState) =>
                                     handleSelectRecipe(checked, recipe)
                                   }
+                                  className="border-white border-2"
                                 />
                               </FormControl>
                               <FormLabel className="font-normal whitespace-nowrap">
