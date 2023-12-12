@@ -32,7 +32,7 @@ import { CollectionWithRecipeNames } from '@/types';
 import AddCollectionModal from '../collections/add-collection-modal';
 import { addCollectionsToRecipe } from '@/app/_actions/recipe-actions';
 import { Checkbox } from '../ui/checkbox';
-import { getCollectionsWithRecipeNameByUserIdAndRecipeId } from '@/app/_actions/collection-actions';
+import { getCollectionsWithRecipeNameByRecipeId } from '@/app/_actions/collection-actions';
 
 const AddRecipeToCollectionSchema = z.object({
   collections: z.array(z.string()),
@@ -50,9 +50,6 @@ function AddRecipeToCollectionModal({
   const [collections, setCollections] = useState<CollectionWithRecipeNames[]>(
     []
   );
-
-  const { data: session } = useSession();
-  const userId = session?.user?.id;
 
   const form = useForm<z.infer<typeof AddRecipeToCollectionSchema>>({
     resolver: zodResolver(AddRecipeToCollectionSchema),
@@ -79,12 +76,9 @@ function AddRecipeToCollectionModal({
     setIsLoading(true);
     async function getCollections() {
       try {
-        if (!userId) return;
-        const collections =
-          await getCollectionsWithRecipeNameByUserIdAndRecipeId(
-            parseInt(userId),
-            recipeId
-          );
+        const collections = await getCollectionsWithRecipeNameByRecipeId(
+          recipeId
+        );
         setCollections(collections);
       } catch (error) {
         toast.error('Something went wrong!');
@@ -94,7 +88,7 @@ function AddRecipeToCollectionModal({
     }
 
     getCollections();
-  }, [isOpen, recipeId, userId]);
+  }, [isOpen, recipeId]);
 
   const onAddNewCollection = (collection: CollectionWithRecipeNames) => {
     setCollections((prev) => [...prev, collection]);

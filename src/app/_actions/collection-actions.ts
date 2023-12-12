@@ -111,13 +111,18 @@ export async function getCollectionsWithRecipesByUserId(userId: number) {
 }
 
 // used when adding collections to a recipe and to see which collections a recipe is already in
-export async function getCollectionsWithRecipeNameByUserIdAndRecipeId(
-  userId: number,
+export async function getCollectionsWithRecipeNameByRecipeId(
   recipeId: number
 ): Promise<CollectionWithRecipeNames[]> {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
   const collections = await prisma.collection.findMany({
     where: {
-      userId,
+      userId: user.id,
     },
     include: {
       recipes: {
