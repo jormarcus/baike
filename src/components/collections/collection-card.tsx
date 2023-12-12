@@ -4,15 +4,18 @@ import { Folder } from 'lucide-react';
 import { CollectionWithRecipeNamesAndImage } from '@/types';
 import RecipeImage from '../recipes/recipe-image';
 import CollectionPopover from './collection-popover';
+import { cn } from '@/lib/utils';
 
 interface CollectionCardProps {
   collection: CollectionWithRecipeNamesAndImage;
   handleDelete: (id: number) => void;
+  isActive: boolean;
 }
 
 const CollectionCard: React.FC<CollectionCardProps> = ({
   collection,
   handleDelete,
+  isActive,
 }) => {
   const getRecipeAmntLabel = (amnt: number) => {
     if (amnt === 1) {
@@ -23,8 +26,51 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
   };
 
   return (
-    <div className="w-full">
-      <div className="flex justify-end p-2 border border-neutral-500 rounded-md">
+    <div
+      className={cn(
+        'w-full flex border border-neutral-500 max-w-[500px]',
+        isActive ? 'bg-secondary' : ''
+      )}
+    >
+      <div className="flex items-center w-full p-2">
+        <div className="flex items-center gap-4 basis-11/12">
+          <div className="h-[80px] w-[80px]">
+            <RecipeImage
+              image={
+                collection.recipes.length > 0
+                  ? collection.recipes[0]['imageSrc']
+                  : null
+              }
+              alt={collection.name}
+              width={60}
+              height={60}
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <h2 className="text-xl">{collection.name}</h2>
+            <div className="text-sm text-gray-500">
+              {collection.recipes &&
+                getRecipeAmntLabel(collection.recipes.length)}
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-end self-start basis-1/12">
+          <CollectionPopover
+            collection={collection}
+            handleDelete={handleDelete}
+            isActive={isActive}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CollectionCard;
+
+{
+  /* <div className="flex justify-end p-2 border border-neutral-500 rounded-md">
         <div className="flex flex-col p-2">
           <CollectionPopover
             collection={collection}
@@ -72,9 +118,5 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
             </div>
           </div>
         </Link>
-      </div>
-    </div>
-  );
-};
-
-export default CollectionCard;
+      </div> */
+}

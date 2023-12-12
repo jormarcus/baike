@@ -27,6 +27,8 @@ const Collections: React.FC<CollectionsProps> = ({
     CollectionWithRecipeNamesAndImage[]
   >([]);
   const [count, setCount] = useState<number>(0);
+  const [activeCollection, setActiveCollection] =
+    useState<CollectionWithRecipeNamesAndImage | null>(null);
 
   const container = useRef<HTMLDivElement>(null);
   const options = {};
@@ -35,6 +37,7 @@ const Collections: React.FC<CollectionsProps> = ({
   useEffect(() => {
     setCollections(initialCollections);
     setCount(totalCount);
+    setActiveCollection(initialCollections[0]);
   }, [initialCollections, totalCount]);
 
   useEffect(() => {
@@ -81,33 +84,40 @@ const Collections: React.FC<CollectionsProps> = ({
   };
 
   return (
-    <>
-      <div className="w-full h-full mx-auto max-w-3xl md:px-xl px-md flex flex-col gap-4 pb-2 items-center justify-center">
-        {collections.length > 0 ? (
-          collections.map((collection, index) => {
-            return index === collections.length - 1 && index < totalCount ? (
-              <div ref={container} key={collection.id} className="w-full">
+    <div className="w-full h-full">
+      <div className="w-full flex">
+        <div className="w-full flex flex-col border border-neutral-500 min-w-[400px] max-w-[460px] overflow-y-scroll rounded-md h-screen">
+          {collections.length > 0 ? (
+            collections.map((collection, index) => {
+              return index === collections.length - 1 && index < totalCount ? (
+                <div ref={container} key={collection.id} className="w-full">
+                  <CollectionCard
+                    collection={collection}
+                    handleDelete={handleDelete}
+                    isActive={activeCollection?.id === collection.id}
+                  />
+                </div>
+              ) : (
                 <CollectionCard
+                  key={collection.id}
                   collection={collection}
                   handleDelete={handleDelete}
+                  isActive={activeCollection?.id === collection.id}
                 />
-              </div>
-            ) : (
-              <CollectionCard
-                key={collection.id}
-                collection={collection}
-                handleDelete={handleDelete}
-              />
-            );
-          })
-        ) : (
-          <EmptyState
-            title="You do not have any collections"
-            subtitle="Create one"
-          />
-        )}
+              );
+            })
+          ) : (
+            <EmptyState
+              title="You do not have any collections"
+              subtitle="Create one"
+            />
+          )}
+        </div>
+        <div className="w-full flex flex-col border border-neutral-500 min-w-[620px] max-w-[700px] overflow-y-scroll rounded-md h-screen">
+          list of recipes
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
