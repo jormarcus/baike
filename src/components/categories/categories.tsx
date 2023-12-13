@@ -2,50 +2,19 @@
 
 import { useSearchParams } from 'next/navigation';
 import CategoryItem from './category-item';
-
-const categoryItems = [
-  {
-    label: 'Pizza',
-    image: '/images/icons8-pizza-48.png',
-  },
-  {
-    label: 'Hamburgers',
-    image: '/images/icons8-hamburger-48.png',
-  },
-  {
-    label: 'Steak',
-    image: '/images/icons8-steak-48.png',
-  },
-  {
-    label: 'Tacos',
-    image: '/images/icons8-taco-48.png',
-  },
-  {
-    label: 'Chinese',
-    image: '/images/icons8-rice-bowl-48.png',
-  },
-  {
-    label: 'Fish',
-    image: '/images/icons8-whole-fish-48.png',
-  },
-  {
-    label: 'Soup',
-    image: '/images/icons8-soup-plate-48.png',
-  },
-  {
-    label: 'Dessert',
-    image: '/images/icons8-cake-48.png',
-  },
-];
+import categoryData from './categories-data';
 
 const Categories = () => {
   const params = useSearchParams();
   const selectedCategory = params?.get('category');
 
   return (
-    <div className="py-8 overflow-x-auto">
-      <ul className="flex flex-row items-center justify-between w-full gap-8">
-        {categoryItems.map((item) => (
+    <div className="py-4 overflow-x-auto flex flex-col items-center">
+      <ul
+        className="flex flex-row items-center justify-center gap-4 mx-16
+          overflow-x-auto max-w-6xl"
+      >
+        {categoryData.map((item) => (
           <CategoryItem
             key={item.label}
             label={item.label}
@@ -54,6 +23,12 @@ const Categories = () => {
           />
         ))}
       </ul>
+      <div className="text-neutral-400 text-xs">
+        Icons by{' '}
+        <a target="_blank" href="https://icons8.com">
+          Icons8
+        </a>
+      </div>
     </div>
   );
 };

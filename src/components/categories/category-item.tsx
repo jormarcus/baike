@@ -63,7 +63,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
         `}
       >
         <Image src={image} alt={label} width={40} height={40} />
-        <p className="text-sm font-medium">{label}</p>
+        <p className="text-sm font-medium whitespace-nowrap">{label}</p>
       </li>
     </>
   );

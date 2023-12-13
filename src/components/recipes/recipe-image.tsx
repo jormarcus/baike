@@ -17,7 +17,11 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
   if (!image) {
     return (
       <div className="bg-neutral-950 dark:bg-neutral-950 flex items-center justify-center h-full w-full rounded-xl aspect-square">
-        <Croissant className="text-white" height={height} width={width} />
+        <Croissant
+          className="text-white"
+          height={height / 3}
+          width={width / 3}
+        />
       </div>
     );
   }
@@ -32,13 +36,17 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
           decoding="async"
           className="object-cover transition group-hover:scale-110 aspect-square"
           priority
+          height={height}
+          width={width}
         />
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={image}
           alt={alt}
-          className="object-cover transition group-hover:scale-110 aspect-square min-h-[150] w-full"
+          className="object-cover transition group-hover:scale-110 aspect-square"
+          height={height}
+          width={width}
         />
       )}
     </div>

@@ -58,8 +58,8 @@ const RecipesList: React.FC<RecipesListProps> = ({
   }, [isVisible, recipes.length, searchParams, totalCount]);
 
   return (
-    <div className="h-full overflow-y-scroll no-scrollbar px-16 max-h-[82vh]">
-      <div className="grid grid-cols-1 gap-6 py-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+    <div className="h-full overflow-y-scroll no-scrollbar max-h-[82vh]">
+      <div className="grid grid-cols-1 gap-12 py-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {recipes.map((recipe, index) => {
           return index === recipes.length - 1 && index < totalCount ? (
             <div ref={container} key={recipe.id} className="w-full">

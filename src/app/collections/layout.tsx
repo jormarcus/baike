@@ -8,7 +8,7 @@ const CollectionsLayout: React.FC<CollectionsLayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col">
       <CollectionsHeader />
-      <div className="h-full ml-24 mr-48 py-16 flex justify-center">
+      <div className="h-full ml-24 mr-48 pb-16 flex justify-center">
         {children}
       </div>
     </div>
