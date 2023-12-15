@@ -1,13 +1,11 @@
 'use client';
 
 import { createContext, useContext, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 import { throwContextNotInitializedError } from '@/lib/utils';
 import { SafeIngredient, SafeRecipe } from '@/types';
-import { toast } from 'react-hot-toast';
-import { sqltag } from '@prisma/client/runtime/library';
 import { getIngredientsByRecipeId } from '@/app/_actions/recipe-actions';
-import { set } from 'date-fns';
 
 interface RecipeCompareContextStore {
   isRecipeCompareExpanded: boolean;
@@ -36,9 +34,8 @@ export const RecipeCompareProvider: React.FC<{
 
   const getIngredients = async (recipeId: number) => {
     try {
-      const safeIngredients: SafeIngredient[] = await getIngredientsByRecipeId(
-        recipeId
-      );
+      const safeIngredients: SafeIngredient[] =
+        await getIngredientsByRecipeId(recipeId);
       return safeIngredients;
     } catch (error) {
       console.error(error);

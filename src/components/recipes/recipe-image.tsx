@@ -16,7 +16,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
 }) => {
   if (!image) {
     return (
-      <div className="bg-neutral-950 dark:bg-neutral-950 flex items-center justify-center h-full w-full rounded-xl aspect-square">
+      <div className="bg-neutral-900 dark:bg-neutral-900 flex items-center justify-center h-full w-full rounded-lg aspect-square">
         <Croissant
           className="text-white"
           height={height / 3}
@@ -26,7 +26,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
     );
   }
   return (
-    <div className="relative col-span-1 w-full overflow-hidden rounded-xl">
+    <div className="">
       {image.includes('avatars.githubusercontent.com') ||
       image.includes('lh3.googleusercontent.com') ||
       image.includes('res.cloudinary.comm') ? (
@@ -34,7 +34,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
           src={image}
           alt={alt}
           decoding="async"
-          className="object-cover transition group-hover:scale-110 aspect-square"
+          className="object-cover transition group-hover:scale-110 aspect-square rounded-lg"
           priority
           height={height}
           width={width}
@@ -44,7 +44,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
         <img
           src={image}
           alt={alt}
-          className="object-cover transition group-hover:scale-110 aspect-square"
+          className="object-cover transition group-hover:scale-110 aspect-square rounded-lg"
           height={height}
           width={width}
         />
