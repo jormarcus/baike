@@ -1,3 +1,7 @@
+'use client';
+
+import { useParams, useRouter } from 'next/navigation';
+
 import { SafeCollection } from '@/types';
 import RecipeImage from '../recipes/recipe-image';
 import CollectionPopover from './collection-popover';
@@ -5,29 +9,35 @@ import { cn } from '@/lib/utils';
 
 interface CollectionCardProps {
   collection: SafeCollection;
-  handleDelete: (id: number) => void;
-  isActive: boolean;
+  index: number;
 }
 
 const CollectionCard: React.FC<CollectionCardProps> = ({
   collection,
-  handleDelete,
-  isActive,
+  index,
 }) => {
-  const getRecipeAmntLabel = (amnt: number) => {
-    if (amnt === 1) {
-      return '1 recipe';
-    } else {
-      return `${amnt} recipes`;
+  const router = useRouter();
+  const params = useParams();
+
+  const isActive =
+    params.collectionId === collection.id.toString() ||
+    (index === 0 && !params.collectionId);
+
+  const handleClick = () => {
+    if (isActive) {
+      return;
     }
+
+    router.push(`/collections/${collection.id}`);
   };
 
   return (
     <div
       className={cn(
-        'w-full flex border border-neutral-500 max-w-[500px]',
+        'flex max-w-[500px] cursor-pointer hover:bg-secondary transition-colors duration-300 ease-in-out rounded-lg mx-2 my-1',
         isActive ? 'bg-secondary' : ''
       )}
+      onClick={handleClick}
     >
       <div className="flex items-center w-full p-2">
         <div className="flex items-center gap-4 basis-11/12">
@@ -45,19 +55,19 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
           </div>
 
           <div className="flex flex-col gap-1">
-            <h2 className="text-xl">{collection.name}</h2>
+            <h2 className="text-md">{collection.name}</h2>
             <div className="text-sm text-gray-500">
-              {collection.recipes &&
-                getRecipeAmntLabel(collection.recipes.length)}
+              {collection.recipesCount ===
+              0 ? null : collection.recipesCount === 1 ? (
+                <span>1 recipe</span>
+              ) : (
+                <span>{collection.recipesCount} recipes</span>
+              )}
             </div>
           </div>
         </div>
         <div className="flex justify-end self-start basis-1/12">
-          <CollectionPopover
-            collection={collection}
-            handleDelete={handleDelete}
-            isActive={isActive}
-          />
+          <CollectionPopover collection={collection} isActive={isActive} />
         </div>
       </div>
     </div>
@@ -65,55 +75,3 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
 };
 
 export default CollectionCard;
-
-{
-  /* <div className="flex justify-end p-2 border border-neutral-500 rounded-md">
-        <div className="flex flex-col p-2">
-          <CollectionPopover
-            collection={collection}
-            handleDelete={handleDelete}
-          />
-        </div>
-        <Link
-          href={`/collection/${collection.id}`}
-          className="cursor-pointer flex items-center"
-        >
-          <div className="flex justify-center items-center w-[70px] h-[70px]">
-            {collection?.recipes &&
-            collection.recipes[0] &&
-            collection.recipes[0]['imageSrc'] ? (
-              <RecipeImage
-                image={collection.recipes[0]['imageSrc']}
-                alt={collection.name}
-                width={70}
-                height={70}
-              />
-            ) : (
-              <Folder />
-            )}
-          </div>
-          <div className="w-full pr-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-2xl font-bold">{collection.name}</h3>
-              <div>
-                {collection?.recipes &&
-                  getRecipeAmntLabel(collection.recipes.length)}
-              </div>
-            </div>
-            <hr className="mb-1 w-full" />
-            <div className="flex items-center flex-wrap gap-2 h-6">
-              {collection.recipes &&
-                collection.recipes.map((recipe, index) => (
-                  <div
-                    key={recipe.name}
-                    className="font-light tracking-tight whitespace-nowrap"
-                  >
-                    {recipe.name}
-                    {index === collection.recipes.length - 1 ? '' : ', '}
-                  </div>
-                ))}
-            </div>
-          </div>
-        </Link>
-      </div> */
-}

@@ -10,6 +10,7 @@ import { ChatProvider } from '@/context/chat-context';
 import { UserPreferencesProvider } from '@/context/user-preferences-context';
 import { WelcomeWizardProvider } from '@/context/welcome-wizard-context';
 import { RecipeCompareProvider } from '@/context/recipe-compare-context';
+import { CollectionsProvider } from '@/context/collections-context';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -24,7 +25,9 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
             <UserPreferencesProvider>
               <WelcomeWizardProvider>
                 <ChatProvider>
-                  <RecipeCompareProvider>{children}</RecipeCompareProvider>
+                  <RecipeCompareProvider>
+                    <CollectionsProvider>{children}</CollectionsProvider>
+                  </RecipeCompareProvider>
                 </ChatProvider>
               </WelcomeWizardProvider>
             </UserPreferencesProvider>

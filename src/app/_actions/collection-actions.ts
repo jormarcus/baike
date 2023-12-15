@@ -81,6 +81,23 @@ export async function getCollectionWithRecipesById(id: number) {
   return formatSafeCollectionWithRecipes(collection);
 }
 
+export async function getFirstCollectionWithRecipes() {
+  const collection = await prisma.collection.findFirst({
+    orderBy: {
+      name: 'asc',
+    },
+    include: {
+      recipes: true,
+    },
+  });
+
+  if (!collection) {
+    return null;
+  }
+
+  return formatSafeCollectionWithRecipes(collection);
+}
+
 export async function getCollectionsByUserId(userId: number) {
   const collections = await prisma.collection.findMany({
     where: {
@@ -204,7 +221,7 @@ export async function addRecipesToCollection(
     },
   });
 
-  revalidatePath(`/collection/${collectionId}`);
+  revalidatePath(`/collections/${collectionId}`);
 }
 
 // collections page search/infscroll

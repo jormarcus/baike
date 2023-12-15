@@ -1,15 +1,17 @@
 import CollectionsHeader from '@/components/collections/collections-header';
+import CollectionsSidebar from './collections-sidebar';
 
 interface CollectionsLayoutProps {
   children: React.ReactNode;
 }
 
-const CollectionsLayout: React.FC<CollectionsLayoutProps> = ({ children }) => {
+const CollectionsLayout = async ({ children }: CollectionsLayoutProps) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       <CollectionsHeader />
-      <div className="h-full ml-24 mr-48 pb-16 flex justify-center">
-        {children}
+      <div className="flex max-h-[100vh]">
+        <CollectionsSidebar />
+        <div className="w-full flex justify-center">{children}</div>
       </div>
     </div>
   );

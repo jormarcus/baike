@@ -6,18 +6,20 @@ import { Button } from '../ui/button';
 import { MoreVertical, Plus } from 'lucide-react';
 import { SafeCollection } from '@/types';
 import { cn } from '@/lib/utils';
+import { useCollections } from '@/context/collections-context';
 
 interface CollectionPopoverProps {
   collection: SafeCollection;
-  handleDelete: (id: number) => void;
-  isActive: boolean;
+
+  isActive: boolean; // to determine btn hover color
 }
 
 const CollectionPopover: React.FC<CollectionPopoverProps> = ({
   collection,
-  handleDelete,
   isActive,
 }) => {
+  const { handleDelete } = useCollections();
+
   return (
     <Popover>
       <PopoverTrigger asChild>

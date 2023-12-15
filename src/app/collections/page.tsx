@@ -1,37 +1,26 @@
 import EmptyState from '@/components/ui/empty-state';
 import { getCurrentUser } from '../_actions/user-actions';
-import { getCollectionsWithCount } from '../_actions/collection-actions';
-import { SafeCollection } from '@/types';
-import Collections from '@/components/collections/collections';
+import CollectionRecipes from './collection-recipes';
+import { getFirstCollectionWithRecipes } from '../_actions/collection-actions';
 
-interface CollectionsPageProps {
-  searchParams: {
-    search: string;
-  };
-}
+interface CollectionsPageProps {}
 
-export default async function CollectionsPage({
-  searchParams,
-}: CollectionsPageProps) {
+export default async function CollectionsPage({}: CollectionsPageProps) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
 
-  const query: string = searchParams.search || '';
+  const collection = await getFirstCollectionWithRecipes();
 
-  const {
-    collections,
-    totalCount,
-  }: {
-    collections: SafeCollection[];
-    totalCount: number;
-  } = await getCollectionsWithCount(query);
+  if (!collection) {
+    return <EmptyState title="No collections" />;
+  }
 
   return (
     <>
-      <Collections initialCollections={collections} totalCount={totalCount} />
+      <CollectionRecipes activeCollection={collection} />
     </>
   );
 }

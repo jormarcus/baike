@@ -16,7 +16,7 @@ const CollectionsRow: React.FC<CollectionsRowProps> = ({ collections }) => {
         {collections.map((collection) => (
           <Link
             key={collection.id}
-            href={`/collection/${collection.id}`}
+            href={`/collections/${collection.id}`}
             className="font-bold border-b-2 border-neutral-500 hover:border-amber-500 transition duration-300"
           >
             {collection.name}
