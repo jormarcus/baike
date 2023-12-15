@@ -7,7 +7,7 @@ interface LoadingProps extends HTMLAttributes<HTMLDivElement> {}
 const Loading: React.FC<LoadingProps> = ({ className }) => {
   return (
     <div className="flex flex-col h-full w-full justify-between px-16">
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12 py-8">
         {Array.from({ length: 9 }).map((_, index) => (
           <div key={index} className="border-none rounded-lg flex flex-col">
             <div className="flex items-center justify-center min-h-[254px]">

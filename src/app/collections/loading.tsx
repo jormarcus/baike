@@ -3,12 +3,12 @@ import { Croissant, Folder } from 'lucide-react';
 
 const Loading = () => {
   return (
-    <div className="flex h-full w-full flex-col overflow-y-scroll rounded-md border-t border-l border-neutral-600">
-      <div className="flex items-center justify-between py-8 px-16 border-b border-border/60 dark:border-border/80 divide-border/60 dark:divide-border/80 ring-border dark:ring-border">
+    <div className="flex h-full w-full flex-col overflow-y-scroll rounded-md border-t border-l border-neutral-600 px-16">
+      <div className="flex items-center justify-between py-8 border-b border-border/60 dark:border-border/80 divide-border/60 dark:divide-border/80 ring-border dark:ring-border">
         <Skeleton className="h-10 w-[120px]" />
         <Skeleton className="h-10 w-[80px]" />
       </div>
-      <div className="p-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-16 pb-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12 py-8">
         {Array.from({ length: 9 }).map((_, index) => (
           <div key={index} className="border-none rounded-lg flex flex-col">
             <div className="flex items-center justify-center min-h-[254px]">
