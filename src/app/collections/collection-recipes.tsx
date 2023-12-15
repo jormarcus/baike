@@ -12,12 +12,14 @@ const CollectionRecipes: React.FC<CollectionRecipesProps> = ({
 }) => {
   return (
     <div className="flex h-full w-full flex-col overflow-y-scroll rounded-md border-t border-l border-neutral-600">
-      <div className="flex items-center justify-between pt-8 px-16">
+      <div className="flex items-center justify-between py-8 px-16 border-b border-border/60 dark:border-border/80 divide-border/60 dark:divide-border/80 ring-border dark:ring-border">
         <h2 className="text-3xl font-semibold">{activeCollection.name}</h2>
         <AddRecipesToCollectionModal
           collectionId={activeCollection.id}
           name={activeCollection.name}
           label="Add recipes to collection"
+          buttonStyle="dark:bg-amber-500 dark:text-white dark:hover:bg-amber-400"
+          hasIcon={false}
         />
       </div>
       {activeCollection?.recipes && activeCollection.recipes.length === 0 ? (

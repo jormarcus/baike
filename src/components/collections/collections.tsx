@@ -5,15 +5,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { SafeCollection } from '@/types';
 import useIntersectionObserver from '@/hooks/use-intersection-observer';
-import CollectionCard from './collection-card';
-import {
-  deleteCollection,
-  getPaginatedCollections,
-} from '@/app/_actions/collection-actions';
-import EmptyState from '../ui/empty-state';
-import toast from 'react-hot-toast';
-import RecipeCard from '../recipes/recipe-card';
-import AddRecipesToCollectionModal from '../recipes/add-recipes-to-collection-modal';
+import { getPaginatedCollections } from '@/app/_actions/collection-actions';
 
 interface CollectionsProps {
   initialCollections: SafeCollection[];

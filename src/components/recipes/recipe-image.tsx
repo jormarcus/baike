@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { Croissant } from 'lucide-react';
 import Image from 'next/image';
 
@@ -16,11 +17,10 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
 }) => {
   if (!image) {
     return (
-      <div className="bg-neutral-900 dark:bg-neutral-900 flex items-center justify-center h-full w-full rounded-lg aspect-square">
+      <div className="bg-neutral-900 dark:bg-neutral-900 flex items-center justify-center object-cover transition group-hover:scale-110 aspect-square rounded-lg">
         <Croissant
-          className="text-white"
-          height={height / 3}
-          width={width / 3}
+          className="text-white p-4"
+          size={height < 160 ? height : 160}
         />
       </div>
     );

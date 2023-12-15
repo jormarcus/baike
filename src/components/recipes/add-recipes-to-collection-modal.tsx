@@ -35,6 +35,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { addRecipesToCollection } from '@/app/_actions/collection-actions';
 import { Button } from '../ui/button';
 import Searchbox from '../ui/searchbox';
+import { cn } from '@/lib/utils';
+import { Plus } from 'lucide-react';
 
 const AddRecipesToCollectionSchema = z.object({
   recipes: z.array(z.string()),
@@ -44,11 +46,13 @@ interface AddRecipesToCollectionModalProps {
   collectionId: number;
   name: string;
   label: string;
+  buttonStyle: string;
+  hasIcon: boolean | false;
 }
 
 const AddRecipesToCollectionModal: React.FC<
   AddRecipesToCollectionModalProps
-> = ({ collectionId, name, label }) => {
+> = ({ collectionId, name, label, buttonStyle, hasIcon }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [recipes, setRecipes] = useState<SafeRecipe[]>([]);
@@ -182,8 +186,8 @@ const AddRecipesToCollectionModal: React.FC<
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <Button className="dark:bg-amber-500 dark:text-white dark:hover:bg-amber-400">
-          {label}
+        <Button className={cn(buttonStyle)}>
+          {hasIcon ? <Plus size={24} /> : null} <span>{label}</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-xl">

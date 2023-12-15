@@ -3,7 +3,6 @@ import { getCurrentUser } from '../_actions/user-actions';
 import EmptyState from '../../components/ui/empty-state';
 import RecipesList from '@/components/recipes/recipes-list';
 import RecipeCompare from '@/components/recipes/recipe-compare';
-import Categories from '@/components/categories/categories';
 
 interface RecipesPageProps {
   searchParams: {
@@ -25,7 +24,6 @@ const RecipesPage = async ({ searchParams }: RecipesPageProps) => {
   return (
     <div className="flex flex-col h-full w-full justify-between">
       <div className="flex flex-col px-16">
-        {/* <Categories /> */}
         <RecipesList initialRecipes={recipes} totalCount={totalCount} />
       </div>
       <RecipeCompare />

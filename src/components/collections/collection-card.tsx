@@ -41,18 +41,16 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
     >
       <div className="flex items-center w-full p-2">
         <div className="flex items-center gap-4 basis-11/12">
-          <div className="h-[80px] w-[80px]">
-            <RecipeImage
-              image={
-                collection.recipes && collection.recipes.length > 0
-                  ? collection.recipes[0]['imageSrc']
-                  : null
-              }
-              alt={collection.name}
-              width={60}
-              height={60}
-            />
-          </div>
+          <RecipeImage
+            image={
+              collection.recipes && collection.recipes.length > 0
+                ? collection.recipes[0]['imageSrc']
+                : null
+            }
+            alt={collection.name}
+            width={60}
+            height={60}
+          />
 
           <div className="flex flex-col gap-1">
             <h2 className="text-md">{collection.name}</h2>
