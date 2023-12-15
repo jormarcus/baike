@@ -5,18 +5,10 @@ import { Heart } from 'lucide-react';
 import Link from 'next/link';
 
 import { SafeRecipe } from '@/types';
-import FeatureCard from '../ui/feature-card';
 import RecipeImage from './recipe-image';
 import { Label } from '../ui/label';
 import { useRecipeCompare } from '@/context/recipe-compare-context';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 interface RecipeCardProps {
   recipe: SafeRecipe;

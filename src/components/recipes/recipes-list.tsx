@@ -5,10 +5,8 @@ import { useSearchParams } from 'next/navigation';
 
 import { SafeRecipe } from '@/types';
 import RecipeCard from './recipe-card';
-import EmptyState from '../ui/empty-state';
 import useIntersectionObserver from '@/hooks/use-intersection-observer';
 import { getPaginatedRecipes } from '@/app/_actions/recipe-actions';
-import Loading from '@/app/recipes/loading';
 
 interface RecipesListProps {
   initialRecipes: SafeRecipe[];
@@ -59,7 +57,7 @@ const RecipesList: React.FC<RecipesListProps> = ({
 
   return (
     <div className="h-full overflow-y-scroll no-scrollbar max-h-[82vh]">
-      <div className="grid grid-cols-1 gap-12 py-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12 py-8">
         {recipes.map((recipe, index) => {
           return index === recipes.length - 1 && index < totalCount ? (
             <div ref={container} key={recipe.id} className="w-full">

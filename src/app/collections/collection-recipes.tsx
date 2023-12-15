@@ -11,7 +11,7 @@ const CollectionRecipes: React.FC<CollectionRecipesProps> = ({
   activeCollection,
 }) => {
   return (
-    <div className="flex h-full w-full flex-col overflow-y-scroll rounded-md border-t border-l border-neutral-600">
+    <div className="flex w-full flex-col overflow-y-scroll rounded-md border-t border-l border-neutral-600 max-h-screen">
       <div className="flex items-center justify-between py-8 px-16 border-b border-border/60 dark:border-border/80 divide-border/60 dark:divide-border/80 ring-border dark:ring-border">
         <h2 className="text-3xl font-semibold">{activeCollection.name}</h2>
         <AddRecipesToCollectionModal
@@ -27,10 +27,10 @@ const CollectionRecipes: React.FC<CollectionRecipesProps> = ({
           <EmptyState title="No recipes in this collection" />
         </div>
       ) : (
-        <div className="p-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-16 pb-2">
+        <div className="p-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-16 pb-2 overscroll-y-scroll max-h-screen">
           {activeCollection?.recipes &&
             activeCollection?.recipes.map((recipe) => (
-              <div key={recipe.id} className="">
+              <div key={recipe.id}>
                 <RecipeCard recipe={recipe} />
               </div>
             ))}

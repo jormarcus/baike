@@ -67,7 +67,7 @@ const CollectionsSidebar: React.FC<CollectionsSidebarProps> = ({}) => {
   }, [isVisible, collections.length, searchParams, totalCount, setCollections]);
 
   return (
-    <div className="flex h-full w-full max-w-[300px] flex-col overflow-y-scroll rounded-lg">
+    <div className="flex h-full w-full max-w-[300px] max-h-screen flex-col overflow-y-scroll rounded-lg">
       {collections.length > 0 ? (
         collections.map((collection, index) => {
           return index === collections.length - 1 && index < totalCount ? (

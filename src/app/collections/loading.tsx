@@ -1,27 +1,34 @@
 import Skeleton from '@/components/ui/skeleton';
-import { Folder } from 'lucide-react';
+import { Croissant, Folder } from 'lucide-react';
 
 const Loading = () => {
   return (
-    <div className="w-full flex flex-col gap-4 pb-2 justify-center items-center">
-      {Array.from({ length: 10 }).map((_, index) => (
-        <div
-          key={index}
-          className="max-w-3xl w-full flex rounded-md items-center justify-between gap-4 overflow-hidden bg-gradient-to-r from-neutral-500/10 from-75% to-100% p-4 py-2 text-black/90 duration-300 group-active/challenge:bg-neutral-500/40 group-active/challenge:duration-75 dark:text-white/90 sm:py-4"
-        >
-          <div className="flex justify-center items-center">
-            <Folder />
-          </div>
-          <div className="w-full pr-4">
-            <div className="flex justify-between items-center pb-2">
-              <Skeleton className="h-8 w-[120px]" />
-              <Skeleton className="h-6 w-[68px]" />
+    <div className="flex h-full w-full flex-col overflow-y-scroll rounded-md border-t border-l border-neutral-600">
+      <div className="flex items-center justify-between py-8 px-16 border-b border-border/60 dark:border-border/80 divide-border/60 dark:divide-border/80 ring-border dark:ring-border">
+        <Skeleton className="h-10 w-[120px]" />
+        <Skeleton className="h-10 w-[80px]" />
+      </div>
+      <div className="p-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-16 pb-2">
+        {Array.from({ length: 9 }).map((_, index) => (
+          <div key={index} className="border-none rounded-lg flex flex-col">
+            <div className="flex items-center justify-center min-h-[254px]">
+              <Croissant size={60} />
             </div>
-            <hr className="mb-1 pt-1 w-full" />
-            <Skeleton className="h-6 w-[500px]" />
+
+            <div className="flex flex-col items-start gap-2 px-4">
+              <div className="w-full flex justify-between">
+                <Skeleton className="h-6 w-[160px]" />
+                <Skeleton className="h-6 w-[30px]" />
+              </div>
+
+              <div className="w-full flex gap-2">
+                <Skeleton className="h-6 w-[20px]" />
+                <Skeleton className="h-6 w-[100px]" />
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
