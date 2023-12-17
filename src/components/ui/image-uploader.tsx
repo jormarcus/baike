@@ -45,18 +45,32 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
             className="relative flex cursor-pointer flex-col items-center justify-center gap-4 border-2 border-dashed border-neutral-500 dark:border-neutral-600 rounded-xl aspect-square transition hover:opacity-70 whitespace-nowrap h-[200px] w-[200px]"
           >
             {value ? (
-              <>
-                <Image
-                  className="relative object-cover"
-                  src={value}
-                  alt="recipe image"
-                  height={200}
-                  width={200}
-                />
+              <div>
+                {value.includes('avatars.githubusercontent.com') ||
+                value.includes('lh3.googleusercontent.com') ||
+                value.includes('res.cloudinary.comm') ? (
+                  <Image
+                    className="relative object-cover"
+                    src={value}
+                    alt="recipe image"
+                    height={200}
+                    width={200}
+                  />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={value}
+                    alt="recipe image"
+                    className="object-cover transition group-hover:scale-110 aspect-square rounded-lg"
+                    height={200}
+                    width={200}
+                  />
+                )}
+
                 <div className="p-2 absolute bottom-[-12px] right-[-12px] border rounded-full  dark:bg-secondary  dark:text-white">
                   <Pencil height={20} width={20} />
                 </div>
-              </>
+              </div>
             ) : (
               <>
                 <div className="text-lg font-semibold">Click to upload</div>

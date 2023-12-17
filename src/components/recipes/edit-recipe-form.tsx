@@ -110,7 +110,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
           deletedIngredients
         );
         router.refresh();
-        router.push(`/recipe/${newRecipe.id}`);
+        router.push(`/recipes/${newRecipe.id}`);
       } catch (error) {
         error instanceof Error
           ? toast.error(error.message)

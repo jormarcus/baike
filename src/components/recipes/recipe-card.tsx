@@ -20,7 +20,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
 
   return (
     <Card className="border-none rounded-lg">
-      <Link href={`/recipe/${id}`} className="flex flex-col">
+      <Link href={`/recipes/${id}`} className="flex flex-col">
         <CardContent className="p-0 rounded-lg">
           <div className="object-cover transition duration-300 group-hover:scale-110 ease-cubic-bezier rounded-lg">
             <RecipeImage image={imageSrc} alt={name} height={240} width={300} />
@@ -36,7 +36,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
       <CardFooter className="flex flex-col items-start pt-1 pb-0 px-0">
         <div className="flex justify-between items-center w-full">
           <Link
-            href={`/recipe/${id}`}
+            href={`/recipes/${id}`}
             className="text-sm font-semibold truncate basis-10/12"
           >
             {recipe.name}

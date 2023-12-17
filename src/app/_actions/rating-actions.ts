@@ -63,5 +63,5 @@ export async function upsertRating(
     },
   });
 
-  revalidatePath(`/recipe/${recipeId}`);
+  revalidatePath(`/recipes/${recipeId}`);
 }

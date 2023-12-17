@@ -323,7 +323,7 @@ export async function addCollectionsToRecipe(
     },
   });
 
-  revalidatePath(`/recipe/${recipeId}`);
+  revalidatePath(`/recipes/${recipeId}`);
 
   return formatSafeRecipe(updatedRecipe);
 }

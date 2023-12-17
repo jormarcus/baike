@@ -27,7 +27,7 @@ export default async function RecipePage({
   }
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col items-center sm:items-start space-y-4 mt-8 px-4 sm:px-0">
+    <div className="mx-auto flex max-w-4xl flex-col items-center sm:items-start space-y-4 py-16 px-4 sm:px-0">
       <RecipeActionButtonRow recipe={recipe} />
 
       <div className="flex flex-col gap-8 sm:gap-16">
@@ -40,8 +40,8 @@ export default async function RecipePage({
               <RecipeImage
                 image={recipe.imageSrc}
                 alt={recipe.name}
-                height={80}
-                width={80}
+                height={200}
+                width={300}
               />
             </div>
             <div className="flex justify-center">

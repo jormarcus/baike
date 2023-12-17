@@ -18,7 +18,6 @@ export default async function EditRecipePage({
     return <EmptyState title="Recipe not found" />;
   }
 
-  console.log(recipe);
   return (
     <div>
       <EditRecipeForm recipe={recipe} />

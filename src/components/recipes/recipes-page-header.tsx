@@ -30,7 +30,7 @@ const RecipesPageHeader: React.FC<RecipesPageHeaderProps> = () => {
           <Button
             className="bg-amber-500 text-white hover:bg-amber-400 flex gap-2"
             variant="default"
-            onClick={() => router.push('/recipe/add')}
+            onClick={() => router.push('/recipes/add')}
           >
             <PlusCircle />
             Add recipe

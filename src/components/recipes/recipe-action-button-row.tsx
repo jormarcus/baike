@@ -17,9 +17,9 @@ const RecipeActionButtonRow: React.FC<RecipeActionButtonRowProps> = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="flex gap-6 sm:gap-4">
+    <div className="flex gap-12 w-full">
       <Button
-        onClick={() => router.push(`/recipe/${recipe.id}/edit`)}
+        onClick={() => router.push(`/recipes/${recipe.id}/edit`)}
         className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 flex flex-nowrap items-center"
       >
         <Edit className="mr-0 md:mr-2 h-4 w-4" />

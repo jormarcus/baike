@@ -59,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
       },
       {
         label: 'Add recipe',
-        href: '/recipe/add',
+        href: '/recipes/add',
         icon: <Icons.plusCircle />,
       },
     ];
@@ -88,7 +88,10 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
               }}
             >
               {sideBarItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive =
+                  item.href === '/'
+                    ? pathname === '/'
+                    : pathname.includes(item.href);
                 if (item.hide) {
                   return null;
                 } else {

@@ -87,7 +87,7 @@ const AddRecipeForm: React.FC = () => {
     startTransition(async () => {
       try {
         const newRecipe = await createRecipe(data);
-        router.push(`/recipe/${newRecipe.id}`);
+        router.push(`/recipes/${newRecipe.id}`);
       } catch (error) {
         error instanceof Error
           ? toast.error(error.message)

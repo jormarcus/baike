@@ -51,7 +51,7 @@ const ImportRecipeModal: React.FC<ImportRecipeModalProps> = ({}) => {
     startTransition(async () => {
       try {
         const newRecipe = await importRecipe(data.url);
-        router.push(`/recipe/${newRecipe.id}`);
+        router.push(`/recipes/${newRecipe.id}`);
         setIsOpen(false);
       } catch (error) {
         error instanceof Error

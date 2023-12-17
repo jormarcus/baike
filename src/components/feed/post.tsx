@@ -70,7 +70,7 @@ const PostFooter: React.FC<{
 
     <div>
       <Link
-        href={`/recipe/${id}`}
+        href={`/recipes/${id}`}
         className="pr-2 font-bold dark:hover:text-neutral-300 whitespace-nowrap"
       >
         {title}
