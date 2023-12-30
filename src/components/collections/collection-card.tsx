@@ -39,8 +39,8 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
       )}
       onClick={handleClick}
     >
-      <div className="flex items-center w-full p-2">
-        <div className="flex items-center gap-4 basis-11/12">
+      <div className="flex items-center w-full p-2 justify-between">
+        <div className="flex items-center gap-4 basis-11/12 max-w-[60px] max-h-[60px]">
           <RecipeImage
             image={
               collection.recipes && collection.recipes.length > 0
@@ -48,8 +48,6 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
                 : null
             }
             alt={collection.name}
-            width={60}
-            height={60}
           />
 
           <div className="flex flex-col gap-1">

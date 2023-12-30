@@ -1,44 +1,29 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { toast } from 'react-hot-toast';
 
 import CollectionCard from '@/components/collections/collection-card';
 import EmptyState from '@/components/ui/empty-state';
-import { useCollections } from '@/context/collections-context';
 import useIntersectionObserver from '@/hooks/use-intersection-observer';
 import { SafeCollection } from '@/types';
-import {
-  getCollectionsWithCount,
-  getPaginatedCollections,
-} from '../_actions/collection-actions';
+import { getPaginatedCollections } from '../_actions/collection-actions';
 
-interface CollectionsSidebarProps {}
+interface CollectionsSidebarProps {
+  initialCollections: SafeCollection[];
+  totalCount: number;
+}
 
-const CollectionsSidebar: React.FC<CollectionsSidebarProps> = ({}) => {
+const CollectionsSidebar: React.FC<CollectionsSidebarProps> = ({
+  initialCollections,
+  totalCount,
+}) => {
   const searchParams = useSearchParams();
+  const [collections, setCollections] =
+    useState<SafeCollection[]>(initialCollections);
+
   const container = useRef<HTMLDivElement>(null);
   const isVisible = useIntersectionObserver(container, {});
-  const { collections, totalCount, setCollections, setTotalCount } =
-    useCollections();
-
-  const query: string = searchParams.get('search') || '';
-
-  useEffect(() => {
-    const fetchCollections = async () => {
-      try {
-        const { collections, totalCount: count } =
-          await getCollectionsWithCount(query);
-        setCollections(collections);
-        setTotalCount(count);
-      } catch (error) {
-        console.error(error);
-        toast.error('Could not fetch collections');
-      }
-    };
-    fetchCollections();
-  }, [query, setCollections, setTotalCount]);
 
   useEffect(() => {
     const getCollections = async () => {

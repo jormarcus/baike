@@ -9,10 +9,7 @@ const CollectionsLayout = async ({ children }: CollectionsLayoutProps) => {
   return (
     <div className="flex flex-col max-h-screen overflow-hidden">
       <CollectionsHeader />
-      <div className="flex max-h-screen">
-        <CollectionsSidebar />
-        <div className="w-full flex justify-center">{children}</div>
-      </div>
+      <div className="w-full flex justify-center">{children}</div>
     </div>
   );
 };
