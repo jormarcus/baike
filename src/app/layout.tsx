@@ -1,4 +1,4 @@
-import { Nunito } from 'next/font/google';
+import { Figtree } from 'next/font/google';
 
 import './globals.css';
 import LoginModal from '../components/auth/login-modal';
@@ -17,7 +17,7 @@ export const metadata = {
   },
 };
 
-const font = Nunito({
+const font = Figtree({
   subsets: ['latin'],
 });
 
@@ -36,12 +36,7 @@ export default async function RootLayout({
             <RegisterModal />
             <ToastProvider />
             <div className="flex h-full min-h-[100vh]">
-              <Sidebar currentUser={currentUser} />
-              <div className="py-2 pr-2 grow">
-                <div className="rounded-lg shadow-sm border dark:border h-full bg-clip-border border-neutral-600 bg-background overflow-hidden">
-                  {children}
-                </div>
-              </div>
+              <Sidebar>{children}</Sidebar>
             </div>
             <Themechanger />
           </Providers>
