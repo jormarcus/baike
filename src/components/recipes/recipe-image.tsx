@@ -4,23 +4,13 @@ import Image from 'next/image';
 interface RecipeImageProps {
   image: string | null;
   alt: string;
-  height: number;
-  width: number;
 }
 
-const RecipeImage: React.FC<RecipeImageProps> = ({
-  image,
-  alt,
-  height,
-  width,
-}) => {
+const RecipeImage: React.FC<RecipeImageProps> = ({ image, alt }) => {
   if (!image) {
     return (
-      <div className="bg-neutral-900 dark:bg-neutral-900 flex items-center justify-center object-cover transition group-hover:scale-110 aspect-square rounded-lg">
-        <Croissant
-          className="text-white p-4"
-          size={height < 100 ? height : 100}
-        />
+      <div className="bg-neutral-900 dark:bg-neutral-900 flex items-center justify-center object-cover transition group-hover:scale-110 aspect-square rounded-lg h-auto max-w-full">
+        <Croissant className="text-white p-4 h-auto max-w-full" />
       </div>
     );
   }
@@ -35,17 +25,14 @@ const RecipeImage: React.FC<RecipeImageProps> = ({
           decoding="async"
           className="object-cover transition group-hover:scale-110 aspect-square rounded-lg"
           priority
-          height={height}
-          width={width}
+          fill
         />
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={image}
           alt={alt}
-          className="object-cover transition group-hover:scale-110 aspect-square rounded-lg"
-          height={height}
-          width={width}
+          className="object-cover transition group-hover:scale-110 aspect-square rounded-lg h-auto max-w-full"
         />
       )}
     </div>

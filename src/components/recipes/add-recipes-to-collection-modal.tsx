@@ -123,7 +123,6 @@ const AddRecipesToCollectionModal: React.FC<
       );
       setIsOpen(false);
     } catch (error) {
-      console.log('error: ', error);
       toast.error('Something went wrong!');
     } finally {
       setIsLoading(false);

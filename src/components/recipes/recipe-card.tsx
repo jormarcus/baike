@@ -23,7 +23,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
       <Link href={`/recipes/${id}`} className="flex flex-col">
         <CardContent className="p-0 rounded-lg">
           <div className="object-cover transition duration-300 group-hover:scale-110 ease-cubic-bezier rounded-lg">
-            <RecipeImage image={imageSrc} alt={name} height={240} width={300} />
+            <RecipeImage image={imageSrc} alt={name} />
           </div>
           <div className="absolute right-4 top-4 bg-transparent">
             <Heart

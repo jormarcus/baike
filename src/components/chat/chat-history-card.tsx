@@ -40,7 +40,6 @@ const ChatHistoryCard = ({ chat, handleDelete }: ChatHistoryCardProps) => {
 
   const onSubmit: SubmitHandler<ChatTitleSchemaType> = useCallback(
     async (data: ChatTitleSchemaType) => {
-      console.log('submitting');
       try {
         const updatedChat = await updateChatTitle(chat.id, data.title);
         if (updatedChat) {
