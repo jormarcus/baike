@@ -11,12 +11,14 @@ import {
 } from '@/components/ui/table';
 import { Button } from '../ui/button';
 import RecipeImage from './recipe-image';
+import { cn } from '@/lib/utils';
 
 interface RecipeCompareTableProps {
   recipes: SafeRecipe[];
 }
 
 const TableHeading = ({ recipes }: { recipes: SafeRecipe[] }) => {
+  const height = recipes.length === 1 ? 240 : 80;
   return (
     <TableHeader>
       <TableRow className="grid grid-cols-5 border border-neutral-600">
@@ -33,12 +35,7 @@ const TableHeading = ({ recipes }: { recipes: SafeRecipe[] }) => {
                 X
               </Button>
               <div className="object-cover transition duration-300 group-hover:scale-110 ease-cubic-bezier rounded-3xl flex items-center justify-center h-60 w-60 py-4">
-                <RecipeImage
-                  image={recipe.imageSrc}
-                  alt={recipe.name}
-                  height={80}
-                  width={80}
-                />
+                <RecipeImage image={recipe.imageSrc} alt={recipe.name} />
               </div>
             </div>
           </TableHead>
@@ -120,6 +117,7 @@ function calcTotalTime(hours = 0, min = 0) {
 }
 
 const RecipeCompareTable: React.FC<RecipeCompareTableProps> = ({ recipes }) => {
+  const colSpan = recipes.length === 1 ? 3 : recipes.length === 2 ? 2 : 1;
   return (
     <Table className="overflow-scroll">
       <TableHeading recipes={recipes} />
@@ -132,7 +130,10 @@ const RecipeCompareTable: React.FC<RecipeCompareTableProps> = ({ recipes }) => {
           {recipes.map((recipe) => (
             <TableCell
               key={recipe.id}
-              className="border-l border-r border-neutral-600 col-span-1"
+              className={cn(
+                'border-l border-r border-neutral-600',
+                `col-span-${colSpan}`
+              )}
             >
               {recipe.name}
             </TableCell>
@@ -145,7 +146,10 @@ const RecipeCompareTable: React.FC<RecipeCompareTableProps> = ({ recipes }) => {
           {recipes.map((recipe) => (
             <TableCell
               key={recipe.id}
-              className="border-l border-r border-neutral-600 col-span-1"
+              className={cn(
+                'border-l border-r border-neutral-600',
+                `col-span-${colSpan}`
+              )}
             >
               {recipe.averageRating}
             </TableCell>
@@ -158,7 +162,10 @@ const RecipeCompareTable: React.FC<RecipeCompareTableProps> = ({ recipes }) => {
           {recipes.map((recipe) => (
             <TableCell
               key={recipe.id}
-              className="border-l border-r border-neutral-600 col-span-1"
+              className={cn(
+                'border-l border-r border-neutral-600',
+                `col-span-${colSpan}`
+              )}
             >
               {recipe.servings}
             </TableCell>
@@ -171,7 +178,10 @@ const RecipeCompareTable: React.FC<RecipeCompareTableProps> = ({ recipes }) => {
           {recipes.map((recipe) => (
             <TableCell
               key={recipe.id}
-              className="border-l border-r border-neutral-600 col-span-1"
+              className={cn(
+                'border-l border-r border-neutral-600',
+                `col-span-${colSpan}`
+              )}
             >
               {calcTotalTime(recipe.prepHours, recipe.prepMinutes)}
             </TableCell>
@@ -184,7 +194,10 @@ const RecipeCompareTable: React.FC<RecipeCompareTableProps> = ({ recipes }) => {
           {recipes.map((recipe) => (
             <TableCell
               key={recipe.id}
-              className="border-l border-r border-neutral-600 col-span-1"
+              className={cn(
+                'border-l border-r border-neutral-600',
+                `col-span-${colSpan}`
+              )}
             >
               {calcTotalTime(recipe.cookHours, recipe.cookMinutes)}
             </TableCell>
