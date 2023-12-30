@@ -17,44 +17,33 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
-        },
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
-        },
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        backgroundBase: 'hsl(var(--background-base))',
+        backgroundHighlight: 'hsl(var(--background-highlight))',
+        backgroundPress: 'hsl(var(--background-press))',
+        backgroundElevatedBase: 'hsl(var(--background-elevated-base))',
+        backgroundElevatedHighlight:
+          'hsl(var(--background-elevated-highlight))',
+        backgroundElevatedPress: 'hsl(var(--background-elevated-press))',
+        backgroundTintedBase: 'hsl(var(--background-tinted-base))',
+        backgroundTintedHighlight: 'hsl(var(--background-tinted-highlight))',
+        backgroundTintedPress: 'hsl(var(--background-tinted-press))',
+        textBase: 'hsl(var(--text-base))',
+        textSubdued: 'hsl(var(--text-subdued))',
+        textBrightAccent: 'hsl(var(--text-bright-accent))',
+        textNegative: 'hsl(var(--text-negative))',
+        textWarning: 'hsl(var(--text-warning))',
+        textPositive: 'hsl(var(--text-positive))',
+        textAnnouncement: 'hsl(var(--text-announcement))',
+        essentialBase: 'hsl(var(--essential-base))',
+        essentialSubdued: 'hsl(var(--essential-subdued))',
+        essentialBrightAccent: 'hsl(var(--essential-bright-accent))',
+        essentialNegative: 'hsl(var(--essential-negative))',
+        essentialWarning: 'hsl(var(--essential-warning))',
+        essentialPositive: 'hsl(var(--essential-positive))',
+        essentialAnnouncement: 'hsl(var(--essential-announcement))',
+        decorativeBase: 'hsl(var(--decorative-base))',
+        decorativeSubdued: 'hsl(var(--decorative-subdued))',
       },
       keyframes: {
         'accordion-down': {
