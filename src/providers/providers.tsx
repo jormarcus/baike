@@ -1,6 +1,5 @@
 'use client';
 
-import { ThemeProvider } from 'next-themes';
 import { FC, ReactNode } from 'react';
 
 import { LoginModalProvider } from '@/context/login-modal-context';
@@ -11,6 +10,7 @@ import { UserPreferencesProvider } from '@/context/user-preferences-context';
 import { WelcomeWizardProvider } from '@/context/welcome-wizard-context';
 import { RecipeCompareProvider } from '@/context/recipe-compare-context';
 import { CollectionsProvider } from '@/context/collections-context';
+import { ThemeProvider } from './theme-provider';
 
 interface ProvidersProps {
   children: ReactNode;

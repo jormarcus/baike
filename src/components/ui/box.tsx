@@ -7,7 +7,12 @@ type BoxProps = {
 
 const Box: React.FC<BoxProps> = ({ children, className }) => {
   return (
-    <div className={cn('background-base rounded-lg h-fit w-full', className)}>
+    <div
+      className={cn(
+        'bg-card text-card-foreground rounded-lg h-fit w-full',
+        className
+      )}
+    >
       {children}
     </div>
   );

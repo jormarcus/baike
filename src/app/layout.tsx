@@ -28,9 +28,9 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="dark bg-background" suppressHydrationWarning>
       <body className={`${font.className}`}>
-        <main className="h-full">
+        <main className="h-full min-h-full w-full p-2">
           <Providers>
             <LoginModal />
             <RegisterModal />
