@@ -30,17 +30,13 @@ export default async function RootLayout({
   return (
     <html lang="en" className="dark bg-background" suppressHydrationWarning>
       <body className={`${font.className}`}>
-        <main className="h-full min-h-full w-full p-2">
-          <Providers>
-            <LoginModal />
-            <RegisterModal />
-            <ToastProvider />
-            <div className="flex h-full min-h-[100vh]">
-              <Sidebar>{children}</Sidebar>
-            </div>
-            <Themechanger />
-          </Providers>
-        </main>
+        <Providers>
+          <LoginModal />
+          <RegisterModal />
+          <ToastProvider />
+          <Sidebar>{children}</Sidebar>
+          <Themechanger />
+        </Providers>
       </body>
     </html>
   );

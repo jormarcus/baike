@@ -2,7 +2,7 @@ import { Croissant } from 'lucide-react';
 import Image from 'next/image';
 
 interface RecipeImageProps {
-  image: string | null;
+  image?: string;
   alt: string;
 }
 
@@ -15,7 +15,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({ image, alt }) => {
     );
   }
   return (
-    <div className="">
+    <>
       {image.includes('avatars.githubusercontent.com') ||
       image.includes('lh3.googleusercontent.com') ||
       image.includes('res.cloudinary.comm') ? (
@@ -23,7 +23,7 @@ const RecipeImage: React.FC<RecipeImageProps> = ({ image, alt }) => {
           src={image}
           alt={alt}
           decoding="async"
-          className="object-cover transition group-hover:scale-110 aspect-square rounded-lg"
+          className="object-cover transition"
           priority
           fill
         />
@@ -32,10 +32,10 @@ const RecipeImage: React.FC<RecipeImageProps> = ({ image, alt }) => {
         <img
           src={image}
           alt={alt}
-          className="object-cover transition group-hover:scale-110 aspect-square rounded-lg h-auto max-w-full"
+          className="object-cover transition group-hover:scale-110 aspect-square rounded-lg"
         />
       )}
-    </div>
+    </>
   );
 };
 
