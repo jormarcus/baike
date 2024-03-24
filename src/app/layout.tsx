@@ -37,7 +37,7 @@ export default async function RootLayout({
           <RegisterModal />
           <ToastProvider />
           <div className="flex">
-            <Sidebar />
+            <Sidebar currentUser={currentUser} />
             <Box className="w-full my-2 mr-2">
               <Header currentUser={currentUser} />
               <div className="overflow-hidden overflow-y-auto min-h-screen">

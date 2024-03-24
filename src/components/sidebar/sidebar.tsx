@@ -7,8 +7,14 @@ import { BiSearch } from 'react-icons/bi';
 import Box from '../ui/box';
 import Cookbook from './cookbook';
 import SidebarItem from './sidebar-item';
+import { SafeUser } from '@/types';
+import { Button } from '../ui/button';
 
-const Sidebar: React.FC = () => {
+export type SidebarProps = {
+  currentUser: SafeUser | null;
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   const pathname = usePathname();
 
   const routes = useMemo(() => {
@@ -39,7 +45,7 @@ const Sidebar: React.FC = () => {
           </div>
         </Box>
         <Box className="overflow-y-auto h-full min-h-screen">
-          <Cookbook />
+          <Cookbook currentUser={currentUser} />
         </Box>
       </div>
     </div>
