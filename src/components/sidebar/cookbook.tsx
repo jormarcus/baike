@@ -33,11 +33,11 @@ const Cookbook: React.FC<CookbookProps> = ({ currentUser }) => {
       ) : (
         <div className="flex flex-col gap-4 px-2">
           <Box className="bg-secondary py-4 px-5">
-            <p className="pb-4">Let&apos;s find some recipes to cook</p>
+            <p className="pb-6">Let&apos;s find some recipes to cook</p>
             <Button className="bg-white text-background">Browse recipes</Button>
           </Box>
           <Box className="bg-secondary py-4 px-5">
-            <p className="pb-4">Create your first collection</p>
+            <p className="pb-6">Create your first collection</p>
             <Button className="bg-white text-background">
               Create Collection
             </Button>
