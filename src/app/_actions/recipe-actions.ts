@@ -5,14 +5,26 @@ import { revalidatePath } from 'next/cache';
 import { parseIngredient } from 'parse-ingredient';
 
 import { formatSafeIngredient, formatSafeRecipe } from '@/helpers/format-dto';
-import { getCurrentUser } from './user-actions';
-import { Recipe, RecipeSchema } from '@/lib/validators/recipe-validator';
-import { Ingredient } from '@/lib/validators/ingredient-validator';
-import { CollectionWithRecipeNames, ImportedRecipe, SafeRecipe } from '@/types';
-import { capitalizeFirstLetter, omit } from '@/lib/utils';
-import { Recipe as PrismaRecipe } from '@prisma/client';
-import { Ingredient as PrismaIngredient } from '@prisma/client';
 import { importRecipeLambda } from '@/lib/aws-lambda';
+import { capitalizeFirstLetter, omit } from '@/lib/utils';
+import { Ingredient } from '@/lib/validators/ingredient-validator';
+import { Recipe, RecipeSchema } from '@/lib/validators/recipe-validator';
+import { CollectionWithRecipeNames, ImportedRecipe, SafeRecipe } from '@/types';
+import { Ingredient as PrismaIngredient, Recipe as PrismaRecipe } from '@prisma/client';
+import { getCurrentUser } from './user-actions';
+
+export async function getHomeRecipes() {
+  const newFeedRecipes = await getNewFeedRecipes();
+  const popularFeedRecipes = await getPopularFeedRecipes();
+  const recentRecipes = await getRecentRecipes();
+
+  return {
+    newFeedRecipes,
+    popularFeedRecipes,
+    recentRecipes
+  };
+
+}
 
 function parseIngredients(ingredients: { input: string; id?: number }[]) {
   return ingredients.map((ingredient, index) => {
@@ -235,6 +247,20 @@ export async function getPopularFeedRecipes() {
     },
     orderBy: {
       // likesCount: 'desc',
+    },
+    take: 10,
+  });
+
+  return recipes.map((recipe: PrismaRecipe) => formatSafeRecipe(recipe));
+}
+
+export async function getRecentRecipes() {
+  const recipes = await prisma.recipe.findMany({
+    where: {
+      isPublic: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
     },
     take: 10,
   });
