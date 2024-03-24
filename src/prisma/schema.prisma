@@ -58,6 +58,7 @@ model User {
   accounts       Account[]
   sessions       Session[]
   avoidances     Avoidance[]
+  RecipeView     RecipeView[]
 
   @@map("users")
 }
@@ -94,6 +95,7 @@ model Recipe {
   ratings       Rating[]
   collections   Collection[] @relation("CollectionToRecipe")
   ingredients   Ingredient[] @relation("IngredientToRecipe")
+  RecipeView    RecipeView[]
 }
 
 model Ingredient {
@@ -141,11 +143,11 @@ model Like {
   collectionId Int        @map("collection_id")
   commentId    Int        @map("comment_id")
   postId       Int        @map("post_id")
-  collection   Collection @relation(fields: [collectionId], references: [id])
-  comment      Comment    @relation(fields: [commentId], references: [id])
-  post         Post       @relation(fields: [postId], references: [id])
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  comment      Comment    @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  post         Post       @relation(fields: [postId], references: [id], onDelete: Cascade)
   review       Review     @relation(fields: [reviewId], references: [id], onDelete: Cascade)
-  user         User       @relation(fields: [userId], references: [id])
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Rating {
@@ -155,8 +157,8 @@ model Rating {
   rating    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  recipe    Recipe   @relation(fields: [recipeId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Note {
@@ -164,7 +166,7 @@ model Note {
   userId   Int        @map("user_id")
   recipeId Int        @map("recipe_id")
   note     String
-  user     User       @relation(fields: [userId], references: [id])
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   noteLike NoteLike[]
 }
 
@@ -175,7 +177,7 @@ model Review {
   review     String
   likeCount  Int          @default(0)
   like       Like[]
-  User       User         @relation(fields: [userId], references: [id])
+  User       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   reviewLike ReviewLike[]
 }
 
@@ -183,16 +185,16 @@ model ReviewLike {
   id       Int    @id @default(autoincrement())
   userId   Int    @map("user_id")
   reviewId Int    @map("review_id")
-  review   Review @relation(fields: [reviewId], references: [id])
-  user     User   @relation(fields: [userId], references: [id])
+  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model NoteLike {
   id     Int  @id @default(autoincrement())
   userId Int  @map("user_id")
   noteId Int  @map("note_id")
-  note   Note @relation(fields: [noteId], references: [id])
-  user   User @relation(fields: [userId], references: [id])
+  note   Note @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Chat {
@@ -202,7 +204,7 @@ model Chat {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   userMessagesCount Int       @default(0) @map("user_messages_count")
-  user              User      @relation(fields: [userId], references: [id])
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   messages          Message[]
 }
 
@@ -213,7 +215,7 @@ model Message {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   chatId        Int      @map("chat_id")
-  chat          Chat     @relation(fields: [chatId], references: [id])
+  chat          Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
 }
 
 model Post {
@@ -227,8 +229,8 @@ model Post {
   recipeId   Int?
   comments   Comment[]
   likes      Like[]
-  Recipe     Recipe?   @relation(fields: [recipeId], references: [id])
-  author     User      @relation(fields: [authorId], references: [id])
+  Recipe     Recipe?   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
@@ -241,6 +243,15 @@ model Comment {
   post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
   replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   replies   Comment[] @relation("ReplyTo")
-  author    User      @relation(fields: [authorId], references: [id])
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   Like      Like[]
+}
+
+model RecipeView {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  recipeId Int
+  viewedAt DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 }
