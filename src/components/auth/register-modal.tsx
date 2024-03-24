@@ -63,7 +63,7 @@ const RegisterModal = () => {
     <Modal
       disabled={isLoading}
       isOpen={registerModal.isOpen}
-      title="Register"
+      title="Sign up"
       onClose={registerModal.onClose}
       body={bodyContent}
     />

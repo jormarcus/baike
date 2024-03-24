@@ -8,11 +8,7 @@ import Box from '../ui/box';
 import Cookbook from './cookbook';
 import SidebarItem from './sidebar-item';
 
-type SidebarProps = {
-  children: React.ReactNode;
-};
-
-const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+const Sidebar: React.FC = () => {
   const pathname = usePathname();
 
   const routes = useMemo(() => {
@@ -46,7 +42,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           <Cookbook />
         </Box>
       </div>
-      <main className="h-full flex-1 overflow-y-auto py-2">{children}</main>
     </div>
   );
 };

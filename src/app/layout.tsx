@@ -8,6 +8,8 @@ import Sidebar from '../components/sidebar/sidebar';
 import { getCurrentUser } from './_actions/user-actions';
 import ToastProvider from '@/providers/toast-provider';
 import Themechanger from '@/components/theme-changer';
+import Header from '@/components/header';
+import Box from '@/components/ui/box';
 
 export const metadata = {
   title: 'Baike',
@@ -34,7 +36,15 @@ export default async function RootLayout({
           <LoginModal />
           <RegisterModal />
           <ToastProvider />
-          <Sidebar>{children}</Sidebar>
+          <div className="flex">
+            <Sidebar />
+            <Box className="w-full my-2 mr-2">
+              <Header currentUser={currentUser} />
+              <div className="overflow-hidden overflow-y-auto min-h-screen">
+                <main className="flex-1 overflow-y-auto py-2">{children}</main>
+              </div>
+            </Box>
+          </div>
           <Themechanger />
         </Providers>
       </body>

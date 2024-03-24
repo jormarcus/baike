@@ -54,6 +54,34 @@ const Modal: React.FC<ModalProps> = ({
     onSubmit();
   }, [disabled, onSubmit]);
 
+  const Footer = () => {
+    if (!secondaryAction && !onSubmit) {
+      return null;
+    }
+
+    return (
+      <div className="flex flex-col gap-2 p-6">
+        <div className="flex w-full flex-row items-center gap-4">
+          {secondaryAction && secondaryActionLabel ? (
+            <Button
+              disabled={disabled}
+              onClick={handleSecondaryAction}
+              variant="outline"
+            >
+              {secondaryActionLabel}
+            </Button>
+          ) : null}
+          {actionLabel ? (
+            <Button disabled={disabled} onClick={handleSubmit}>
+              {actionLabel}
+            </Button>
+          ) : null}
+        </div>
+        {footer}
+      </div>
+    );
+  };
+
   const handleSecondaryAction = useCallback(() => {
     if (disabled || !secondaryAction) {
       return;
@@ -82,7 +110,7 @@ const Modal: React.FC<ModalProps> = ({
           >
             <div className="translate relative flex h-full w-full flex-col rounded-lg border-0 bg-white dark:bg-neutral-900 shadow-lg outline-none focus:outline-none md:h-auto lg:h-auto">
               {/* HEADER */}
-              <div className="relative flex items-center justify-center rounded-t border-b-[1px] pt-4">
+              <div className="relative flex items-center justify-center rounded-t border-b-[1px] py-4">
                 <button
                   onClick={handleClose}
                   className="absolute left-9 border-0 p-1 transition hover:opacity-70"
@@ -92,27 +120,9 @@ const Modal: React.FC<ModalProps> = ({
                 <div className="text-lg font-semibold">{title}</div>
               </div>
               {/* BODY */}
-              <div className="relative flex-auto p-6">{body}</div>
+              <div className="relative flex-auto p-12">{body}</div>
               {/* FOOTER */}
-              <div className="flex flex-col gap-2 p-6">
-                <div className="flex w-full flex-row items-center gap-4">
-                  {secondaryAction && secondaryActionLabel ? (
-                    <Button
-                      disabled={disabled}
-                      onClick={handleSecondaryAction}
-                      variant="outline"
-                    >
-                      {secondaryActionLabel}
-                    </Button>
-                  ) : null}
-                  {actionLabel ? (
-                    <Button disabled={disabled} onClick={handleSubmit}>
-                      {actionLabel}
-                    </Button>
-                  ) : null}
-                </div>
-                {footer}
-              </div>
+              <Footer />
             </div>
           </div>
         </div>
