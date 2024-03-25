@@ -15,7 +15,7 @@ export const metadata = {
   title: 'Baike',
   description: 'Recipe sharing app using ChatGPT',
   icons: {
-    icon: '/images/bake.png',
+    icon: '/images/baike_logo.png',
   },
 };
 
