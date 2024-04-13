@@ -45,7 +45,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
             image={
               collection.recipes && collection.recipes.length > 0
                 ? collection.recipes[0]['imageSrc']
-                : null
+                : undefined
             }
             alt={collection.name}
           />

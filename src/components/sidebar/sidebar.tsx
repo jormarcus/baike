@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   }, [pathname]);
 
   return (
-    <nav className="flex flex-col gap-y-2 h-full w-[340px]">
+    <nav className="flex flex-col gap-y-2 h-full">
       <Box>
         <div className="pt-4">
           <Logo />

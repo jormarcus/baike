@@ -9,6 +9,11 @@ import RegisterModal from '../components/auth/register-modal';
 import Sidebar from '../components/sidebar/sidebar';
 import Providers from '../providers/providers';
 import { getCurrentUser } from './_actions/user-actions';
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@/components/ui/resizable';
 
 export const metadata = {
   title: 'Baike',
@@ -35,13 +40,24 @@ export default async function RootLayout({
           <LoginModal />
           <RegisterModal />
           <ToastProvider />
-          <div className="flex gap-2 py-2 px-1 h-screen max-h-screen overflow-hidden">
-            <Sidebar currentUser={currentUser} />
-            <Box className="mb-2 flex flex-col w-full h-full overflow-y-scroll">
-              <Header currentUser={currentUser} />
-              <main className="flex-1 pb-4 px-6">{children}</main>
-            </Box>
-          </div>
+          <ResizablePanelGroup
+            direction="horizontal"
+            className="flex gap-2 py-2 px-1 h-screen max-h-screen overflow-hidden"
+          >
+            <ResizablePanel
+              defaultSize={20}
+              className="min-w-[280px] max-w-[420px]"
+            >
+              <Sidebar currentUser={currentUser} />
+            </ResizablePanel>
+            <ResizableHandle />
+            <ResizablePanel defaultSize={80}>
+              <Box className="mb-2 flex flex-col w-full h-full overflow-y-scroll">
+                <Header currentUser={currentUser} />
+                <main className="flex-1 pb-4 px-6">{children}</main>
+              </Box>
+            </ResizablePanel>
+          </ResizablePanelGroup>
           <Themechanger />
         </Providers>
       </body>
