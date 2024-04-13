@@ -2,7 +2,7 @@ import { Croissant } from 'lucide-react';
 import Image from 'next/image';
 
 interface RecipeImageProps {
-  image?: string;
+  image?: string | null;
   alt: string;
 }
 
