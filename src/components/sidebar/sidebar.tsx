@@ -2,13 +2,13 @@
 
 import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
-import { HiHome } from 'react-icons/hi';
 import { BiSearch } from 'react-icons/bi';
+import { HiHome } from 'react-icons/hi';
+import { SafeUser } from '@/types';
 import Box from '../ui/box';
+import Logo from '../ui/logo';
 import Cookbook from './cookbook';
 import SidebarItem from './sidebar-item';
-import { SafeUser } from '@/types';
-import Logo from '../ui/logo';
 
 export type SidebarProps = {
   currentUser: SafeUser | null;
@@ -35,22 +35,20 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {
   }, [pathname]);
 
   return (
-    <nav className="flex h-full">
-      <div className="flex flex-col gap-y-2 h-full w-[300px] p-2">
-        <Box>
-          <div className="pt-4">
-            <Logo />
-          </div>
-          <div className="flex flex-col gap-y-4 px-5 py-4">
-            {routes.map((item) => (
-              <SidebarItem key={item.label} {...item} />
-            ))}
-          </div>
-        </Box>
-        <Box className="overflow-y-auto h-full min-h-screen">
-          <Cookbook currentUser={currentUser} />
-        </Box>
-      </div>
+    <nav className="flex flex-col gap-y-2 h-full w-[340px]">
+      <Box>
+        <div className="pt-4">
+          <Logo />
+        </div>
+        <div className="flex flex-col gap-y-4 px-5 py-4">
+          {routes.map((item) => (
+            <SidebarItem key={item.label} {...item} />
+          ))}
+        </div>
+      </Box>
+      <Box className="overflow-y-auto h-full min-h-screen">
+        <Cookbook currentUser={currentUser} />
+      </Box>
     </nav>
   );
 };

@@ -1,8 +1,8 @@
 'use client';
 
-import { SafeRecipe, SafeUser } from '@/types';
 import { Book } from 'lucide-react';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { SafeUser } from '@/types';
 import Box from '../ui/box';
 import { Button } from '../ui/button';
 
@@ -17,15 +17,13 @@ const Cookbook: React.FC<CookbookProps> = ({ currentUser }) => {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between px-5 pt-4">
-        <div className="inline-flex items-center gap-x-2">
-          <Book size={26} className="text-neutral-400" />
-          <p className="text-neutral-400 font-medium text-md">Your Cookbook</p>
+        <div className="text-muted-foreground inline-flex items-center gap-x-2 cursor-pointer hover:text-foreground transition duration-300">
+          <Book size={26} />
+          <p className="font-medium">Your Cookbook</p>
         </div>
-        <AiOutlinePlus
-          onClick={handleClick}
-          size={20}
-          className="text-neutral-400 cursor-pointer hover:text-white transition"
-        />
+        <Button className="text-muted-foreground bg-transparent hover:bg-secondary active:bg-primary p-[2px] w-8 h-8">
+          <AiOutlinePlus onClick={handleClick} size={20} />
+        </Button>
       </div>
 
       {currentUser ? (
@@ -34,11 +32,13 @@ const Cookbook: React.FC<CookbookProps> = ({ currentUser }) => {
         <div className="flex flex-col gap-4 px-2">
           <Box className="bg-secondary py-4 px-5">
             <p className="pb-6">Let&apos;s find some recipes to cook</p>
-            <Button className="bg-white text-background">Browse recipes</Button>
+            <Button className="bg-foreground text-background">
+              Browse recipes
+            </Button>
           </Box>
           <Box className="bg-secondary py-4 px-5">
             <p className="pb-6">Create your first collection</p>
-            <Button className="bg-white text-background">
+            <Button className="bg-foreground text-background">
               Create Collection
             </Button>
           </Box>

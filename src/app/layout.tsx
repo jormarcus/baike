@@ -1,15 +1,14 @@
 import { Figtree } from 'next/font/google';
-
 import './globals.css';
+import Header from '@/components/header/header';
+import Themechanger from '@/components/theme-changer';
+import Box from '@/components/ui/box';
+import ToastProvider from '@/providers/toast-provider';
 import LoginModal from '../components/auth/login-modal';
 import RegisterModal from '../components/auth/register-modal';
-import Providers from '../providers/providers';
 import Sidebar from '../components/sidebar/sidebar';
+import Providers from '../providers/providers';
 import { getCurrentUser } from './_actions/user-actions';
-import ToastProvider from '@/providers/toast-provider';
-import Themechanger from '@/components/theme-changer';
-import Header from '@/components/header';
-import Box from '@/components/ui/box';
 
 export const metadata = {
   title: 'Baike',
@@ -36,13 +35,11 @@ export default async function RootLayout({
           <LoginModal />
           <RegisterModal />
           <ToastProvider />
-          <div className="flex">
+          <div className="flex gap-2 py-2 px-1 h-screen max-h-screen overflow-hidden">
             <Sidebar currentUser={currentUser} />
-            <Box className="w-full my-2 mr-2">
+            <Box className="mb-2 flex flex-col w-full h-full overflow-y-scroll">
               <Header currentUser={currentUser} />
-              <div className="overflow-hidden overflow-y-auto min-h-screen">
-                <main className="flex-1 overflow-y-auto py-2">{children}</main>
-              </div>
+              <main className="flex-1 pb-4 px-6">{children}</main>
             </Box>
           </div>
           <Themechanger />
