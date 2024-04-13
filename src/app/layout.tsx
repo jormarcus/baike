@@ -42,7 +42,7 @@ export default async function RootLayout({
           <ToastProvider />
           <ResizablePanelGroup
             direction="horizontal"
-            className="flex gap-2 py-2 px-1 h-screen max-h-screen overflow-hidden"
+            className="flex gap-1 py-2 px-1 h-screen max-h-screen overflow-hidden"
           >
             <ResizablePanel
               defaultSize={20}
@@ -50,7 +50,7 @@ export default async function RootLayout({
             >
               <Sidebar currentUser={currentUser} />
             </ResizablePanel>
-            <ResizableHandle />
+            <ResizableHandle className="bg-primary hover:bg-border hover:border-[0.1px]" />
             <ResizablePanel defaultSize={80}>
               <Box className="mb-2 flex flex-col w-full h-full overflow-y-scroll">
                 <Header currentUser={currentUser} />
