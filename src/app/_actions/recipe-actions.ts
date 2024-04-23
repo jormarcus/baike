@@ -10,20 +10,36 @@ import { capitalizeFirstLetter, omit } from '@/lib/utils';
 import { Ingredient } from '@/lib/validators/ingredient-validator';
 import { Recipe, RecipeSchema } from '@/lib/validators/recipe-validator';
 import { CollectionWithRecipeNames, ImportedRecipe, SafeRecipe } from '@/types';
-import { Ingredient as PrismaIngredient, Recipe as PrismaRecipe } from '@prisma/client';
+import {
+  Ingredient as PrismaIngredient,
+  Recipe as PrismaRecipe,
+} from '@prisma/client';
 import { getCurrentUser } from './user-actions';
 
-export async function getHomeRecipes() {
-  const newFeedRecipes = await getNewFeedRecipes();
-  const popularFeedRecipes = await getPopularFeedRecipes();
-  const recentRecipes = await getRecentRecipes();
+export async function getUnauthHomeRecipes() {
+  const [trendingRecipes, popularRecipes] = await Promise.all([
+    getTrendingRecipes(),
+    getPopularRecipes(),
+  ]);
 
   return {
-    newFeedRecipes,
-    popularFeedRecipes,
-    recentRecipes
+    trendingRecipes,
+    popularRecipes,
   };
+}
 
+export async function getAuthHomeRecipes() {
+  const [trendingRecipes, popularRecipes, recentRecipes] = await Promise.all([
+    getTrendingRecipes(),
+    getPopularRecipes(),
+    getRecentRecipes(),
+  ]);
+
+  return {
+    trendingRecipes,
+    popularRecipes,
+    recentRecipes,
+  };
 }
 
 function parseIngredients(ingredients: { input: string; id?: number }[]) {
@@ -220,7 +236,7 @@ export async function deleteRecipe(id: number) {
   return formatSafeRecipe(deletedRecipe);
 }
 
-export async function getNewFeedRecipes() {
+export async function getTrendingRecipes() {
   const recipes = await prisma.recipe.findMany({
     where: {
       isPublic: true,
@@ -228,27 +244,27 @@ export async function getNewFeedRecipes() {
     orderBy: {
       createdAt: 'desc',
     },
-    take: 10,
+    take: 6,
   });
 
   return recipes.map((recipe: PrismaRecipe) => formatSafeRecipe(recipe));
 }
 
-export async function getPopularFeedRecipes() {
+export async function getPopularRecipes() {
   const twoWeeksAgo = new Date();
   twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
   const recipes = await prisma.recipe.findMany({
     where: {
       isPublic: true,
-      createdAt: {
-        gte: twoWeeksAgo,
-      },
+      // createdAt: {
+      //   gte: twoWeeksAgo,
+      // },
     },
     orderBy: {
       // likesCount: 'desc',
     },
-    take: 10,
+    take: 6,
   });
 
   return recipes.map((recipe: PrismaRecipe) => formatSafeRecipe(recipe));

@@ -1,17 +1,20 @@
-export default function UnauthenticatedPage() {
+import { SafeRecipe } from '@/types';
+import { getUnauthHomeRecipes } from '../_actions/recipe-actions';
+import { RecipeCarousel } from './_components/recipe-carousel';
+
+export default async function UnauthenticatedPage() {
+  const {
+    trendingRecipes,
+    popularRecipes,
+  }: {
+    trendingRecipes: SafeRecipe[];
+    popularRecipes: SafeRecipe[];
+  } = await getUnauthHomeRecipes();
+
   return (
-    <div className="mt-[1px]">
-      <div>Unauth page</div>
-      {Array(20)
-        .fill(0)
-        .map((_, index) => (
-          <p key={index}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque fugit
-            optio, architecto consequatur voluptatum iure inventore culpa.
-            Excepturi praesentium alias quisquam ipsa nesciunt necessitatibus
-            nulla rem saepe, suscipit laudantium nisi.
-          </p>
-        ))}
+    <div className="mt-1 flex flex-col gap-6">
+      <RecipeCarousel recipes={trendingRecipes} title="Trending recipes" />
+      <RecipeCarousel recipes={popularRecipes} title="Popular recipes" />
     </div>
   );
 }
