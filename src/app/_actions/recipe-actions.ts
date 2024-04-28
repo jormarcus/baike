@@ -136,28 +136,23 @@ export async function updateRecipe(
 export async function getRecipeById(id: number) {
   const user = await getCurrentUser();
 
-  if (!user) {
-    throw new Error('User not found');
-  }
-
+  const userRatingsInclude = user
+    ? {
+        ratings: {
+          where: {
+            recipeId: id,
+            userId: user.id,
+          },
+        },
+      }
+    : {};
   const recipe = await prisma.recipe.findUnique({
     where: {
       id,
     },
     // include the current users rating for the recipe
     include: {
-      ratings: {
-        where: {
-          AND: [
-            {
-              recipeId: id,
-            },
-            {
-              userId: user.id,
-            },
-          ],
-        },
-      },
+      ...userRatingsInclude,
       collections: {
         take: 5,
         select: {
