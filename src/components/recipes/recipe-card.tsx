@@ -42,7 +42,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
             {recipe.name}
           </Link>
 
-          <div className="flex flex-row gap-2 items-center justify-end basis-2/12">
+          <div className="flex flex-row gap-[2px] items-center justify-end basis-2/12">
             <FaStar size={14} />
             <div className="text-md font-semibold">
               {recipe.averageRating || 0}
