@@ -24,6 +24,7 @@
     --input: #e3e3e7;
     --ring: #e11c48;
     --radius: 0.5rem;
+    --background-tilted-base: hsla(0, 0%, 100%, 0.07);
   }
 
   .dark {
@@ -47,6 +48,7 @@
     --input: #27272a;
     --ring: #e11c48;
     --subdued: #b3b3b3;
+    --background-tilted-base: hsla(0, 0%, 100%, 0.07);
   }
 }
 

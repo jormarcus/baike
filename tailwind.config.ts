@@ -51,6 +51,8 @@ const config = {
           DEFAULT: 'var(--card)',
           foreground: 'var(--card-foreground)',
         },
+        'background-tilted-base':
+          'var(--background-tilted-base, rgba(0, 0, 0, 0.08))',
       },
       borderRadius: {
         lg: 'var(--radius)',
