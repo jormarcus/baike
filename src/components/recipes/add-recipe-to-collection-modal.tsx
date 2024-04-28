@@ -76,9 +76,8 @@ function AddRecipeToCollectionModal({
     setIsLoading(true);
     async function getCollections() {
       try {
-        const collections = await getCollectionsWithRecipeNameByRecipeId(
-          recipeId
-        );
+        const collections =
+          await getCollectionsWithRecipeNameByRecipeId(recipeId);
         setCollections(collections);
       } catch (error) {
         toast.error('Something went wrong!');
@@ -110,7 +109,7 @@ function AddRecipeToCollectionModal({
   return (
     <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
       <AlertDialogTrigger asChild>
-        <Button className="dark:bg-neutral-950 dark:text-white dark:hover:bg-neutral-900 flex flex-nowrap items-center">
+        <Button className="bg-background-tilted-base text-foreground font-medium flex flex-nowrap items-center">
           <AiOutlineAppstoreAdd className="mr-0 md:mr-2 h-4 w-4" />
           <span className="hidden lg:block">Add to collection</span>
         </Button>
