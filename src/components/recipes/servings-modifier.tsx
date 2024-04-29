@@ -14,21 +14,15 @@ const ServingsModifier: React.FC<ServingsModifierProps> = ({ servings }) => {
   }, [servings]);
   return (
     <div className="flex items-center border border-neutral-500 w-fit rounded-xl p-1">
-      <Button variant="ghost">
-        <Minus
-          className="bg-neutral-950 text-white rounded-md
-      "
-        />
+      <Button className="text-foreground font-medium bg-background-tilted-base px-2 mx-2 my-1">
+        <Minus className="rounded-full" />
       </Button>
       <div className="flex gap-2 items-center">
         <span>{servings || 1}</span>
         <span>{servingsLabel}</span>
       </div>
-      <Button variant="ghost" className="w-fit">
-        <Plus
-          className="bg-neutral-950 text-white rounded-md
-      "
-        />
+      <Button className="w-fit text-foreground font-medium bg-background-tilted-base px-2 mx-2 my-1">
+        <Plus className="rounded-full" />
       </Button>
     </div>
   );
