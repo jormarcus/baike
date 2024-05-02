@@ -15,7 +15,7 @@ const Footer: React.FC<{ recipe: SafeRecipe }> = ({ recipe }) => {
   const { averageRating, id, name } = recipe;
 
   return (
-    <CardFooter className="flex flex-col items-start pt-1 pb-0 px-0">
+    <CardFooter className="flex flex-col items-start p-3">
       <div className="flex justify-between items-center w-full">
         <Link
           href={`/recipes/${id}`}
