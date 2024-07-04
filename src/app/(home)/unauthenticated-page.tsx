@@ -12,7 +12,7 @@ export default async function UnauthenticatedPage() {
   } = await getUnauthHomeRecipes();
 
   return (
-    <div className="mt-1 flex flex-col gap-6">
+    <div className="mt-1 flex flex-col gap-2">
       <RecipeCarousel recipes={trendingRecipes} title="Trending recipes" />
       <RecipeCarousel recipes={popularRecipes} title="Popular recipes" />
     </div>

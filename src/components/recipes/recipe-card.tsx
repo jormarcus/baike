@@ -51,11 +51,11 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   return (
     <Card className="border-none rounded-lg">
       <Link href={`/recipes/${id}`} className="flex flex-col">
-        <CardContent className="p-0 rounded-lg">
+        <CardContent className="p-0 rounded-lg relative">
           <div className="object-cover transition duration-300 group-hover:scale-110 ease-cubic-bezier rounded-lg">
             <RecipeImage image={imageSrc} alt={name} />
           </div>
-          <div className="absolute right-4 top-4 bg-transparent">
+          <div className="absolute right-2 top-2 bg-transparent">
             <Heart
               size={24}
               className="fill-[#00000080] hover:text-amber-500 hover:fill-amber-500 transition duration-300"

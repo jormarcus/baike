@@ -14,6 +14,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable';
+import RightSidebar from '@/components/sidebar/right-sidebar';
 
 export const metadata = {
   title: 'Baike',
@@ -44,18 +45,19 @@ export default async function RootLayout({
             direction="horizontal"
             className="flex gap-1 py-2 px-1 h-screen max-h-screen overflow-hidden"
           >
-            <ResizablePanel
-              defaultSize={20}
-              className="min-w-[280px] max-w-[420px]"
-            >
+            <ResizablePanel defaultSize={20} className="min-w-[280px]">
               <Sidebar currentUser={currentUser} />
             </ResizablePanel>
             <ResizableHandle className="bg-primary hover:bg-border hover:border-[0.1px]" />
             <ResizablePanel defaultSize={80}>
-              <Box className="mb-2 flex flex-col w-full h-full overflow-y-scroll">
+              <div className="mb-2 flex flex-col w-full h-full overflow-y-scroll">
                 <Header currentUser={currentUser} />
-                <main className="flex-1 pb-4 px-6">{children}</main>
-              </Box>
+                <main className="flex-1 pb-4">{children}</main>
+              </div>
+            </ResizablePanel>
+            <ResizableHandle className="bg-primary hover:bg-border hover:border-[0.1px]" />
+            <ResizablePanel defaultSize={20} className="min-w-[360px]">
+              <RightSidebar />
             </ResizablePanel>
           </ResizablePanelGroup>
           <Themechanger />

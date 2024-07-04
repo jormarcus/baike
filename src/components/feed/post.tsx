@@ -7,7 +7,7 @@ import { Croissant } from 'lucide-react';
 import { SafePost } from '@/types';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import PostDescription from './post-description';
-import PostActions from './poast-actions';
+import PostActions from './post-actions';
 import PostComments from './post-comments';
 
 interface PostProps {

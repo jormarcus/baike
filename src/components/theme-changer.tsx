@@ -20,7 +20,7 @@ const Themechanger = () => {
 
   const light = theme === 'light';
   return (
-    <button className="fixed z-40 bottom-5 right-5 bg-secondary dark:bg-secondary dark:text-amber-500 w-10 h-10 rounded-full flex justify-center items-center">
+    <button className="fixed z-40 bottom-5 left-5 bg-secondary dark:bg-secondary dark:text-amber-500 w-10 h-10 rounded-full flex justify-center items-center">
       {light ? (
         <BsMoonStarsFill onClick={() => setTheme('dark')} size={27} />
       ) : (
