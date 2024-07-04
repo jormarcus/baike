@@ -93,9 +93,12 @@ model Recipe {
   averageRating Float        @default(0)
   posts         Post[]
   ratings       Rating[]
-  collections   Collection[] @relation("CollectionToRecipe")
-  ingredients   Ingredient[] @relation("IngredientToRecipe")
+  collections   Collection[]
+  ingredients   Ingredient[]
   RecipeView    RecipeView[]
+  cuisines      Cuisine[]
+
+  @@map("recipes")
 }
 
 model Ingredient {
@@ -110,8 +113,20 @@ model Ingredient {
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
   order           Int         @default(0)
-  recipes         Recipe[]    @relation("IngredientToRecipe")
+  recipes         Recipe[]
   avoidances      Avoidance[]
+
+  @@map("ingredients")
+}
+
+model Cuisine {
+  id        Int      @id @default(autoincrement())
+  name      String
+  recipes   Recipe[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cuisines")
 }
 
 model Avoidance {
@@ -121,6 +136,8 @@ model Avoidance {
   ingredients Ingredient[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+
+  @@map("avoidances")
 }
 
 model Collection {
@@ -132,7 +149,9 @@ model Collection {
   isPublic   Boolean  @default(false)
   likesCount Int      @default(0)
   likes      Like[]
-  recipes    Recipe[] @relation("CollectionToRecipe")
+  recipes    Recipe[]
+
+  @@map("collections")
 }
 
 model Like {
@@ -148,6 +167,8 @@ model Like {
   post         Post       @relation(fields: [postId], references: [id], onDelete: Cascade)
   review       Review     @relation(fields: [reviewId], references: [id], onDelete: Cascade)
   user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("likes")
 }
 
 model Rating {
@@ -159,6 +180,8 @@ model Rating {
   updatedAt DateTime @updatedAt
   recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("ratings")
 }
 
 model Note {
@@ -168,6 +191,8 @@ model Note {
   note     String
   user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   noteLike NoteLike[]
+
+  @@map("notes")
 }
 
 model Review {
@@ -179,6 +204,8 @@ model Review {
   like       Like[]
   User       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   reviewLike ReviewLike[]
+
+  @@map("reviews")
 }
 
 model ReviewLike {
@@ -187,6 +214,8 @@ model ReviewLike {
   reviewId Int    @map("review_id")
   review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("review_likes")
 }
 
 model NoteLike {
@@ -195,6 +224,8 @@ model NoteLike {
   noteId Int  @map("note_id")
   note   Note @relation(fields: [noteId], references: [id], onDelete: Cascade)
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("note_likes")
 }
 
 model Chat {
@@ -206,6 +237,8 @@ model Chat {
   userMessagesCount Int       @default(0) @map("user_messages_count")
   user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   messages          Message[]
+
+  @@map("chats")
 }
 
 model Message {
@@ -216,6 +249,8 @@ model Message {
   updatedAt     DateTime @updatedAt
   chatId        Int      @map("chat_id")
   chat          Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
 }
 
 model Post {
@@ -231,6 +266,8 @@ model Post {
   likes      Like[]
   Recipe     Recipe?   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@map("posts")
 }
 
 model Comment {
@@ -245,6 +282,8 @@ model Comment {
   replies   Comment[] @relation("ReplyTo")
   author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   Like      Like[]
+
+  @@map("comments")
 }
 
 model RecipeView {
@@ -254,4 +293,6 @@ model RecipeView {
   viewedAt DateTime @default(now())
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   recipe   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@map("recipe_views")
 }
