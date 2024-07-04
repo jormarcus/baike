@@ -34,7 +34,7 @@ const RightSidebarChat = () => {
           <ChatMessage message={message} key={message.id} />
         ))}
       </div>
-      <div className="my-3">
+      <div className="my-3 p-2">
         <Input placeholder="Ask any cooking or recipe related questions" />
       </div>
     </Box>

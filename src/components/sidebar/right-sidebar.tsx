@@ -11,7 +11,7 @@ export type SidebarProps = {};
 
 const RightSidebar: React.FC<SidebarProps> = () => {
   return (
-    <div className="h-full px-4 flex flex-col">
+    <div className="h-full pr-4 flex flex-col">
       <RightSidebarHeading />
       <RightSidebarChat />
     </div>
