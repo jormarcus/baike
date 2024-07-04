@@ -49,7 +49,7 @@ export default async function RootLayout({
               <Sidebar currentUser={currentUser} />
             </ResizablePanel>
             <ResizableHandle className="bg-primary hover:bg-border hover:border-[0.1px]" />
-            <ResizablePanel defaultSize={80}>
+            <ResizablePanel defaultSize={60}>
               <div className="mb-2 flex flex-col w-full h-full overflow-y-scroll">
                 <Header currentUser={currentUser} />
                 <main className="flex-1 pb-4">{children}</main>
