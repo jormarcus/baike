@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { ChatGPTMessage } from '@/types';
 
 type ChatMessageProps = {
@@ -7,13 +8,14 @@ type ChatMessageProps = {
 const ChatMessage = ({ message }: ChatMessageProps) => {
   return (
     <div
-      className={`${
+      className={cn(
+        'rounded-3xl text-sm p-4',
         message.role === 'user'
-          ? 'bg-primary self-end'
-          : 'bg-secondary self-start'
-      } p-4 rounded-full max-w-[75%] text-sm`}
+          ? 'bg-primary self-end max-w-[75%]'
+          : 'bg-secondary text-center md:text-left w-full'
+      )}
     >
-      <div>{message.content}</div>
+      {message.content}
     </div>
   );
 };

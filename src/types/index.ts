@@ -55,7 +55,7 @@ export type ChatWithMessages = Prisma.ChatGetPayload<typeof chatWithMessages>;
 export type Role = 'function' | 'user' | 'system' | 'assistant';
 
 export type ChatGPTMessage = {
-  id: string;
+  id: string | null;
   role: Role;
   content: string;
 };

@@ -5,7 +5,7 @@ import Box from '../ui/box';
 import { Input } from '../ui/input';
 import { ChefHat, CircleMinus, Expand } from 'lucide-react';
 import RightSidebarHeading from './right-sidebar-heading';
-import RightSidebarChat from './right-sidebar-chat';
+import Chat from './chat';
 
 export type SidebarProps = {};
 
@@ -13,7 +13,7 @@ const RightSidebar: React.FC<SidebarProps> = () => {
   return (
     <div className="h-full pr-4 flex flex-col">
       <RightSidebarHeading />
-      <RightSidebarChat />
+      <Chat />
     </div>
   );
 };

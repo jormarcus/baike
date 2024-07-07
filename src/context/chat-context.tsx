@@ -1,105 +1,38 @@
-'use client';
+// context/ChatContext.tsx
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-import { ChangeEvent, FormEvent, createContext } from 'react';
-import { Message, useChat } from 'ai/react';
-import {
-  // ChatRequest,
-  ChatRequestOptions,
-  // FunctionCallHandler,
-  // nanoid,
-} from 'ai';
-import toast from 'react-hot-toast';
-
-import { throwContextNotInitializedError } from '@/lib/utils';
-
-// const functionCallHandler: FunctionCallHandler = async (
-//   chatMessages,
-//   functionCall
-// ) => {
-//   if (functionCall.name === 'importRecipe') {
-//     if (functionCall.arguments) {
-//       const parsedFunctionCallArguments = JSON.parse(functionCall.arguments);
-//       // You now have access to the parsed arguments here (assuming the JSON was valid)
-//       // If JSON is invalid, return an appropriate message to the model so that it may retry?
-//       console.log(parsedFunctionCallArguments);
-//     }
-
-//     const functionResponse: ChatRequest = {
-//       messages: [
-//         ...chatMessages,
-//         {
-//           id: nanoid(),
-//           name: 'importRecipe',
-//           role: 'function' as const,
-//           content: functionCall.arguments || '',
-//         },
-//       ],
-//     };
-//     return functionResponse;
-//   }
-// };
-
-interface ChatContextStore {
-  messages: Message[];
-  input: string;
-  handleInputChange: (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) => void;
-  setInput: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: (
-    e: FormEvent<HTMLFormElement>,
-    chatRequestOptions?: ChatRequestOptions | undefined
-  ) => void;
-  setMessages: (messages: Message[]) => void;
-  reload: (
-    chatRequestOptions?: ChatRequestOptions | undefined
-  ) => Promise<string | null | undefined>;
+interface ChatMessage {
+  question: string;
+  response: string;
 }
 
-export const ChatContext = createContext<ChatContextStore>({
-  messages: [],
-  input: '',
-  handleInputChange: throwContextNotInitializedError,
-  setInput: throwContextNotInitializedError,
-  handleSubmit: throwContextNotInitializedError,
-  setMessages: throwContextNotInitializedError,
-  reload: throwContextNotInitializedError,
-});
+interface ChatContextProps {
+  messages: ChatMessage[];
+  addMessage: (message: ChatMessage) => void;
+}
 
-export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({
+const ChatContext = createContext<ChatContextProps | undefined>(undefined);
+
+export const ChatProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const {
-    messages,
-    input,
-    handleInputChange,
-    setInput,
-    handleSubmit,
-    setMessages,
-    reload,
-  } = useChat({
-    // experimental_onFunctionCall: functionCallHandler,
-    onResponse: (response) => {
-      if (response.status === 429) {
-        toast.error('You have reached your request limit for the day.');
-        return;
-      }
-    },
-  });
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+  const addMessage = (message: ChatMessage) => {
+    setMessages((prevMessages) => [...prevMessages, message]);
+  };
 
   return (
-    <ChatContext.Provider
-      value={{
-        messages,
-        input,
-        handleInputChange,
-        setInput,
-        handleSubmit,
-        setMessages,
-        reload,
-      }}
-    >
+    <ChatContext.Provider value={{ messages, addMessage }}>
       {children}
     </ChatContext.Provider>
   );
+};
+
+export const useChat = () => {
+  const context = useContext(ChatContext);
+  if (context === undefined) {
+    throw new Error('useChat must be used within a ChatProvider');
+  }
+  return context;
 };
