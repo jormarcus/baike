@@ -55,9 +55,3 @@ async function saveChatToDatabase(chat: {
   console.log('Saving chat to database', chat);
   // Implement your database saving logic here
 }
-
-export const config = {
-  api: {
-    bodyParser: false, // Disable body parsing to handle raw requests
-  },
-};
