@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { IconType } from 'react-icons';
 
 import { cn } from '@/lib/utils';
+import { usePanelSizes } from '@/context/panel-sizes-context';
 
 interface SidebarItemProps {
   icon: IconType;
@@ -18,16 +19,20 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   active,
   href,
 }) => {
+  const { panelSizes } = usePanelSizes();
+  const isLeftPanelMinimized = panelSizes[0] === 5;
+
   return (
     <Link
       href={href}
       className={cn(
-        'flex  flex-row  h-auto  items-center  w-full  gap-x-4  text-md  font-medium cursor-pointer hover:text-foreground transition duration-300 text-muted-foreground py-1 px-1',
-        active && 'text-foreground'
+        'flex items-center w-full gap-x-4 text-md font-medium cursor-pointer hover:text-foreground transition duration-300 text-muted-foreground',
+        active && 'text-foreground',
+        isLeftPanelMinimized ? 'justify-center ' : ''
       )}
     >
       <Icon size={26} />
-      <p className="truncate w-100">{label}</p>
+      {!isLeftPanelMinimized && <p className="truncate w-100">{label}</p>}
     </Link>
   );
 };

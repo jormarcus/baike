@@ -1,14 +1,15 @@
+import { getSession } from 'next-auth/react';
 import AuthenticatedPage from './(home)/authenticated-page';
 import UnauthenticatedPage from './(home)/unauthenticated-page';
-import { getCurrentUser } from './_actions/user-actions';
+import ResizableLayout from './(home)/_components/resizable-layout';
 
 export default async function Home() {
-  const currentUser = await getCurrentUser();
+  const session = await getSession();
 
   return (
-    <>
+    <ResizableLayout>
       {/* @ts-expect-error Server Component */}
-      {currentUser ? <AuthenticatedPage /> : <UnauthenticatedPage />}
-    </>
+      {session ? <AuthenticatedPage /> : <UnauthenticatedPage />}
+    </ResizableLayout>
   );
 }

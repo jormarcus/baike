@@ -1,19 +1,19 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { FaUserAlt } from 'react-icons/fa';
 import { useLoginModal } from '@/context/login-modal-context';
 import { useRegisterModal } from '@/context/register-modal-context';
-import { SafeUser } from '@/types';
 import { Button } from '../ui/button';
 
-type AuthButtonProps = {
-  currentUser: SafeUser | null | undefined;
-};
-
-const AuthButtons = ({ currentUser }: AuthButtonProps) => {
+const AuthButtons = () => {
+  const { status } = useSession();
   const router = useRouter();
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+
+  const isAuthenticatedUser = status === 'authenticated';
 
   const handleLogout = async () => {
     await signOut();
@@ -22,7 +22,7 @@ const AuthButtons = ({ currentUser }: AuthButtonProps) => {
 
   return (
     <>
-      {currentUser ? (
+      {isAuthenticatedUser ? (
         <div className="flex gap-x-4 items-center">
           <Button
             onClick={handleLogout}

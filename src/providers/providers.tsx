@@ -11,6 +11,7 @@ import { WelcomeWizardProvider } from '@/context/welcome-wizard-context';
 import { RecipeCompareProvider } from '@/context/recipe-compare-context';
 import { CollectionsProvider } from '@/context/collections-context';
 import { ThemeProvider } from './theme-provider';
+import { PanelSizesProvider } from '@/context/panel-sizes-context';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -20,19 +21,21 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <AuthContext>
-        <RegisterModalProvider>
-          <LoginModalProvider>
-            <UserPreferencesProvider>
-              <WelcomeWizardProvider>
-                <ChatProvider>
-                  <RecipeCompareProvider>
-                    <CollectionsProvider>{children}</CollectionsProvider>
-                  </RecipeCompareProvider>
-                </ChatProvider>
-              </WelcomeWizardProvider>
-            </UserPreferencesProvider>
-          </LoginModalProvider>
-        </RegisterModalProvider>
+        <PanelSizesProvider>
+          <RegisterModalProvider>
+            <LoginModalProvider>
+              <UserPreferencesProvider>
+                <WelcomeWizardProvider>
+                  <ChatProvider>
+                    <RecipeCompareProvider>
+                      <CollectionsProvider>{children}</CollectionsProvider>
+                    </RecipeCompareProvider>
+                  </ChatProvider>
+                </WelcomeWizardProvider>
+              </UserPreferencesProvider>
+            </LoginModalProvider>
+          </RegisterModalProvider>
+        </PanelSizesProvider>
       </AuthContext>
     </ThemeProvider>
   );

@@ -5,44 +5,53 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { SafeUser } from '@/types';
 import Box from '../ui/box';
 import { Button } from '../ui/button';
+import { useSession } from 'next-auth/react';
+import { usePanelSizes } from '@/context/panel-sizes-context';
+import { cn } from '@/lib/utils';
 
-type CookbookProps = {
-  currentUser: SafeUser | null;
-};
+const Cookbook = () => {
+  const { status } = useSession();
+  const { panelSizes } = usePanelSizes();
 
-const Cookbook: React.FC<CookbookProps> = ({ currentUser }) => {
+  const isLeftPanelMinimized = panelSizes[0] === 5;
+
+  const isAuthenticatedUser = status === 'authenticated';
+
   const handleClick = () => {
     console.log('clicked');
   };
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex items-center justify-between px-5 pt-4">
-        <div className="text-muted-foreground inline-flex items-center gap-x-2 cursor-pointer hover:text-foreground transition duration-300">
+      <div
+        className={cn(
+          'flex items-center justify-between px-5 pt-4',
+          isLeftPanelMinimized ? 'flex-col justify-center gap-2' : ''
+        )}
+      >
+        <div className="text-muted-foreground flex items-center gap-x-2 cursor-pointer hover:text-foreground transition duration-300">
           <Book size={26} />
-          <p className="font-medium">Your Cookbook</p>
+          {!isLeftPanelMinimized && (
+            <p className="font-medium">Your Cookbook</p>
+          )}
         </div>
         <Button className="text-muted-foreground bg-transparent hover:bg-secondary active:bg-primary p-[2px] w-8 h-8">
           <AiOutlinePlus onClick={handleClick} size={20} />
         </Button>
       </div>
 
-      {currentUser ? (
+      {isAuthenticatedUser ? (
         <div className="flex flex-col gap-y-2 mt-4 px-3">List of Cookbook</div>
       ) : (
-        <div className="flex flex-col gap-4 px-2">
-          <Box className="bg-secondary py-4 px-5">
-            <p className="pb-6">Let&apos;s find some recipes to cook</p>
-            <Button className="bg-foreground text-background">
-              Browse recipes
-            </Button>
-          </Box>
-          <Box className="bg-secondary py-4 px-5">
-            <p className="pb-6">Create your first collection</p>
-            <Button className="bg-foreground text-background">
-              Create Collection
-            </Button>
-          </Box>
-        </div>
+        !isLeftPanelMinimized && (
+          <div className="flex flex-col gap-4 px-2">
+            <Box className="bg-secondary py-4 px-5">
+              <p className="pb-6">Create your first collection</p>
+              <Button className="bg-foreground text-background">
+                Create Collection
+              </Button>
+            </Box>
+          </div>
+        )
       )}
     </div>
   );
