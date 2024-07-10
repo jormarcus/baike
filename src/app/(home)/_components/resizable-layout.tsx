@@ -88,7 +88,7 @@ export default function ResizableLayout({ children }: ResizableLayoutProps) {
         order={3}
         defaultSize={panelSizes[2]}
         collapsible
-        collapsedSize={0}
+        collapsedSize={5}
         onResize={(size) => handleResize(2, size)}
       >
         <RightSidebar />

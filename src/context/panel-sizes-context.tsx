@@ -56,13 +56,13 @@ export const PanelSizesProvider = ({ children }: { children: ReactNode }) => {
   const handleUnCollapse = (panel: 'left' | 'main' | 'right') => {
     switch (panel) {
       case 'left':
-        setPanelSizes([20, 60, 20]);
+        setPanelSizes((prev) => [20, 60, prev[2]]);
         break;
       case 'main':
         setPanelSizes([20, 60, 20]);
         break;
       case 'right':
-        setPanelSizes((prev) => [20, 60, 20]);
+        setPanelSizes((prev) => [prev[0], 60, 20]);
         break;
       default:
         break;
