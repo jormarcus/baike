@@ -1,6 +1,6 @@
 'use client';
 
-import { SquareMinus, Maximize, PanelLeftOpen, Minimize2 } from 'lucide-react';
+import { Maximize, PanelLeftOpen, Minimize2 } from 'lucide-react';
 import Box from '../ui/box';
 import { Button } from '../ui/button';
 import { usePanelSizes } from '@/context/panel-sizes-context';

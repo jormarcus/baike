@@ -15,10 +15,10 @@ const Header = () => {
   const isRightPanelMinimized = panelSizes[2] === 0;
 
   return (
-    <div className="h-16 top-0 sticky flex items-center gap-2">
+    <div className="h-16 top-0 sticky flex items-center gap-2 z-10">
       <Box
         className={
-          (cn('flex items-center'),
+          (cn('flex items-center sticky'),
           isRightPanelMinimized ? 'basis-[95%]' : 'basis-full')
         }
       >
@@ -35,7 +35,7 @@ const Header = () => {
         </header>
       </Box>
       {isRightPanelMinimized && (
-        <Box className="h-16 p-4 basis-[5%] flex justify-center items-center">
+        <Box className="h-16 p-4 basis-[5%] flex justify-center items-center sticky">
           <Button
             className="p-0 bg-transparent text-foreground"
             onClick={() => handleUnCollapse('right')}
