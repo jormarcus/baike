@@ -5,6 +5,7 @@ import ToastProvider from '@/providers/toast-provider';
 import LoginModal from '../components/auth/login-modal';
 import RegisterModal from '../components/auth/register-modal';
 import Providers from '../providers/providers';
+import ResizableLayout from './(home)/_components/resizable-layout';
 
 export const metadata = {
   title: 'Baike',
@@ -30,7 +31,7 @@ export default async function RootLayout({
           <LoginModal />
           <RegisterModal />
           <ToastProvider />
-          {children}
+          <ResizableLayout>{children}</ResizableLayout>
           <Themechanger />
         </Providers>
       </body>

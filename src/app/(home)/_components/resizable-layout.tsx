@@ -53,6 +53,7 @@ export default function ResizableLayout({ children }: ResizableLayoutProps) {
       className="flex gap-1 py-2 px-2 h-screen max-h-screen overflow-hidden"
     >
       <ResizablePanel
+        id="left-panel"
         ref={leftPanelRef}
         order={1}
         defaultSize={panelSizes[0]}
@@ -67,6 +68,7 @@ export default function ResizableLayout({ children }: ResizableLayoutProps) {
         className="bg-primary hover:bg-border hover:border-[0.1px]"
       />
       <ResizablePanel
+        id="main-panel"
         ref={mainPanelRef}
         order={2}
         defaultSize={panelSizes[1]}
@@ -79,11 +81,14 @@ export default function ResizableLayout({ children }: ResizableLayoutProps) {
           <main className="flex-1 pb-4">{children}</main>
         </div>
       </ResizablePanel>
+
       <ResizableHandle
         withHandle
         className="bg-primary hover:bg-border hover:border-[0.1px]"
       />
+
       <ResizablePanel
+        id="right-panel"
         ref={rightPanelRef}
         order={3}
         defaultSize={panelSizes[2]}
