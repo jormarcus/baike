@@ -39,10 +39,18 @@ const DeleteRecipeModal: React.FC<DeleteRecipeModalProps> = ({ recipe }) => {
     <div>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button className="bg-background-tilted-base text-foreground font-medium flex flex-nowrap items-center">
-            <Trash className="mr-0 md:mr-2 h-4 w-4" />
-            <span className="hidden md:block">Delete</span>
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button className="bg-card p-0 text-foreground font-medium flex flex-nowrap items-center">
+                  <Trash className="mr-0 md:mr-2" size={20} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <p>Delete</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

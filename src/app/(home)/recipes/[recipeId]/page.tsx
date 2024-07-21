@@ -28,9 +28,7 @@ export default async function RecipePage({
   }
 
   return (
-    <Box className="mt-2 mx-4 flex flex-col items-center sm:items-start space-y-4 sm:px-0">
-      <RecipeActionButtonRow recipe={recipe} />
-
+    <Box className="mt-2 p-4 flex flex-col items-center space-y-4">
       <div className="flex flex-col gap-8 sm:gap-16">
         <div className="flex flex-col sm:flex-row gap-12 sm:gap-16">
           <div className="flex flex-col gap-4 basis-1/3 items-center">
@@ -58,9 +56,12 @@ export default async function RecipePage({
             </div>
           </div>
           <div className="flex flex-col space-y-2 items-center sm:items-start basis-2/3">
-            <h1 className="hidden sm:block font-serif font-extrabold tracking-tight text-3xl lg:text-4xl">
-              {recipe.name}
-            </h1>
+            <div className="flex justify-between w-full items-end py-2">
+              <h1 className="hidden sm:block font-serif font-extrabold tracking-tight text-3xl lg:text-4xl">
+                {recipe.name}
+              </h1>
+              <RecipeActionButtonRow recipe={recipe} />
+            </div>
             <AverageRating averageRating={recipe?.averageRating || 0} />
             <CollectionsRow collections={recipe.collections} />
             {recipe.description ? (
