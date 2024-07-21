@@ -11,6 +11,7 @@ import Header from '@/components/header/header';
 import RightSidebar from '@/components/sidebar/right-sidebar';
 import { ReactNode, useEffect, useRef } from 'react';
 import { usePanelSizes } from '@/context/panel-sizes-context';
+import RecipeTabs from './recipe-tabs';
 
 type ResizableLayoutProps = {
   children: ReactNode;
@@ -76,6 +77,9 @@ export default function ResizableLayout({ children }: ResizableLayoutProps) {
       >
         <div className="mb-2 flex flex-col w-full h-full overflow-y-scroll">
           <Header />
+          <RecipeTabs>
+            <main className="flex-1 pb-4">{children}</main>
+          </RecipeTabs>
           <main className="flex-1 pb-4">{children}</main>
         </div>
       </ResizablePanel>
