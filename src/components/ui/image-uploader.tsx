@@ -5,6 +5,7 @@ import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
 import { useCallback } from 'react';
 import { TbPhotoPlus } from 'react-icons/tb';
+import FastAverageColor from 'fast-average-color';
 
 declare global {
   var cloudinary: any;
@@ -13,20 +14,31 @@ declare global {
 const uploadPreset = 'gr2hwvgw';
 
 interface ImageUploaderProps {
-  handleChange: (value: string) => void;
+  handleMediaUpload: (value: string, color: string) => void;
   value: string;
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({
-  handleChange,
+  handleMediaUpload,
   value,
   ...props
 }) => {
   const handleUpload = useCallback(
-    (result: any) => {
-      handleChange(result.info.secure_url);
+    async (result: any) => {
+      const imageUrl = result.info.secure_url;
+
+      // Create an image element
+      const img = document.createElement('img');
+      img.crossOrigin = 'Anonymous';
+      img.src = imageUrl;
+
+      img.onload = async () => {
+        const fac = new FastAverageColor();
+        const color = fac.getColor(img);
+        handleMediaUpload(imageUrl, color.hex);
+      };
     },
-    [handleChange]
+    [handleMediaUpload]
   );
 
   return (
@@ -67,7 +79,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
                   />
                 )}
 
-                <div className="p-2 absolute bottom-[-12px] right-[-12px] border rounded-full  dark:bg-secondary  dark:text-white">
+                <div className="p-2 absolute bottom-[-12px] right-[-12px] border rounded-full dark:bg-secondary dark:text-white">
                   <Pencil height={20} width={20} />
                 </div>
               </div>

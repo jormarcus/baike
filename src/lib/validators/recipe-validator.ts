@@ -7,6 +7,7 @@ export const RecipeSchema = z.object({
     message: 'Must be at least 1 character',
   }),
   imageSrc: z.string().optional(),
+  imageAverageColor: z.string().optional(),
   url: z.string(),
   description: z.string().optional(),
   servings: z.number(),
