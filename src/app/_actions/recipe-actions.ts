@@ -101,6 +101,8 @@ export async function updateRecipe(
     throw new Error('Recipe id cannot be null');
   }
 
+  console.log('recipe', recipe);
+
   const newIngredients: Ingredient[] = parseIngredients(
     recipe.ingredients.filter((i) => !i.id).map((i) => ({ input: i.input }))
   );

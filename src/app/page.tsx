@@ -7,9 +7,9 @@ export default async function Home() {
   const session = await getSession();
 
   return (
-    <ResizableLayout>
+    <>
       {/* @ts-expect-error Server Component */}
       {session ? <AuthenticatedPage /> : <UnauthenticatedPage />}
-    </ResizableLayout>
+    </>
   );
 }

@@ -33,6 +33,12 @@ import AddCollectionModal from '../collections/add-collection-modal';
 import { addCollectionsToRecipe } from '@/app/_actions/recipe-actions';
 import { Checkbox } from '../ui/checkbox';
 import { getCollectionsWithRecipeNameByRecipeId } from '@/app/_actions/collection-actions';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../ui/tooltip';
 
 const AddRecipeToCollectionSchema = z.object({
   collections: z.array(z.string()),
@@ -109,10 +115,18 @@ function AddRecipeToCollectionModal({
   return (
     <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
       <AlertDialogTrigger asChild>
-        <Button className="bg-background-tilted-base text-foreground font-medium flex flex-nowrap items-center">
-          <AiOutlineAppstoreAdd className="mr-0 md:mr-2 h-4 w-4" />
-          <span className="hidden lg:block">Add to collection</span>
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button className="p-0 bg-card text-foreground font-medium flex flex-nowrap items-center">
+                <AiOutlineAppstoreAdd size={20} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>Add to collection</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-[425px]">
         <AlertDialogHeader>

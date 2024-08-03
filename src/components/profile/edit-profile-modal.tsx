@@ -85,7 +85,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
         <div className="flex flex-col gap-2 mt-4">
           <div className="rounded-full self-center">
             <ImageUploader
-              handleChange={(value) => setValue('image', value)}
+              handleMediaUpload={(value) => setValue('image', value)}
               value={image || ''}
             />
           </div>

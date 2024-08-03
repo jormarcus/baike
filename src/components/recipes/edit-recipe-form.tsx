@@ -85,6 +85,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
       ],
       instructions: [...recipe?.instructions, ''] || [''],
       imageSrc: recipe?.imageSrc || '',
+      imageAverageColor: recipe?.imageAverageColor || '',
       notes: recipe?.notes || '',
     },
   });
@@ -179,6 +180,11 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
     }
   };
 
+  const handleMediaUpload = (imageUrl: string, color: string) => {
+    form.setValue('imageSrc', imageUrl);
+    form.setValue('imageAverageColor', color);
+  };
+
   return (
     <div className="flex justify-center items-center">
       <div className="md:p-12 p-4 w-full max-w-3xl flex flex-col dark:bg-neutral-950 rounded-lg shadow-lg shadow-neutral-950/50">
@@ -191,7 +197,7 @@ const EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe }) => {
               <FormItem>
                 <FormControl>
                   <ImageUploader
-                    handleChange={(value) => form.setValue('imageSrc', value)}
+                    handleMediaUpload={handleMediaUpload}
                     value={imageSrc || ''}
                   />
                 </FormControl>
